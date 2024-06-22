@@ -1,2 +1,17 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+
+
+
+
+namespace TP01EF2024.Consola
+{
+    internal class Program
+    {
+
+        private static IServiceProvider? _serviceProvider;
+        public static void Main(string[] args)
+        {
+            servicioProvider =DI.Conola()
+        }
+    }
+}

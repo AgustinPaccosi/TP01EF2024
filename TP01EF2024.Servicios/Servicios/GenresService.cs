@@ -22,37 +22,96 @@ namespace TP01EF2024.Servicios.Servicios
         }
         public void Eliminar(Genre genre)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _reposiroty.Eliminar(genre);
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.RollBack();
+                throw;
+            }
         }
 
         public bool EstaRelacionado(Genre genre)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _reposiroty.EstaRelacionado(genre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public bool Existe(Genre genre)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _reposiroty.Existe(genre);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public int GetCantidad()
         {
-            throw new NotImplementedException();
+            return _reposiroty.GetCantidad();
         }
 
         public Genre? GetGenrePorId(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _reposiroty.GetGenrePorId(id);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public List<Genre> GetGenres()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return _reposiroty.GetGenres();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void Guardar(Genre genre)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                if (genre.GenreId==0)
+                {
+                    _reposiroty.Agregar(genre);
+                }
+                else
+                {
+                    _reposiroty.Editar(genre);
+                }
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.RollBack();
+                throw;
+            }
         }
     }
 }
