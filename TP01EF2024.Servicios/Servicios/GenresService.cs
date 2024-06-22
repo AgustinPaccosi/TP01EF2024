@@ -1,32 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
+using TP01EF2024.Datos.Repositorios;
 using TP01EF2024.Entidades;
+using TP01EF2024.Servicios.Interfaces;
 
-namespace TP01EF2024.Datos.Repositorios
+namespace TP01EF2024.Servicios.Servicios
 {
-    public class GenreRepository:IGenreRepository
+    public class GenresService : IGenresService
     {
-        public readonly TPDbContext _Context;
-        public GenreRepository(TPDbContext context)
-        {
-            _Context = context;
-        }
+        private readonly IGenresRepository _reposiroty;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public void Agregar(Genre genre)
+        public GenresService(IGenresRepository repository, IUnitOfWork unitOfWork)
         {
-            throw new NotImplementedException();
+            _reposiroty = repository;
+            _unitOfWork = unitOfWork;
         }
-
-        public void Editar(Genre genre)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Eliminar(Genre genre)
         {
             throw new NotImplementedException();
@@ -56,6 +49,10 @@ namespace TP01EF2024.Datos.Repositorios
         {
             throw new NotImplementedException();
         }
-        //public void Agregar (Genre)
+
+        public void Guardar(Genre genre)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

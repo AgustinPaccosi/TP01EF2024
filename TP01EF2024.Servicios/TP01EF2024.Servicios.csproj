@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TP01EF2024.Datos\TP01EF2024.Datos.csproj" />
+    <ProjectReference Include="..\TP01EF2024.Entidades\TP01EF2024.Entidades.csproj" />
+  </ItemGroup>
+
 </Project>
