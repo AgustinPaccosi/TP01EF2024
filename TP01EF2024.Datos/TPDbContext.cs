@@ -20,7 +20,7 @@ namespace TP01EF2024.Datos
 
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Shoe> Shoes { get; set; }
-        public DbSet<ShoeColour> ShoesColours { get; set; }
+        //public DbSet<ShoeColour> ShoesColours { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -104,6 +104,42 @@ namespace TP01EF2024.Datos
                     SportName = "Tenis"
                 },
             };
+            var shoes = new List<Shoe>()
+            {
+                new Shoe
+                {
+                    ShoeId = 1,
+                    BrandId = 1,
+                    SportId = 3,
+                    GenreId = 2,
+                    ColourId=1,
+                    Model = "Deportivas",
+                    Description = "Vans Deportivas",
+                    Price = 15
+                },
+                new Shoe
+                {
+                    ShoeId = 2,
+                    BrandId = 2,
+                    SportId = 1,
+                    GenreId = 1,
+                    ColourId=1,
+                    Model = "Botines",
+                    Description = "Botines Femeninos",
+                    Price = 20
+                },
+                new Shoe
+                {
+                    ShoeId = 3,
+                    BrandId = 3,
+                    SportId = 2,
+                    GenreId = 3,
+                    ColourId=1,
+                    Model = "1982",
+                    Description = "Importados",
+                    Price = 35
+                },
+            };
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.HasKey(b => b.BrandId);
@@ -138,18 +174,19 @@ namespace TP01EF2024.Datos
                 entity.HasOne(s => s.Brand).WithMany(b => b.Shoes).HasForeignKey(s => s.BrandId);
                 entity.HasOne(s => s.Genre).WithMany(g => g.Shoes).HasForeignKey(s => s.GenreId);
                 entity.HasOne(s => s.Sport).WithMany(s => s.Shoes).HasForeignKey(s => s.SportId);
+                entity.HasOne(s => s.Colour).WithMany(c => c.Shoes).HasForeignKey(s => s.ColourId);
                 entity.Property(e => e.Model).IsRequired().HasMaxLength(150);
                 entity.Property(e => e.Price).HasPrecision(10, 2);
                 entity.Property(e => e.Description).IsRequired();
-                //entity.HasData(shoe);
+                entity.HasData(shoes);
             });
 
-            modelBuilder.Entity<ShoeColour>(entity =>
-            {
-                entity.HasKey(sc => new { sc.ShoeId, sc.ColourId });
-                entity.HasOne(sc => sc.Shoe).WithMany(s => s.ShoesColours).HasForeignKey(sc => sc.ShoeId);
-                entity.HasOne(sc => sc.Colour).WithMany(c => c.ShoesColours).HasForeignKey(sc => sc.ColourId);
-            });
+            //modelBuilder.Entity<ShoeColour>(entity =>
+            //{
+            //    entity.HasKey(sc => new { sc.ShoeId, sc.ColourId });
+            //    entity.HasOne(sc => sc.Shoe).WithMany(s => s.ShoesColours).HasForeignKey(sc => sc.ShoeId);
+            //    entity.HasOne(sc => sc.Colour).WithMany(c => c.ShoesColours).HasForeignKey(sc => sc.ColourId);
+            //});
         }
 
 

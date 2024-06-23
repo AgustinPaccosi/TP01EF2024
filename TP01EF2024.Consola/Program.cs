@@ -32,16 +32,23 @@ namespace TP01EF2024.Consola
                 Console.WriteLine("7. Editar una Marca");
                 Console.WriteLine("8. Eliminar una Marca");
                 Console.WriteLine("----------");
-                Console.WriteLine("9. Ver todas las Deportes");
-                Console.WriteLine("10. Agregar una Deportes");
-                Console.WriteLine("11. Editar una Deportes");
-                Console.WriteLine("12. Eliminar una Deportes");
+                Console.WriteLine("9. Ver todos los Deportes");
+                Console.WriteLine("10. Agregar un Deporte");
+                Console.WriteLine("11. Editar un Deports");
+                Console.WriteLine("12. Eliminar un Deporte");
                 Console.WriteLine("----------");
-                Console.WriteLine("13. Ver todas las Colores");
-                Console.WriteLine("14. Agregar una Colores");
-                Console.WriteLine("15. Editar una Colores");
-                Console.WriteLine("16. Eliminar una Colores");
+                Console.WriteLine("13. Ver todos los Colores");
+                Console.WriteLine("14. Agregar un Color");
+                Console.WriteLine("15. Editar un Color");
+                Console.WriteLine("16. Eliminar un Color");
                 Console.WriteLine("----------");
+                Console.WriteLine("17. Ver todas las Zapatillas");
+                Console.WriteLine("18. Agregar una Zapatilla");
+                Console.WriteLine("19. Editar una Zapatilla");
+                Console.WriteLine("20. Eliminar una Zapatilla");
+                Console.WriteLine("----------");
+
+
                 Console.WriteLine("PRESIONE X PARA SALIR");
                 Console.Write("Por favor, seleccione una opción: ");
                 string? input = Console.ReadLine();
@@ -128,10 +135,67 @@ namespace TP01EF2024.Consola
                         EliminarColores ();
                         ConsoleExtensions.Enter();
                         break;
+                    case "17"://Zapatillas
+                        Console.Clear();
+                        MostrarZapatillas();
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "18":
+                        Console.Clear();
+                        AgregarZapatillas();
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "19":
+                        Console.Clear();
+                        EditarZapatillas();
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "20":
+                        Console.Clear();
+                        EliminarZapatillas();
+                        ConsoleExtensions.Enter();
+                        break;
 
 
                 }
             }
+        }
+
+        private static void EliminarZapatillas()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void EditarZapatillas()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void AgregarZapatillas()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MostrarZapatillas()
+        {
+            var servicio=servicioProvider?.GetService<IShoesService>();
+            var shoes=servicio?.GetShoes();
+
+            Console.WriteLine("Listado De Zapatillas");
+
+            var tabla=new ConsoleTable("ID","MARCA","MODELO","DESCRIPCION","DEPORTE","COLOR","GENERO","PRECIO");
+
+            if (shoes!=null)
+            {
+                foreach (var s in shoes)
+                {
+                    tabla.AddRow(s.ShoeId, s.Brand.BrandName, s.Model, s.Description, s.Sport.SportName, s.Colour.ColourName,
+                        s.Genre.GenreName, s.Price);
+                }
+            }
+            tabla.Options.EnableCount = false;
+            tabla.Write();
+            Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
         //COLORES
         private static void EliminarColores()
@@ -174,7 +238,6 @@ namespace TP01EF2024.Consola
             }
             Thread.Sleep(2000);
         }
-
         private static void EditarColores()
         {
             var servicio = servicioProvider?.GetService<IColoursService>();
@@ -199,7 +262,6 @@ namespace TP01EF2024.Consola
             }
             Thread.Sleep(3000);
         }
-
         private static void AgregarColores()
         {
             var servicio = servicioProvider?.GetService<IColoursService>();
@@ -233,7 +295,6 @@ namespace TP01EF2024.Consola
 
             Thread.Sleep(2000);
         }
-
         private static void MostrarColores()
         {
             var servicio = servicioProvider?.GetService<IColoursService>();
@@ -294,7 +355,6 @@ namespace TP01EF2024.Consola
             }
             Thread.Sleep(2000);
         }
-
         private static void EditarDeporte()
         {
             var servicio = servicioProvider?.GetService<ISportsService>();
@@ -319,7 +379,6 @@ namespace TP01EF2024.Consola
             }
             Thread.Sleep(3000);
         }
-
         private static void AgregarDeporte()
         {
             var servicio = servicioProvider?.GetService<ISportsService>();
@@ -353,7 +412,6 @@ namespace TP01EF2024.Consola
 
             Thread.Sleep(2000);
         }
-
         private static void MostrarDeportes()
         {
             {
@@ -416,7 +474,6 @@ namespace TP01EF2024.Consola
             }
             Thread.Sleep(2000);
         }
-
         private static void EditarMarca()
         {
             var servicio = servicioProvider?.GetService<IBrandsService>();
@@ -441,7 +498,6 @@ namespace TP01EF2024.Consola
             }
             Thread.Sleep(3000);
         }
-
         private static void AgregarMarca()
         {
             var servicio = servicioProvider?.GetService<IBrandsService>();
@@ -475,7 +531,6 @@ namespace TP01EF2024.Consola
 
             Thread.Sleep(2000);
         }
-
         private static void MostrarMarcas()
         {
             var servicio = servicioProvider?.GetService<IBrandsService>();
@@ -495,7 +550,6 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
-
         //GENEROS
         private static void EliminarGenero()
         {
@@ -613,5 +667,6 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
+        
     }
 }

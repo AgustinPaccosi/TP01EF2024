@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,22 +39,38 @@ namespace TP01EF2024.Datos.Repositorios
 
         public bool Existe(Shoe shoe)
         {
-            throw new NotImplementedException();
+            if (shoe.ShoeId==0)
+            {
+                return _context.Shoes.Any(s => s.BrandId == shoe.BrandId
+                                          && s.SportId == shoe.SportId
+                                          && s.GenreId == shoe.GenreId
+                                          && s.Model==shoe.Model);
+            }
+            return _context.Shoes.Any(s => s.BrandId == shoe.BrandId
+                                          && s.SportId == shoe.SportId
+                                          && s.GenreId == shoe.GenreId
+                                          && s.Model == shoe.Model
+                                          && s.ShoeId==shoe.ShoeId);
         }
 
         public int GetCantidad()
         {
-            throw new NotImplementedException();
+            return _context.Shoes.Count();
         }
 
         public Shoe? GetShoePorId(int id)
         {
-            throw new NotImplementedException();
+            return _context.Shoes.SingleOrDefault(s => s.ShoeId == id);
         }
 
         public List<Shoe> GetShoes()
         {
-            throw new NotImplementedException();
+            return _context.Shoes.
+                Include(s=>s.Brand).
+                Include(s=>s.Sport).
+                Include(s=>s.Genre).
+                Include(s=>s.Colour).
+                OrderBy(s => s.ShoeId).AsNoTracking().ToList();
         }
     }
 }

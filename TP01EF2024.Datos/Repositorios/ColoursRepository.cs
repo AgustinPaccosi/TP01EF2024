@@ -34,7 +34,7 @@ namespace TP01EF2024.Datos.Repositorios
         }
         public bool EstaRelacionado(Colour colour)
         {
-            return _context.ShoesColours.Any(s => s.ColourId == colour.ColourId);
+            return true; //_context.ShoesColours.Any(s => s.ColourId == colour.ColourId);
         }
 
         public bool Existe(Colour colour)

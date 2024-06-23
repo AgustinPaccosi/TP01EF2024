@@ -10,6 +10,6 @@ namespace TP01EF2024.Entidades
     {
         public int ColourId{ get; set; }
         public string ColourName { get; set; } = null!;
-        public ICollection<ShoeColour> ShoesColours { get; set;} = new List<ShoeColour>();
+        public ICollection<Shoe> Shoes { get; set;} = new List<Shoe>();
     }
 }
