@@ -1,25 +1,31 @@
-﻿using TP01EF2024.Datos.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TP01EF2024.Datos.Interfaces;
+using TP01EF2024.Datos.Repositorios;
 using TP01EF2024.Entidades;
 using TP01EF2024.Servicios.Interfaces;
 
 namespace TP01EF2024.Servicios.Servicios
 {
-    public class GenresService : IGenresService
+    public class SportsService : ISportsService
     {
-        private readonly IGenresRepository _reposiroty;
+        private readonly ISportsRepository _reposiroty;
         private readonly IUnitOfWork _unitOfWork;
 
-        public GenresService(IGenresRepository repository, IUnitOfWork unitOfWork)
+        public SportsService(ISportsRepository repository, IUnitOfWork unitOfWork)
         {
             _reposiroty = repository;
             _unitOfWork = unitOfWork;
         }
-        public void Eliminar(Genre genre)
+        public void Eliminar(Sport sport)
         {
             try
             {
                 _unitOfWork.BeginTransaction();
-                _reposiroty.Eliminar(genre);
+                _reposiroty.Eliminar(sport);
                 _unitOfWork.Commit();
             }
             catch (Exception)
@@ -29,11 +35,11 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public bool EstaRelacionado(Genre genre)
+        public bool EstaRelacionado(Sport sport)
         {
             try
             {
-                return _reposiroty.EstaRelacionado(genre);
+                return _reposiroty.EstaRelacionado(sport);
             }
             catch (Exception)
             {
@@ -42,11 +48,11 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public bool Existe(Genre genre)
+        public bool Existe(Sport sport)
         {
             try
             {
-                return _reposiroty.Existe(genre);
+                return _reposiroty.Existe(sport);
             }
             catch (Exception)
             {
@@ -60,11 +66,11 @@ namespace TP01EF2024.Servicios.Servicios
             return _reposiroty.GetCantidad();
         }
 
-        public Genre? GetGenrePorId(int id)
+        public Sport? GetSportPorId(int id)
         {
             try
             {
-                return _reposiroty.GetGenrePorId(id);
+                return _reposiroty.GetSportPorId(id);
             }
             catch (Exception)
             {
@@ -73,11 +79,11 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public List<Genre> GetGenres()
+        public List<Sport> GetSports()
         {
             try
             {
-                return _reposiroty.GetGenres();
+                return _reposiroty.GetSports();
             }
             catch (Exception)
             {
@@ -86,18 +92,18 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public void Guardar(Genre genre)
+        public void Guardar(Sport sport)
         {
             try
             {
                 _unitOfWork.BeginTransaction();
-                if (genre.GenreId==0)
+                if (sport.SportId==0)
                 {
-                    _reposiroty.Agregar(genre);
+                    _reposiroty.Agregar(sport);
                 }
                 else
                 {
-                    _reposiroty.Editar(genre);
+                    _reposiroty.Editar(sport);
                 }
                 _unitOfWork.Commit();
             }

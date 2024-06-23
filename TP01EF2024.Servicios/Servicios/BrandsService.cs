@@ -1,25 +1,31 @@
-﻿using TP01EF2024.Datos.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TP01EF2024.Datos.Interfaces;
+using TP01EF2024.Datos.Repositorios;
 using TP01EF2024.Entidades;
 using TP01EF2024.Servicios.Interfaces;
 
 namespace TP01EF2024.Servicios.Servicios
 {
-    public class GenresService : IGenresService
+    public class BrandsService : IBrandsService
     {
-        private readonly IGenresRepository _reposiroty;
+        private readonly IBrandsRepository _reposiroty;
         private readonly IUnitOfWork _unitOfWork;
 
-        public GenresService(IGenresRepository repository, IUnitOfWork unitOfWork)
+        public BrandsService(IBrandsRepository repository, IUnitOfWork unitOfWork)
         {
             _reposiroty = repository;
             _unitOfWork = unitOfWork;
         }
-        public void Eliminar(Genre genre)
+        public void Eliminar(Brand brand)
         {
             try
             {
                 _unitOfWork.BeginTransaction();
-                _reposiroty.Eliminar(genre);
+                _reposiroty.Eliminar(brand);
                 _unitOfWork.Commit();
             }
             catch (Exception)
@@ -29,11 +35,11 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public bool EstaRelacionado(Genre genre)
+        public bool EstaRelacionado(Brand brand)
         {
             try
             {
-                return _reposiroty.EstaRelacionado(genre);
+                return _reposiroty.EstaRelacionado(brand);
             }
             catch (Exception)
             {
@@ -42,11 +48,11 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public bool Existe(Genre genre)
+        public bool Existe(Brand brand)
         {
             try
             {
-                return _reposiroty.Existe(genre);
+                return _reposiroty.Existe(brand);
             }
             catch (Exception)
             {
@@ -60,11 +66,11 @@ namespace TP01EF2024.Servicios.Servicios
             return _reposiroty.GetCantidad();
         }
 
-        public Genre? GetGenrePorId(int id)
+        public Brand? GetBrandPorId(int id)
         {
             try
             {
-                return _reposiroty.GetGenrePorId(id);
+                return _reposiroty.GetBrandPorId(id);
             }
             catch (Exception)
             {
@@ -73,11 +79,11 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public List<Genre> GetGenres()
+        public List<Brand> GetBrands()
         {
             try
             {
-                return _reposiroty.GetGenres();
+                return _reposiroty.GetBrands();
             }
             catch (Exception)
             {
@@ -86,18 +92,18 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
-        public void Guardar(Genre genre)
+        public void Guardar(Brand brand)
         {
             try
             {
                 _unitOfWork.BeginTransaction();
-                if (genre.GenreId==0)
+                if (brand.BrandId==0)
                 {
-                    _reposiroty.Agregar(genre);
+                    _reposiroty.Agregar(brand);
                 }
                 else
                 {
-                    _reposiroty.Editar(genre);
+                    _reposiroty.Editar(brand);
                 }
                 _unitOfWork.Commit();
             }

@@ -30,6 +30,10 @@ namespace TP01EF2024.Consola
                 Console.WriteLine("3. Editar un Genero");
                 Console.WriteLine("4. Eliminar un Genero");
                 Console.WriteLine("----------");
+                Console.WriteLine("1. Ver todas las Marcas");
+                Console.WriteLine("2. Agregar una Marca");
+                Console.WriteLine("3. Editar una Marca");
+                Console.WriteLine("4. Eliminar una Marca");
 
 
 
