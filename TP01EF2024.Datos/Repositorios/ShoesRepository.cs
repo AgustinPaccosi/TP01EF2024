@@ -33,7 +33,7 @@ namespace TP01EF2024.Datos.Repositorios
 
         public bool EstaRelacionado(Shoe shoe)
         {
-            _context.shoesColours
+            return true; //_context.shoesColours;
         }
 
         public bool Existe(Shoe shoe)

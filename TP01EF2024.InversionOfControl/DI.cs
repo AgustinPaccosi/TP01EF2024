@@ -16,27 +16,27 @@ namespace TP01EF2024.InversionOfControl
 
             //REPOSITORIOS
 
-            //servicios.AddScoped<IBrandsRepository, BrandsRepository>();
-
-            //servicios.AddScoped<IColoursRepository, ColoursRepository>();
-
-            //servicios.AddScoped<ISportsRepository, SportsRepository>();
-
             servicios.AddScoped<IGenresRepository, GenresRepository>();
 
-            //servicios.AddScoped<IShoesRepository, ShoesRepository>();
+            servicios.AddScoped<IBrandsRepository, BrandsRepository>();
+
+            servicios.AddScoped<IColoursRepository, ColoursRepository>();
+
+            servicios.AddScoped<ISportsRepository, SportsRepository>();
+
+            servicios.AddScoped<IShoesRepository, ShoesRepository>();
 
             //SERVICIOS
 
-            //servicios.AddScoped<IBrandsService, BrandsService>();
-
-            //servicios.AddScoped<IColoursService, ColoursService>();
-
-            //servicios.AddScoped<ISportsService, SportsService>();
-
             servicios.AddScoped<IGenresService, GenresService>();
 
-            //servicios.AddScoped<IShoesService, ShoesService>();
+            servicios.AddScoped<IBrandsService, BrandsService>();
+
+            servicios.AddScoped<IColoursService, ColoursService>();
+
+            servicios.AddScoped<ISportsService, SportsService>();
+
+            servicios.AddScoped<IShoesService, ShoesService>();
 
             //UNIT
 

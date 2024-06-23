@@ -9,6 +9,10 @@ namespace TP01EF2024.Datos
         {
 
         }
+        public TPDbContext(DbContextOptions<TPDbContext> options) : base(options)
+        {
+
+        }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Colour> Colours { get; set; }
 
