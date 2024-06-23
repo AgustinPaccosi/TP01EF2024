@@ -32,10 +32,9 @@ namespace TP01EF2024.Datos.Repositorios
         {
             _context.Colours.Remove(colour);
         }
-        //TODO: HACER LA RELACION CON LA TABLA COLOR
         public bool EstaRelacionado(Colour colour)
         {
-            throw new NotImplementedException();
+            return _context.ShoesColours.Any(s => s.ColourId == colour.ColourId);
         }
 
         public bool Existe(Colour colour)

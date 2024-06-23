@@ -136,17 +136,102 @@ namespace TP01EF2024.Consola
         //COLORES
         private static void EliminarColores()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Elimar Color");
+            MostrarColores();
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID a Eliminar: ");
+            try
+            {
+                var servicio = servicioProvider?.GetService<IColoursService>();
+                var colour = servicio?.GetColourPorId(id);
+                if (colour != null)
+                {
+                    if (servicio != null)
+                    {
+                        if (!servicio.EstaRelacionado(colour))
+                        {
+                            servicio.Eliminar(colour);
+                            Console.WriteLine("Registro eliminado.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("El registro esta relacionado, No se puede eliminar");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("El servicio no esta disponible");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El registro que desea eliminar no existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            Thread.Sleep(2000);
         }
 
         private static void EditarColores()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<IColoursService>();
+            Console.WriteLine("Editar COLORES: ");
+            MostrarColores();
+
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del Color a editar");
+            var colour = servicio?.GetColourPorId(id);
+            if (colour != null)
+            {
+                Console.WriteLine($"Color a editar: {colour.ColourName}");
+                var newColour = ConsoleExtensions.ReadString("Ingrese el nuevo Color: ");
+                colour.ColourName = newColour;
+                servicio?.Guardar(colour);
+                Console.WriteLine("Se edito el COLOR correctamente.");
+
+
+            }
+            else
+            {
+                Console.WriteLine("No se encuentra el ID Ingresado.");
+            }
+            Thread.Sleep(3000);
         }
 
         private static void AgregarColores()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<IColoursService>();
+
+            Console.WriteLine("Agregar Un Color: ");
+            MostrarColores();
+
+            var colourName = ConsoleExtensions.ReadString("Nombre Del Color: ");
+
+            var colour = new Colour
+            {
+                ColourName = colourName
+            };
+
+            if (servicio != null)
+            {
+                if (!servicio.Existe(colour))
+                {
+                    servicio.Guardar(colour);
+                    Console.WriteLine("Color Agregado");
+                }
+                else
+                {
+                    Console.WriteLine("El Color que desea ingresar ya existe.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Servicio no disponible");
+            }
+
+            Thread.Sleep(2000);
         }
 
         private static void MostrarColores()
@@ -171,17 +256,102 @@ namespace TP01EF2024.Consola
         //DEPORTES
         private static void EliminarDeporte()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Elimar Deporte");
+            MostrarGeneros();
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID a Eliminar: ");
+            try
+            {
+                var servicio = servicioProvider?.GetService<ISportsService>();
+                var sport = servicio?.GetSportPorId(id);
+                if (sport != null)
+                {
+                    if (servicio != null)
+                    {
+                        if (!servicio.EstaRelacionado(sport))
+                        {
+                            servicio.Eliminar(sport);
+                            Console.WriteLine("Registro eliminado.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("El registro esta relacionado, No se puede eliminar");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("El servicio no esta disponible");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El registro que desea eliminar no existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            Thread.Sleep(2000);
         }
 
         private static void EditarDeporte()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<ISportsService>();
+            Console.WriteLine("Editar DEPORTE: ");
+            MostrarDeportes();
+
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del DEPORTE a editar");
+            var sport = servicio?.GetSportPorId(id);
+            if (sport != null)
+            {
+                Console.WriteLine($"Deporte a editar: {sport.SportName}");
+                var newSport = ConsoleExtensions.ReadString("Ingrese el nuevo Deporte: ");
+                sport.SportName = newSport;
+                servicio?.Guardar(sport);
+                Console.WriteLine("Se edito el DEPORTE correctamente.");
+
+
+            }
+            else
+            {
+                Console.WriteLine("No se encuentra el ID Ingresado.");
+            }
+            Thread.Sleep(3000);
         }
 
         private static void AgregarDeporte()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<ISportsService>();
+
+            Console.WriteLine("Agregar Un Deporte: ");
+            MostrarGeneros();
+
+            var sportName = ConsoleExtensions.ReadString("Nombre Del Deporte: ");
+
+            var sport = new Sport
+            {
+                SportName = sportName
+            };
+
+            if (servicio != null)
+            {
+                if (!servicio.Existe(sport))
+                {
+                    servicio.Guardar(sport);
+                    Console.WriteLine("Deporte Agregado");
+                }
+                else
+                {
+                    Console.WriteLine("El Deporte que desea ingresar ya existe.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Servicio no disponible");
+            }
+
+            Thread.Sleep(2000);
         }
 
         private static void MostrarDeportes()
@@ -190,9 +360,9 @@ namespace TP01EF2024.Consola
                 var servicio = servicioProvider?.GetService<ISportsService>();
                 var sports = servicio?.GetSports();
 
-                Console.WriteLine("LISTADO DE GENEROS ");
+                Console.WriteLine("LISTADO DE Deportes ");
 
-                var tabla = new ConsoleTable("ID", "GENERO");
+                var tabla = new ConsoleTable("ID", "Deporte");
                 if (sports != null)
                 {
                     foreach (var item in sports)
@@ -208,17 +378,102 @@ namespace TP01EF2024.Consola
         //MARCAS
         private static void EliminarMarca()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Elimar Marca");
+            MostrarGeneros();
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID a Eliminar: ");
+            try
+            {
+                var servicio = servicioProvider?.GetService<IBrandsService>();
+                var brand = servicio?.GetBrandPorId(id);
+                if (brand != null)
+                {
+                    if (servicio != null)
+                    {
+                        if (!servicio.EstaRelacionado(brand))
+                        {
+                            servicio.Eliminar(brand);
+                            Console.WriteLine("Registro eliminado.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("El registro esta relacionado, No se puede eliminar");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("El servicio no esta disponible");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El registro que desea eliminar no existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            Thread.Sleep(2000);
         }
 
         private static void EditarMarca()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<IBrandsService>();
+            Console.WriteLine("Editar Marca: ");
+            MostrarMarcas();
+
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID de la MARCA a editar");
+            var brand = servicio?.GetBrandPorId(id);
+            if (brand != null)
+            {
+                Console.WriteLine($"Marca a editar: {brand.BrandName}");
+                var newBrand = ConsoleExtensions.ReadString("Ingrese la nueva Marca: ");
+                brand.BrandName = newBrand;
+                servicio?.Guardar(brand);
+                Console.WriteLine("Se edito la MARCA correctamente.");
+
+
+            }
+            else
+            {
+                Console.WriteLine("No se encuentra el ID Ingresado.");
+            }
+            Thread.Sleep(3000);
         }
 
         private static void AgregarMarca()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<IBrandsService>();
+
+            Console.WriteLine("Agregar Una Marca: ");
+            MostrarGeneros();
+
+            var brandName = ConsoleExtensions.ReadString("Nombre De La Marca: ");
+
+            var brand = new Brand
+            {
+                BrandName = brandName
+            };
+
+            if (servicio != null)
+            {
+                if (!servicio.Existe(brand))
+                {
+                    servicio.Guardar(brand);
+                    Console.WriteLine("Marca Agregada");
+                }
+                else
+                {
+                    Console.WriteLine("La Marca que desea ingresar ya existe.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Servicio no disponible");
+            }
+
+            Thread.Sleep(2000);
         }
 
         private static void MostrarMarcas()
@@ -286,14 +541,15 @@ namespace TP01EF2024.Consola
         {
             var servicio = servicioProvider?.GetService<IGenresService>();
             Console.WriteLine("Editar Genero: ");
+            MostrarGeneros();
 
-            var id = ConsoleExtensions.ReadInt("Ingrese el ID del Genero a editar");
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del Genero a editar: ");
             var genre = servicio?.GetGenrePorId(id);
             if (genre != null)
             {
                 Console.WriteLine($"Genero a editar: {genre.GenreName}");
-                var nuevoGenre = ConsoleExtensions.ReadString("Ingrese el nuevo genero: ");
-                genre.GenreName = nuevoGenre;
+                var newGenre = ConsoleExtensions.ReadString("Ingrese el nuevo genero: ");
+                genre.GenreName = newGenre;
                 servicio?.Guardar(genre);
                 Console.WriteLine("Se edito el genero correctamente.");
 
