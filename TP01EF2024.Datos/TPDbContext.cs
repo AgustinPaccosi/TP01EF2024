@@ -16,7 +16,7 @@ namespace TP01EF2024.Datos
 
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Shoe> Shoes { get; set; }
-        public DbSet<ShoeColour> shoesColours { get; set; }
+        public DbSet<ShoeColour> ShoesColours { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

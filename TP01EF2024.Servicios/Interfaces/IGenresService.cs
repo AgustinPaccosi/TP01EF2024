@@ -11,12 +11,12 @@ namespace TP01EF2024.Servicios.Interfaces
     {
         void Guardar(Genre genre);
         void Eliminar(Genre genre);
-        bool EstaRelacionado(Genre genre);
         bool Existe(Genre genre);
+        bool EstaRelacionado(Genre genre);
         Genre? GetGenrePorId(int id);
         List<Genre> GetGenres();
         int GetCantidad();
 
     }
 }
-}
+

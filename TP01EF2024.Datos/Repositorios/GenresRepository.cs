@@ -35,7 +35,7 @@ namespace TP01EF2024.Datos.Repositorios
 
         public bool EstaRelacionado(Genre genre) 
         {
-            return _context.Genres.Any(s=>s.GenreId==genre.GenreId);
+            return _context.Shoes.Any(s=>s.GenreId==genre.GenreId);
         }
 
         public bool Existe(Genre genre)

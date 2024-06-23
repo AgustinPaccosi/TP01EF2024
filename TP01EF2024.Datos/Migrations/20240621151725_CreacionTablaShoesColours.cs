@@ -35,7 +35,7 @@ namespace TP01EF2024.Datos.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_shoesColours_ColourId",
+                name: "IX_ShoesColours_ColourId",
                 table: "shoesColours",
                 column: "ColourId");
         }
