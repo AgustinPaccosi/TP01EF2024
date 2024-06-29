@@ -12,20 +12,52 @@ namespace TP01EF2024.Servicios.Servicios
 {
     public class ShoesService : IShoesService
     {
-        private readonly IShoesRepository _reposiroty;
+        private readonly IShoesRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ShoesService(IShoesRepository repository, IUnitOfWork unitOfWork)
         {
-            _reposiroty = repository;
+            _repository = repository;
             _unitOfWork = unitOfWork;
         }
+
+        public void AsignarTalle(Shoe shoe, Size size, int stock)
+        {
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                var existeRelacion = _repository.ExisteShoeSize(shoe, size);
+                if (existeRelacion!=null)
+                {
+                    existeRelacion.QuantityInStock += stock;
+                    //_reposiroty.ActualizarShoeSize(existeRelacion);
+                }
+                else
+                {
+                    ShoeSize relacionNueva = new ShoeSize()
+                    {
+                        Shoe = shoe,
+                        Size = size,
+                        QuantityInStock = stock
+                    };
+                    _repository.AgregarShoeSize(relacionNueva);
+                }
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.RollBack();
+
+                throw;
+            }
+        }
+
         public void Eliminar(Shoe shoe)
         {
             try
             {
                 _unitOfWork.BeginTransaction();
-                _reposiroty.Eliminar(shoe);
+                _repository.Eliminar(shoe);
                 _unitOfWork.Commit();
             }
             catch (Exception)
@@ -39,7 +71,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.EstaRelacionado(shoe);
+                return _repository.EstaRelacionado(shoe);
             }
             catch (Exception)
             {
@@ -52,7 +84,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.Existe(shoe);
+                return _repository.Existe(shoe);
             }
             catch (Exception)
             {
@@ -63,14 +95,14 @@ namespace TP01EF2024.Servicios.Servicios
 
         public int GetCantidad()
         {
-            return _reposiroty.GetCantidad();
+            return _repository.GetCantidad();
         }
 
         public Shoe? GetShoePorId(int id)
         {
             try
             {
-                return _reposiroty.GetShoePorId(id);
+                return _repository.GetShoePorId(id);
             }
             catch (Exception)
             {
@@ -83,12 +115,39 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.GetShoes();
+                return _repository.GetShoes();
             }
             catch (Exception)
             {
 
                 throw;
+            }
+        }
+
+        public List<Size> GetSizesForShoe(int shoeId)
+        {
+            try
+            {
+                return _repository.GetSizesForShoe(shoeId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public int GetStockShoeSize(Shoe shoe, Size size)
+        {
+            var shoeSize = _repository.ExisteShoeSize(shoe, size);
+
+            if (shoeSize != null)
+            {
+                return shoeSize.QuantityInStock;
+            }
+            else
+            {
+                throw new ArgumentException();
             }
         }
 
@@ -99,11 +158,11 @@ namespace TP01EF2024.Servicios.Servicios
                 _unitOfWork.BeginTransaction();
                 if (shoe.ShoeId==0)
                 {
-                    _reposiroty.Agregar(shoe);
+                    _repository.Agregar(shoe);
                 }
                 else
                 {
-                    _reposiroty.Editar(shoe);
+                    _repository.Editar(shoe);
                 }
                 _unitOfWork.Commit();
             }

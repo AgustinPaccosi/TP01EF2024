@@ -17,9 +17,19 @@ namespace TP01EF2024.Datos.Repositorios
             _context = context;
         }
 
+        public void ActualizarShoeSize(ShoeSize shoeSize)
+        {
+            _context.Set<ShoeSize>().Update(shoeSize);
+        }
+
         public void Agregar(Shoe shoe)
         {
             _context.Shoes.Add(shoe);
+        }
+
+        public void AgregarShoeSize(ShoeSize relacion)
+        {
+            _context.Set<ShoeSize>().Add(relacion);
         }
 
         public void Editar(Shoe shoe)
@@ -34,7 +44,7 @@ namespace TP01EF2024.Datos.Repositorios
 
         public bool EstaRelacionado(Shoe shoe)
         {
-            return true; //_context.shoesColours;
+            return _context.ShoesSizes.Any(ss => ss.ShoeId == shoe.ShoeId);
         }
 
         public bool Existe(Shoe shoe)
@@ -51,6 +61,11 @@ namespace TP01EF2024.Datos.Repositorios
                                           && s.GenreId == shoe.GenreId
                                           && s.Model == shoe.Model
                                           && s.ShoeId==shoe.ShoeId);
+        }
+
+        public ShoeSize? ExisteShoeSize(Shoe shoe, Size size)
+        {
+            return _context.ShoesSizes.FirstOrDefault(ss => ss.ShoeId == shoe.ShoeId && ss.SizeId == size.SizeId);
         }
 
         public int GetCantidad()
@@ -71,6 +86,15 @@ namespace TP01EF2024.Datos.Repositorios
                 Include(s=>s.Genre).
                 Include(s=>s.Colour).
                 OrderBy(s => s.ShoeId).AsNoTracking().ToList();
+        }
+
+        public List<Size> GetSizesForShoe(int shoeId)
+        {
+            return _context.ShoesSizes
+                .Include(ss => ss.Size)
+                .Where(ss => ss.ShoeId == shoeId)
+                .Select(ss => ss.Size)
+                .ToList();
         }
     }
 }

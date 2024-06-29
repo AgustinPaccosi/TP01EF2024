@@ -17,6 +17,13 @@ namespace TP01EF2024.Datos.Interfaces
         Shoe? GetShoePorId(int id);
         List<Shoe> GetShoes();
         int GetCantidad();
+        void AgregarShoeSize(ShoeSize nuevaRelacion);
+
+        ShoeSize? ExisteShoeSize(Shoe shoe, Size size);
+        void ActualizarShoeSize(ShoeSize shoeSize);
+
+        List<Size> GetSizesForShoe(int shoeId);
+
 
     }
 }

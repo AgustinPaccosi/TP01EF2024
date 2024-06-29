@@ -47,6 +47,13 @@ namespace TP01EF2024.Consola
                 Console.WriteLine("19. Editar una Zapatilla");
                 Console.WriteLine("20. Eliminar una Zapatilla");
                 Console.WriteLine("----------");
+                Console.WriteLine("21. Ver Talles");
+                Console.WriteLine("22. Agregar Talle");
+                Console.WriteLine("23. Editar Talle");
+                Console.WriteLine("24. Eliminar Talle");
+                Console.WriteLine("----------");
+
+
 
 
                 Console.WriteLine("PRESIONE X PARA SALIR");
@@ -155,11 +162,82 @@ namespace TP01EF2024.Consola
                         EliminarZapatillas();
                         ConsoleExtensions.Enter();
                         break;
+                    case "21":
+                        Console.Clear();
+                        MostrarTalles(); ;
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "22":
+                        Console.Clear();
+                        AgregarTalle(); ;
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "23":
+                        Console.Clear();
+                        EditarTalle(); ;
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "24":
+                        Console.Clear();
+                        EliminarTalle(); ;
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "25":
+                        Console.Clear();
+                        MostrarMarcasPaginadas();
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "26":
+                        Console.Clear();
+                        MostrarDeportesPaginados(); ;
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "27":
+                        Console.Clear();
+                        MostrarGenerosPaginados(); ;
+                        ConsoleExtensions.Enter();
+                        break;
 
 
                 }
             }
         }
+
+        private static void MostrarGenerosPaginados()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MostrarDeportesPaginados()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MostrarMarcasPaginadas()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void EliminarTalle()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void EditarTalle()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void AgregarTalle()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void MostrarTalles()
+        {
+            throw new NotImplementedException();
+        }
+
         //Zapatillas
         private static void EliminarZapatillas()
         {

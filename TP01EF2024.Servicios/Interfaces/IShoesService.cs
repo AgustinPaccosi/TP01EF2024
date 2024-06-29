@@ -17,6 +17,10 @@ namespace TP01EF2024.Servicios.Interfaces
         List<Shoe> GetShoes();
         int GetCantidad();
 
+        List<Size> GetSizesForShoe(int shoeId);
+        void AsignarTalle(Shoe shoe, Size size, int stock);
+        int GetStockShoeSize(Shoe shoe, Size size);
+
     }
 }
 
