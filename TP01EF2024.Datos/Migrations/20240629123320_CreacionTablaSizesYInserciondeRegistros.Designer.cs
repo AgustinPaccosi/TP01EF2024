@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TP01EF2024.Datos;
 
@@ -10,9 +11,11 @@ using TP01EF2024.Datos;
 namespace TP01EF2024.Datos.Migrations
 {
     [DbContext(typeof(TPDbContext))]
-    partial class TPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240629123320_CreacionTablaSizesYInserciondeRegistros")]
+    partial class CreacionTablaSizesYInserciondeRegistros
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,11 +31,6 @@ namespace TP01EF2024.Datos.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BrandId"));
-
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.Property<string>("BrandName")
                         .IsRequired()
@@ -50,19 +48,16 @@ namespace TP01EF2024.Datos.Migrations
                         new
                         {
                             BrandId = 1,
-                            Active = true,
                             BrandName = "Puma"
                         },
                         new
                         {
                             BrandId = 2,
-                            Active = true,
                             BrandName = "Boris"
                         },
                         new
                         {
                             BrandId = 3,
-                            Active = true,
                             BrandName = "Nike"
                         });
                 });
@@ -74,11 +69,6 @@ namespace TP01EF2024.Datos.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ColourId"));
-
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.Property<string>("ColourName")
                         .IsRequired()
@@ -96,19 +86,16 @@ namespace TP01EF2024.Datos.Migrations
                         new
                         {
                             ColourId = 1,
-                            Active = true,
                             ColourName = "Negro"
                         },
                         new
                         {
                             ColourId = 2,
-                            Active = true,
                             ColourName = "Marron"
                         },
                         new
                         {
                             ColourId = 3,
-                            Active = true,
                             ColourName = "Blanco"
                         });
                 });
@@ -159,11 +146,6 @@ namespace TP01EF2024.Datos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShoeId"));
 
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
@@ -205,7 +187,6 @@ namespace TP01EF2024.Datos.Migrations
                         new
                         {
                             ShoeId = 1,
-                            Active = true,
                             BrandId = 1,
                             ColourId = 1,
                             Description = "Vans Deportivas",
@@ -217,7 +198,6 @@ namespace TP01EF2024.Datos.Migrations
                         new
                         {
                             ShoeId = 2,
-                            Active = true,
                             BrandId = 2,
                             ColourId = 1,
                             Description = "Botines Femeninos",
@@ -229,7 +209,6 @@ namespace TP01EF2024.Datos.Migrations
                         new
                         {
                             ShoeId = 3,
-                            Active = true,
                             BrandId = 3,
                             ColourId = 1,
                             Description = "Importados",
@@ -259,12 +238,11 @@ namespace TP01EF2024.Datos.Migrations
 
                     b.HasKey("ShoeSizeId");
 
+                    b.HasIndex("ShoeId");
+
                     b.HasIndex("SizeId");
 
-                    b.HasIndex("ShoeId", "SizeId")
-                        .IsUnique();
-
-                    b.ToTable("ShoesSizes", (string)null);
+                    b.ToTable("ShoeSize");
                 });
 
             modelBuilder.Entity("TP01EF2024.Entidades.Size", b =>
@@ -522,11 +500,6 @@ namespace TP01EF2024.Datos.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SportId"));
 
-                    b.Property<bool>("Active")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
                     b.Property<string>("SportName")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -543,19 +516,16 @@ namespace TP01EF2024.Datos.Migrations
                         new
                         {
                             SportId = 1,
-                            Active = true,
                             SportName = "Futbol"
                         },
                         new
                         {
                             SportId = 2,
-                            Active = true,
                             SportName = "Atletismo"
                         },
                         new
                         {
                             SportId = 3,
-                            Active = true,
                             SportName = "Tenis"
                         });
                 });
@@ -598,7 +568,7 @@ namespace TP01EF2024.Datos.Migrations
             modelBuilder.Entity("TP01EF2024.Entidades.ShoeSize", b =>
                 {
                     b.HasOne("TP01EF2024.Entidades.Shoe", "Shoe")
-                        .WithMany("ShoesSizes")
+                        .WithMany()
                         .HasForeignKey("ShoeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -627,11 +597,6 @@ namespace TP01EF2024.Datos.Migrations
             modelBuilder.Entity("TP01EF2024.Entidades.Genre", b =>
                 {
                     b.Navigation("Shoes");
-                });
-
-            modelBuilder.Entity("TP01EF2024.Entidades.Shoe", b =>
-                {
-                    b.Navigation("ShoesSizes");
                 });
 
             modelBuilder.Entity("TP01EF2024.Entidades.Size", b =>

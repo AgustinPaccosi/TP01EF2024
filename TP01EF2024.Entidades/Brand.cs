@@ -4,6 +4,8 @@
     {
         public int BrandId { get; set; }
         public string BrandName { get; set; } = null!;
+        public bool Active { get; set; }
+
         public ICollection<Shoe> Shoes { get; set; }= new List<Shoe>();
     }
 }

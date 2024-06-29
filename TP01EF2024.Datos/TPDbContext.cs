@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using System.Windows.Markup;
 using TP01EF2024.Entidades;
 namespace TP01EF2024.Datos
 {
@@ -20,7 +21,8 @@ namespace TP01EF2024.Datos
 
         public DbSet<Sport> Sports { get; set; }
         public DbSet<Shoe> Shoes { get; set; }
-        //public DbSet<ShoeColour> ShoesColours { get; set; }
+        public DbSet<ShoeSize> ShoesSizes { get; set; }
+        public DbSet<Size> Sizes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,17 +39,20 @@ namespace TP01EF2024.Datos
                 new Brand
                 {
                     BrandId=1,
-                    BrandName="Puma"
+                    BrandName="Puma",
+                    Active = true
                 },
                 new Brand
                 {
                     BrandId=2,
-                    BrandName="Boris"
+                    BrandName="Boris",
+                    Active = true
                 },
                 new Brand
                 {
                     BrandId =3,
-                    BrandName="Nike"
+                    BrandName="Nike",
+                    Active = true
                 },
             };
             var colours = new List<Colour>()
@@ -55,17 +60,20 @@ namespace TP01EF2024.Datos
                 new Colour
                 {
                     ColourId=1,
-                    ColourName="Negro"
+                    ColourName="Negro",
+                    Active = true
                 },
                 new Colour
                 {
                     ColourId=2,
-                    ColourName="Marron"
+                    ColourName="Marron",
+                    Active = true
                 },
                 new Colour
                 {
                     ColourId=3,
-                    ColourName="Blanco"
+                    ColourName="Blanco",
+                    Active = true
                 },
             };
             var genres = new List<Genre>()
@@ -91,17 +99,20 @@ namespace TP01EF2024.Datos
                 new Sport
                 {
                     SportId = 1,
-                    SportName = "Futbol"
+                    SportName = "Futbol",
+                    Active = true
                 },
                 new Sport
                 {
                     SportId = 2,
-                    SportName = "Atletismo"
+                    SportName = "Atletismo",
+                    Active = true
                 },
                 new Sport
                 {
                     SportId = 3,
-                    SportName = "Tenis"
+                    SportName = "Tenis",
+                    Active = true
                 },
             };
             var shoes = new List<Shoe>()
@@ -115,7 +126,8 @@ namespace TP01EF2024.Datos
                     ColourId=1,
                     Model = "Deportivas",
                     Description = "Vans Deportivas",
-                    Price = 15
+                    Price = 15,
+                    Active = true
                 },
                 new Shoe
                 {
@@ -126,7 +138,8 @@ namespace TP01EF2024.Datos
                     ColourId=1,
                     Model = "Botines",
                     Description = "Botines Femeninos",
-                    Price = 20
+                    Price = 20,
+                    Active = true
                 },
                 new Shoe
                 {
@@ -137,14 +150,31 @@ namespace TP01EF2024.Datos
                     ColourId=1,
                     Model = "1982",
                     Description = "Importados",
-                    Price = 35
+                    Price = 35,
+                    Active = true
+
                 },
+
             };
+            var sizes = new List<Size>();
+            
+            int sizeId = 1;
+
+            for (decimal i = 28; i <= 50; i += 0.5m)
+            {
+                sizes.Add(new Size
+                {
+                    SizeId = sizeId++,
+                    SizeNumber = i
+                });
+            }
+        
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.HasKey(b => b.BrandId);
                 entity.HasIndex(b => b.BrandName).IsUnique();
                 entity.Property(b => b.BrandName).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Active).IsRequired().HasDefaultValue(true);
                 entity.HasData(brands);
             });
             modelBuilder.Entity<Colour>(entity =>
@@ -152,6 +182,7 @@ namespace TP01EF2024.Datos
                 entity.HasKey(c=>c.ColourId);
                 entity.HasIndex(c => c.ColourName).IsUnique();
                 entity.Property(c=>c.ColourName).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Active).IsRequired().HasDefaultValue(true);
                 entity.HasData(colours);
             });
             modelBuilder.Entity<Genre>(entity =>
@@ -166,6 +197,7 @@ namespace TP01EF2024.Datos
                 entity.HasKey(s => s.SportId);
                 entity.HasIndex(s => s.SportName).IsUnique();
                 entity.Property(s => s.SportName).IsRequired().HasMaxLength(20);
+                entity.Property(e => e.Active).IsRequired().HasDefaultValue(true);
                 entity.HasData(sports);
             });
             modelBuilder.Entity<Shoe>(entity =>
@@ -175,20 +207,30 @@ namespace TP01EF2024.Datos
                 entity.HasOne(s => s.Genre).WithMany(g => g.Shoes).HasForeignKey(s => s.GenreId);
                 entity.HasOne(s => s.Sport).WithMany(s => s.Shoes).HasForeignKey(s => s.SportId);
                 entity.HasOne(s => s.Colour).WithMany(c => c.Shoes).HasForeignKey(s => s.ColourId);
+                entity.Property(e => e.Active).IsRequired().HasDefaultValue(true);
                 entity.Property(e => e.Model).IsRequired().HasMaxLength(150);
                 entity.Property(e => e.Price).HasPrecision(10, 2);
                 entity.Property(e => e.Description).IsRequired();
                 entity.HasData(shoes);
             });
+            modelBuilder.Entity<Size>(entity =>
+            {
+                entity.HasKey(s => s.SizeId);
+                entity.HasIndex(s => s.SizeNumber).IsUnique();
+                entity.Property(s => s.SizeNumber).HasColumnType("decimal (3, 1)").HasPrecision(3, 1).IsRequired();
+                entity.HasData(sizes);
+                entity.ToTable("Sizes");
+            });
+            modelBuilder.Entity<ShoeSize>(entity =>
+            {
+                entity.HasKey(ss => ss.ShoeSizeId);
+                entity.HasIndex(ss => new { ss.ShoeId, ss.SizeId }).IsUnique();
+                entity.HasOne(ss => ss.Shoe).WithMany(s => s.ShoesSizes).HasForeignKey(sc => sc.ShoeId);
+                entity.HasOne(ss => ss.Size).WithMany(s => s.ShoesSizes).HasForeignKey(sc => sc.SizeId);
+                entity.Property(ss => ss.QuantityInStock).IsRequired();
+                entity.ToTable("ShoesSizes");
 
-            //modelBuilder.Entity<ShoeColour>(entity =>
-            //{
-            //    entity.HasKey(sc => new { sc.ShoeId, sc.ColourId });
-            //    entity.HasOne(sc => sc.Shoe).WithMany(s => s.ShoesColours).HasForeignKey(sc => sc.ShoeId);
-            //    entity.HasOne(sc => sc.Colour).WithMany(c => c.ShoesColours).HasForeignKey(sc => sc.ColourId);
-            //});
+            });
         }
-
-
     }
 }
