@@ -160,20 +160,137 @@ namespace TP01EF2024.Consola
                 }
             }
         }
-
+        //Zapatillas
         private static void EliminarZapatillas()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Eliminar Una zapatilla");
+            MostrarZapatillas();
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID de la Zapatilla que desea eliminar: ");
+            try
+            {
+                var servicio = servicioProvider?.GetService<IShoesService>();
+                var shoe = servicio?.GetShoePorId(id);
+
+                if (shoe != null)
+                {
+                    if (servicio != null)
+                    {
+                        if (!servicio.EstaRelacionado(shoe))
+                        {
+                            servicio.Eliminar(shoe);
+                            Console.WriteLine("Registro eliminado satisfactoriamente.");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("El registro no puede ser eliminado porque se encuentra relacionado.");
+                        }
+
+                    }
+                    else
+                    {
+                        throw new Exception("Servicio no disponible.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El registro que desea eliminar no existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); ;
+            }
+
+            Thread.Sleep(5000);
         }
 
         private static void EditarZapatillas()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<IShoesService>();
+
+            Console.WriteLine("Editar una Zapatilla: ");
+            MostrarZapatillas();
+            var id = ConsoleExtensions.ReadInt("ID del zapatilla a editar: ");
+            var shoe = servicio?.GetShoePorId(id);
+
+            if (shoe != null)
+            {
+                Console.WriteLine($"Zapatilla a editar: ID: {shoe.ShoeId}, Marca: {shoe.Brand.BrandName}," +
+                    $"Modelo:{shoe.Model}, Descripcion: {shoe.Description} ");
+                var model = ConsoleExtensions.ReadString("Ingrese el modelo de la zapatilla: ");
+                var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la zapatilla: ");
+                var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio de la zapatilla: ");
+                MostrarMarcas();
+                var marca = ConsoleExtensions.ReadInt("Ingrese el ID de la marca de la zapatilla: ");
+                MostrarDeportes();
+                var deporte = ConsoleExtensions.ReadInt("Ingrese el ID del deporte de la zapatilla: ");
+                MostrarGeneros();
+                var genero = ConsoleExtensions.ReadInt("Ingrese el ID del genero de la zapatilla: ");
+
+                shoe.Model = model;
+                shoe.Description = description;
+                shoe.Price = precio;
+                shoe.BrandId = marca;
+                shoe.SportId = deporte;
+                shoe.GenreId = genero;
+
+                servicio?.Guardar(shoe);
+                Console.WriteLine("Zapatilla editada satisfactoriamente.");
+            }
+            else
+            {
+                Console.WriteLine("La Zapatilla que desea editar no existe.");
+            }
+            Thread.Sleep(2000);
+
+
         }
 
         private static void AgregarZapatillas()
         {
-            throw new NotImplementedException();
+            var servicio = servicioProvider?.GetService<IShoesService>();
+
+            Console.WriteLine("Agregar Zapatilla");
+
+            var model = ConsoleExtensions.ReadString("Ingrese el modelo de la zapatilla: ");
+            var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la zapatilla: ");
+            var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio del zapatilla: ");
+            MostrarMarcas();
+            var marca = ConsoleExtensions.ReadInt("Ingrese el ID de la marca de la zapatilla: ");
+            MostrarDeportes();
+            var deporte = ConsoleExtensions.ReadInt("Ingrese el ID del deporte de la zapatilla: ");
+            MostrarGeneros();
+            var genero = ConsoleExtensions.ReadInt("Ingrese el ID del genero de la zapatilla: ");
+
+            var shoe = new Shoe
+            {
+                BrandId = marca,
+                SportId = deporte,
+                GenreId = genero,
+                Model = model,
+                Description = description,
+                Price = precio
+            };
+
+            if (servicio != null)
+            {
+                if (!servicio.Existe(shoe))
+                {
+                    servicio.Guardar(shoe);
+                    Console.WriteLine("Zapatilla agregado satisfactoriamente.");
+                }
+                else
+                {
+                    Console.WriteLine("El zapatilla que desea ingresar ya existe.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Servicio no disponible");
+            }
+
+            Thread.Sleep(2000);
         }
 
         private static void MostrarZapatillas()
@@ -197,7 +314,7 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
-        //COLORES
+        //Colores
         private static void EliminarColores()
         {
             Console.WriteLine("Elimar Color");
@@ -241,7 +358,7 @@ namespace TP01EF2024.Consola
         private static void EditarColores()
         {
             var servicio = servicioProvider?.GetService<IColoursService>();
-            Console.WriteLine("Editar COLORES: ");
+            Console.WriteLine("Editar un Color: ");
             MostrarColores();
 
             var id = ConsoleExtensions.ReadInt("Ingrese el ID del Color a editar");
@@ -300,7 +417,7 @@ namespace TP01EF2024.Consola
             var servicio = servicioProvider?.GetService<IColoursService>();
             var colours = servicio?.GetColours();
 
-            Console.WriteLine("LISTADO DE COLORES ");
+            Console.WriteLine("LListado de Colores ");
 
             var tabla = new ConsoleTable("ID", "COLOR");
             if (colours != null)
@@ -314,7 +431,7 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
-        //DEPORTES
+        //Deportes
         private static void EliminarDeporte()
         {
             Console.WriteLine("Elimar Deporte");
@@ -358,7 +475,7 @@ namespace TP01EF2024.Consola
         private static void EditarDeporte()
         {
             var servicio = servicioProvider?.GetService<ISportsService>();
-            Console.WriteLine("Editar DEPORTE: ");
+            Console.WriteLine("Editar Deporte: ");
             MostrarDeportes();
 
             var id = ConsoleExtensions.ReadInt("Ingrese el ID del DEPORTE a editar");
@@ -418,7 +535,7 @@ namespace TP01EF2024.Consola
                 var servicio = servicioProvider?.GetService<ISportsService>();
                 var sports = servicio?.GetSports();
 
-                Console.WriteLine("LISTADO DE Deportes ");
+                Console.WriteLine("Listado DE Deportes ");
 
                 var tabla = new ConsoleTable("ID", "Deporte");
                 if (sports != null)
@@ -433,7 +550,7 @@ namespace TP01EF2024.Consola
                 Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
             }
         }
-        //MARCAS
+        //Marcas
         private static void EliminarMarca()
         {
             Console.WriteLine("Elimar Marca");
@@ -536,7 +653,7 @@ namespace TP01EF2024.Consola
             var servicio = servicioProvider?.GetService<IBrandsService>();
             var brand = servicio?.GetBrands();
 
-            Console.WriteLine("LISTADO DE MARCAS ");
+            Console.WriteLine("Listado de Marcas ");
 
             var tabla = new ConsoleTable("ID", "MARCA");
             if (brand != null)
@@ -550,7 +667,7 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
-        //GENEROS
+        //Generos
         private static void EliminarGenero()
         {
             Console.WriteLine("Elimar Genero");
@@ -653,7 +770,7 @@ namespace TP01EF2024.Consola
             var servicio = servicioProvider?.GetService<IGenresService>();
             var genres = servicio?.GetGenres();
 
-            Console.WriteLine("LISTADO DE GENEROS ");
+            Console.WriteLine("Listado de Generos ");
 
             var tabla = new ConsoleTable("ID", "GENERO");
             if (genres != null)
