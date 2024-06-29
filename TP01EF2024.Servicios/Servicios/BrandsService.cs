@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Datos.Repositorios;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 using TP01EF2024.Servicios.Interfaces;
 
 namespace TP01EF2024.Servicios.Servicios
 {
     public class BrandsService : IBrandsService
     {
-        private readonly IBrandsRepository _reposiroty;
+        private readonly IBrandsRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
         public BrandsService(IBrandsRepository repository, IUnitOfWork unitOfWork)
         {
-            _reposiroty = repository;
+            _repository = repository;
             _unitOfWork = unitOfWork;
         }
         public void Eliminar(Brand brand)
@@ -25,7 +26,7 @@ namespace TP01EF2024.Servicios.Servicios
             try
             {
                 _unitOfWork.BeginTransaction();
-                _reposiroty.Eliminar(brand);
+                _repository.Eliminar(brand);
                 _unitOfWork.Commit();
             }
             catch (Exception)
@@ -39,7 +40,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.EstaRelacionado(brand);
+                return _repository.EstaRelacionado(brand);
             }
             catch (Exception)
             {
@@ -52,7 +53,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.Existe(brand);
+                return _repository.Existe(brand);
             }
             catch (Exception)
             {
@@ -63,14 +64,14 @@ namespace TP01EF2024.Servicios.Servicios
 
         public int GetCantidad()
         {
-            return _reposiroty.GetCantidad();
+            return _repository.GetCantidad();
         }
 
         public Brand? GetBrandPorId(int id)
         {
             try
             {
-                return _reposiroty.GetBrandPorId(id);
+                return _repository.GetBrandPorId(id);
             }
             catch (Exception)
             {
@@ -83,7 +84,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.GetBrands();
+                return _repository.GetBrands();
             }
             catch (Exception)
             {
@@ -99,11 +100,11 @@ namespace TP01EF2024.Servicios.Servicios
                 _unitOfWork.BeginTransaction();
                 if (brand.BrandId==0)
                 {
-                    _reposiroty.Agregar(brand);
+                    _repository.Agregar(brand);
                 }
                 else
                 {
-                    _reposiroty.Editar(brand);
+                    _repository.Editar(brand);
                 }
                 _unitOfWork.Commit();
             }
@@ -112,6 +113,16 @@ namespace TP01EF2024.Servicios.Servicios
                 _unitOfWork.RollBack();
                 throw;
             }
+        }
+
+        public List<Shoe>? GetShoes(Brand? brand)
+        {
+            return _repository.GetShoes(brand);
+        }
+
+        public List<Brand> GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
+        {
+            return _repository.GetListaPaginadaOrdenada(page, pageSize, orden);
         }
     }
 }

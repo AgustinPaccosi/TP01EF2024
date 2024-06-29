@@ -26,7 +26,23 @@ namespace TP01EF2024.Shared
             }
             return stringVar;
         }
-        public static int ReadInt(string message)
+        //public static int ReadInt(string message)
+        //{
+        //    while (true)
+        //    {
+        //        Console.Write(message);
+        //        string? input = Console.ReadLine();
+        //        if (int.TryParse(input, out int result))
+        //        {
+        //            return result;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Por favor, ingrese un número entero válido.");
+        //        }
+        //    }
+        //}
+        public static int ReadInt(string message, int min, int max)
         {
             while (true)
             {
@@ -34,7 +50,15 @@ namespace TP01EF2024.Shared
                 string? input = Console.ReadLine();
                 if (int.TryParse(input, out int result))
                 {
-                    return result;
+                    if (result >= min && result <= max)
+                    {
+                        return result;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Selección fuera de rango ({min}-{max}");
+                    }
                 }
                 else
                 {
@@ -42,6 +66,7 @@ namespace TP01EF2024.Shared
                 }
             }
         }
+
         public static decimal ReadDecimal(string message)
         {
             while (true)

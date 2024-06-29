@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Repositorios
 {
@@ -59,6 +60,52 @@ namespace TP01EF2024.Datos.Repositorios
         public int GetCantidad()
         {
             return _context.Brands.Count();
+        }
+
+        public List<Brand> GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden)
+        {
+            IQueryable<Brand> query = _context.Brands.AsNoTracking();
+
+            if (orden != null)
+            {
+                switch (orden)
+                {
+                    case Orden.AZ:
+                        query = query.OrderBy(b => b.BrandName);
+                        break;
+                    case Orden.ZA:
+                        query = query.OrderByDescending(b => b.BrandName);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            List<Brand> listaPaginada = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return listaPaginada;
+        }
+
+        public List<Shoe>? GetShoes(Brand? brand)
+        {
+            if (brand != null)
+            {
+                _context.Entry(brand)
+                                .Collection(tp => tp.Shoes)
+                                .Query()
+                                .Include(p => p.Brand)
+                                .Include(p => p.Sport)
+                                .Include(p => p.Genre)
+                                .Include(p => p.Colour)
+                                .Load();
+                var shoes = brand.Shoes.ToList();
+
+                return shoes;
+            }
+            return null;
         }
     }
 }

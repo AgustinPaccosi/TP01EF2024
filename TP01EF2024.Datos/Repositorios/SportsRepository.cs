@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Repositorios
 {
@@ -48,6 +50,34 @@ namespace TP01EF2024.Datos.Repositorios
         public int GetCantidad()
         {
             return _context.Sports.Count();
+        }
+
+        public List<Sport>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden)
+        {
+            IQueryable<Sport> query = _context.Sports.AsNoTracking();
+
+            if (orden != null)
+            {
+                switch (orden)
+                {
+                    case Orden.AZ:
+                        query = query.OrderBy(b => b.SportName);
+                        break;
+                    case Orden.ZA:
+                        query = query.OrderByDescending(b => b.SportName);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            List<Sport> listaPaginada = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return listaPaginada;
+
         }
 
         public Sport? GetSportPorId(int id)

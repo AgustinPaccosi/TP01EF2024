@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Datos.Repositorios;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 using TP01EF2024.Servicios.Interfaces;
 
 namespace TP01EF2024.Servicios.Servicios
 {
     public class SportsService : ISportsService
     {
-        private readonly ISportsRepository _reposiroty;
+        private readonly ISportsRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
         public SportsService(ISportsRepository repository, IUnitOfWork unitOfWork)
         {
-            _reposiroty = repository;
+            _repository = repository;
             _unitOfWork = unitOfWork;
         }
         public void Eliminar(Sport sport)
@@ -25,7 +26,7 @@ namespace TP01EF2024.Servicios.Servicios
             try
             {
                 _unitOfWork.BeginTransaction();
-                _reposiroty.Eliminar(sport);
+                _repository.Eliminar(sport);
                 _unitOfWork.Commit();
             }
             catch (Exception)
@@ -39,7 +40,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.EstaRelacionado(sport);
+                return _repository.EstaRelacionado(sport);
             }
             catch (Exception)
             {
@@ -52,7 +53,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.Existe(sport);
+                return _repository.Existe(sport);
             }
             catch (Exception)
             {
@@ -63,14 +64,19 @@ namespace TP01EF2024.Servicios.Servicios
 
         public int GetCantidad()
         {
-            return _reposiroty.GetCantidad();
+            return _repository.GetCantidad();
+        }
+
+        public List<Sport>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
+        {
+            return _repository.GetListaPaginadaOrdenada(page, pageSize, orden);
         }
 
         public Sport? GetSportPorId(int id)
         {
             try
             {
-                return _reposiroty.GetSportPorId(id);
+                return _repository.GetSportPorId(id);
             }
             catch (Exception)
             {
@@ -83,7 +89,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.GetSports();
+                return _repository.GetSports();
             }
             catch (Exception)
             {
@@ -99,11 +105,11 @@ namespace TP01EF2024.Servicios.Servicios
                 _unitOfWork.BeginTransaction();
                 if (sport.SportId==0)
                 {
-                    _reposiroty.Agregar(sport);
+                    _repository.Agregar(sport);
                 }
                 else
                 {
-                    _reposiroty.Editar(sport);
+                    _repository.Editar(sport);
                 }
                 _unitOfWork.Commit();
             }
