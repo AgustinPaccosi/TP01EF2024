@@ -15,11 +15,13 @@ namespace TP01EF2024.Shared
             {
                 Console.Write(message);
                 stringVar = Console.ReadLine();
-                if (stringVar == null)
+                if (string.IsNullOrWhiteSpace(stringVar))
                 {
-                    Console.WriteLine($"----------");
-                    Console.WriteLine("Debe haber Un ingreso.");
-                    Console.WriteLine($"----------");
+                    Console.WriteLine("Debe ingresar algo.");
+                }
+                else if (!IsAlphaNumeric(stringVar))
+                {
+                    Console.WriteLine("Debe ingresar solo letras.");
                 }
                 else
                 {
@@ -28,7 +30,16 @@ namespace TP01EF2024.Shared
             }
             return stringVar;
         }
-        
+
+        private static bool IsAlphaNumeric(string input)
+        {
+            return input.All(c => char.IsLetterOrDigit(c) || c == ' ');
+        }
+        //private static bool IsAllLetters(string input)
+        //{
+        //    return input.All(char.IsLetter);
+        //}
+
         public static int ReadInt(string message, int min, int max)
         {
             while (true)
@@ -71,7 +82,6 @@ namespace TP01EF2024.Shared
                 else
                 {
                     Console.WriteLine($"----------");
-
                     Console.WriteLine("Por favor, ingrese un número decimal válido.");
                     Console.WriteLine($"----------");
 

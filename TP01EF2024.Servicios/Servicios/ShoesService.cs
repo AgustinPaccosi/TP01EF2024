@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Datos.Repositorios;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 using TP01EF2024.Servicios.Interfaces;
 
 namespace TP01EF2024.Servicios.Servicios
@@ -96,6 +97,16 @@ namespace TP01EF2024.Servicios.Servicios
         public int GetCantidad()
         {
             return _repository.GetCantidad();
+        }
+
+        public int GetCantidadFiltrada(Brand? brand = null, Sport? sport = null, Genre? genre = null, Colour? colour = null, decimal? maximo = null, decimal? minimo = null)
+        {
+            return _repository.GetCantidadFiltrada(brand, sport, genre, colour, maximo, minimo);
+        }
+
+        public List<Shoe> GetListaPaginadaOrdenadaFiltrada(bool paginar, int page, int pageSize, Orden? orden = null, Brand? brand = null, Sport? sport = null, Genre? genre = null, Colour? colour = null, decimal? maximo = null, decimal? minimo = null)
+        {
+            return _repository.GetListaPaginadaOrdenadaFiltrada(paginar, page, pageSize, orden, brand, sport, genre, colour, maximo, minimo);
         }
 
         public Shoe? GetShoePorId(int id)

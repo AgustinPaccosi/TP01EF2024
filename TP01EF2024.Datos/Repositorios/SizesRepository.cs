@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Repositorios
 {
@@ -51,6 +52,36 @@ namespace TP01EF2024.Datos.Repositorios
         {
             return _context.Sizes.Count();
         }
+
+        public List<Size>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
+        {
+            IQueryable<Size> query = _context.Sizes.AsNoTracking();
+
+            //ORDEN
+            if (orden != null)
+            {
+                switch (orden)
+                {
+                    case Orden.AZ:
+                        query = query.OrderBy(s => s.SizeNumber);
+                        break;
+                    case Orden.ZA:
+                        query = query.OrderByDescending(s => s.SizeNumber);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //PAGINADO
+            List<Size> listaPaginada = query.AsNoTracking()
+                .Skip(page * pageSize) //Saltea estos registros
+                .Take(pageSize) //Muestra estos
+                .ToList();
+
+            return listaPaginada;
+        }
+    
 
         public List<Shoe>? GetShoesForSize(int sizeId)
         {

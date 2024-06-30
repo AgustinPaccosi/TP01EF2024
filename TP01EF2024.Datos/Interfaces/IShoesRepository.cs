@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Interfaces
 {
@@ -23,7 +24,22 @@ namespace TP01EF2024.Datos.Interfaces
         void ActualizarShoeSize(ShoeSize shoeSize);
 
         List<Size> GetSizesForShoe(int shoeId);
-
-
+        List<Shoe> GetListaPaginadaOrdenadaFiltrada(
+            bool paginar,
+            int page,
+            int pageSize,
+            Orden? orden = null,
+            Brand? brand = null,
+            Sport? sport = null,
+            Genre? genre = null,
+            Colour? colour = null,
+            decimal? maximo = null,
+            decimal? minimo = null);
+        int GetCantidadFiltrada(Brand? brand = null,
+            Sport? sport = null,
+            Genre? genre = null,
+            Colour? colour = null,
+            decimal? maximo = null,
+            decimal? minimo = null);
     }
 }

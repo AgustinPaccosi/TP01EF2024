@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Repositorios
 {
@@ -71,6 +72,132 @@ namespace TP01EF2024.Datos.Repositorios
         public int GetCantidad()
         {
             return _context.Shoes.Count();
+        }
+
+        public List<Shoe> GetListaPaginadaOrdenadaFiltrada(
+            bool paginar,
+            int page,
+            int pageSize,
+            Orden? orden = null,
+            Brand? brand = null,
+            Sport? sport = null,
+            Genre? genre = null,
+            Colour? colour = null,
+            decimal? maximo = null,
+            decimal? minimo = null)
+        {
+            IQueryable<Shoe> query = _context.Shoes
+                .Include(s => s.Brand)
+                .Include(s => s.Sport)
+                .Include(s => s.Genre)
+                .Include(s => s.Colour)
+                .AsNoTracking();
+
+            // FILTROS
+            if (brand != null)
+            {
+                query = query
+                    .Where(s => s.BrandId == brand.BrandId);
+            }
+            if (sport != null)
+            {
+                query = query
+                    .Where(s => s.SportId == sport.SportId);
+            }
+            if (genre != null)
+            {
+                query = query
+                    .Where(s => s.GenreId == genre.GenreId);
+            }
+            if (colour != null)
+            {
+                query = query
+                    .Where(s => s.ColourId == colour.ColourId);
+            }
+
+            //ORDEN
+            if (orden != null)
+            {
+                switch (orden)
+                {
+                    case Orden.AZ:
+                        query = query.OrderBy(s => s.Model);
+                        break;
+                    case Orden.ZA:
+                        query = query.OrderByDescending(s => s.Model);
+                        break;
+                    case Orden.MenorPrecio:
+                        query = query.OrderBy(s => s.Price);
+                        break;
+                    case Orden.MayorPrecio:
+                        query = query.OrderByDescending(s => s.Price);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            //PRECIO
+            if (maximo != null && minimo != null)
+            {
+                query = query
+                    .Where(s => s.Price <= maximo)
+                    .Where(s => s.Price >= minimo);
+            }
+
+            //PAGINADO
+            if (paginar)
+            {
+                List<Shoe> listaPaginada = query.AsNoTracking()
+                .Skip(page * pageSize)//Saltea estos registros
+                .Take(pageSize)//Muestra estos
+                .ToList();
+                return listaPaginada;
+            }
+            else
+            {
+                return query.ToList();
+            }
+        }
+
+        public int GetCantidadFiltrada(Brand? brand = null,
+            Sport? sport = null,
+            Genre? genre = null,
+            Colour? colour = null,
+            decimal? maximo = null,
+            decimal? minimo = null)
+        {
+            IQueryable<Shoe> query = _context.Shoes.AsNoTracking();
+            // FILTROS
+            if (brand != null)
+            {
+                query = query
+                    .Where(s => s.BrandId == brand.BrandId);
+            }
+            if (sport != null)
+            {
+                query = query
+                    .Where(s => s.SportId == sport.SportId);
+            }
+            if (genre != null)
+            {
+                query = query
+                    .Where(s => s.GenreId == genre.GenreId);
+            }
+            if (colour != null)
+            {
+                query = query
+                    .Where(s => s.ColourId == colour.ColourId);
+            }
+            //PRECIO
+            if (maximo != null && minimo != null)
+            {
+                query = query
+                    .Where(s => s.Price <= maximo)
+                    .Where(s => s.Price >= minimo);
+            }
+
+            return query.Count();
         }
 
         public Shoe? GetShoePorId(int id)
