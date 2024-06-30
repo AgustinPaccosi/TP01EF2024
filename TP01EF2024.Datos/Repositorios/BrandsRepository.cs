@@ -62,7 +62,7 @@ namespace TP01EF2024.Datos.Repositorios
             return _context.Brands.Count();
         }
 
-        public List<Brand> GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden)
+        public List<Brand> GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
         {
             IQueryable<Brand> query = _context.Brands.AsNoTracking();
 

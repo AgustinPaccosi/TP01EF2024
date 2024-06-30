@@ -230,6 +230,7 @@ namespace TP01EF2024.Datos
                 entity.Property(ss => ss.QuantityInStock).IsRequired();
                 entity.ToTable("ShoesSizes");
 
+
             });
         }
     }

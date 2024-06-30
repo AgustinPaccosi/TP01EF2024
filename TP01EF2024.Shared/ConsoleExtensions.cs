@@ -17,7 +17,9 @@ namespace TP01EF2024.Shared
                 stringVar = Console.ReadLine();
                 if (stringVar == null)
                 {
-                    Console.WriteLine("Debe ingresar algo.");
+                    Console.WriteLine($"----------");
+                    Console.WriteLine("Debe haber Un ingreso.");
+                    Console.WriteLine($"----------");
                 }
                 else
                 {
@@ -26,22 +28,7 @@ namespace TP01EF2024.Shared
             }
             return stringVar;
         }
-        //public static int ReadInt(string message)
-        //{
-        //    while (true)
-        //    {
-        //        Console.Write(message);
-        //        string? input = Console.ReadLine();
-        //        if (int.TryParse(input, out int result))
-        //        {
-        //            return result;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Por favor, ingrese un número entero válido.");
-        //        }
-        //    }
-        //}
+        
         public static int ReadInt(string message, int min, int max)
         {
             while (true)
@@ -57,7 +44,11 @@ namespace TP01EF2024.Shared
                     }
                     else
                     {
-                        Console.WriteLine($"Selección fuera de rango ({min}-{max}");
+                        Console.WriteLine($"----------");
+
+                        Console.WriteLine($" Selección fuera de rango ({min}-{max})");
+                        Console.WriteLine($"----------");
+
                     }
                 }
                 else
@@ -79,7 +70,11 @@ namespace TP01EF2024.Shared
                 }
                 else
                 {
+                    Console.WriteLine($"----------");
+
                     Console.WriteLine("Por favor, ingrese un número decimal válido.");
+                    Console.WriteLine($"----------");
+
                 }
             }
         }

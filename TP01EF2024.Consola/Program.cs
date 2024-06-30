@@ -20,51 +20,15 @@ namespace TP01EF2024.Consola
             bool exit = false;
             while (!exit)
             {
-                Console.Clear();
-                Console.WriteLine("MENÚ PRINCIPAL:");
-                Console.WriteLine();
-                Console.WriteLine("----------");
-                Console.WriteLine("1. Ver todos los Generos");
-                Console.WriteLine("2. Agregar un Genero");
-                Console.WriteLine("3. Editar un Genero");
-                Console.WriteLine("4. Eliminar un Genero");
-                Console.WriteLine("----------");
-                Console.WriteLine("5. Ver todas las Marcas");
-                Console.WriteLine("6. Agregar una Marca");
-                Console.WriteLine("7. Editar una Marca");
-                Console.WriteLine("8. Eliminar una Marca");
-                Console.WriteLine("----------");
-                Console.WriteLine("9. Ver todos los Deportes");
-                Console.WriteLine("10. Agregar un Deporte");
-                Console.WriteLine("11. Editar un Deports");
-                Console.WriteLine("12. Eliminar un Deporte");
-                Console.WriteLine("----------");
-                Console.WriteLine("13. Ver todos los Colores");
-                Console.WriteLine("14. Agregar un Color");
-                Console.WriteLine("15. Editar un Color");
-                Console.WriteLine("16. Eliminar un Color");
-                Console.WriteLine("----------");
-                Console.WriteLine("17. Ver todas las Zapatillas");
-                Console.WriteLine("18. Agregar una Zapatilla");
-                Console.WriteLine("19. Editar una Zapatilla");
-                Console.WriteLine("20. Eliminar una Zapatilla");
-                Console.WriteLine("----------");
-                Console.WriteLine("21. Ver Talles");
-                Console.WriteLine("22. Agregar Talle");
-                Console.WriteLine("23. Editar Talle");
-                Console.WriteLine("24. Eliminar Talle");
-                Console.WriteLine("----------");
-
-
-
-
-                Console.WriteLine("PRESIONE X PARA SALIR");
-                Console.Write("Por favor, seleccione una opción: ");
+                LimpiarConsola();
+                //Console.Clear();
+                MenuPrincipal();
                 string? input = Console.ReadLine();
-
                 switch (input)
                 {
-                    case "1"://GENEROS
+                    //GENEROS
+                    case "1":
+
                         Console.Clear();
                         MostrarGeneros();
                         ConsoleExtensions.Enter();
@@ -84,7 +48,8 @@ namespace TP01EF2024.Consola
                         EliminarGenero();
                         ConsoleExtensions.Enter();
                         break;
-                    case "5"://MARCAS
+                    //MARCAS
+                    case "5":
                         Console.Clear();
                         MostrarMarcas();
                         ConsoleExtensions.Enter();
@@ -104,7 +69,8 @@ namespace TP01EF2024.Consola
                         EliminarMarca();
                         ConsoleExtensions.Enter();
                         break;
-                    case "9"://DEPORTES
+                    //DEPORTES
+                    case "9":
                         Console.Clear();
                         MostrarDeportes();
                         ConsoleExtensions.Enter();
@@ -124,7 +90,8 @@ namespace TP01EF2024.Consola
                         EliminarDeporte();
                         ConsoleExtensions.Enter();
                         break;
-                    case "13"://COLORES
+                    //COLORES
+                    case "13":
                         Console.Clear();
                         MostrarColores();
                         ConsoleExtensions.Enter();
@@ -144,7 +111,8 @@ namespace TP01EF2024.Consola
                         EliminarColores ();
                         ConsoleExtensions.Enter();
                         break;
-                    case "17"://Zapatillas
+                        //ZAPATILLAS
+                    case "17":
                         Console.Clear();
                         MostrarZapatillas();
                         ConsoleExtensions.Enter();
@@ -164,42 +132,39 @@ namespace TP01EF2024.Consola
                         EliminarZapatillas();
                         ConsoleExtensions.Enter();
                         break;
+                        //TALLES
                     case "21":
                         Console.Clear();
-                        MostrarTalles(); ;
+                        MostrarTalles();
                         ConsoleExtensions.Enter();
                         break;
                     case "22":
                         Console.Clear();
-                        AgregarTalle(); ;
+                        AgregarTalle();
                         ConsoleExtensions.Enter();
                         break;
                     case "23":
                         Console.Clear();
-                        EditarTalle(); ;
+                        EditarTalle(); 
                         ConsoleExtensions.Enter();
                         break;
                     case "24":
                         Console.Clear();
-                        EliminarTalle(); ;
+                        EliminarTalle();
                         ConsoleExtensions.Enter();
                         break;
+                    //LISTADOS PAGINADOS
                     case "25":
                         Console.Clear();
-                        MostrarMarcasPaginadas();
+                        ListarGenerosPaginado();
                         ConsoleExtensions.Enter();
                         break;
                     case "26":
                         Console.Clear();
-                        MostrarDeportesPaginados(); ;
+                        ListarDeportesPaginado();
                         ConsoleExtensions.Enter();
                         break;
                     case "27":
-                        Console.Clear();
-                        MostrarGenerosPaginados(); ;
-                        ConsoleExtensions.Enter();
-                        break;
-                    case "28":
                         Console.Clear();
                         ListarMarcasPaginado();
                         ConsoleExtensions.Enter();
@@ -210,41 +175,192 @@ namespace TP01EF2024.Consola
             }
         }
 
-        private static void MostrarGenerosPaginados()
+        static void LimpiarConsola()
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            // Escribir líneas en blanco para limpiar la consola
+            int lines = Console.WindowHeight;
+            for (int i = 0; i < lines; i++)
+            {
+                Console.WriteLine(new string(' ', Console.WindowWidth));
+            }
+            // Mover el cursor a la posición superior izquierda
+            Console.SetCursorPosition(0, 0);
         }
 
-        private static void MostrarDeportesPaginados()
-        {
-            throw new NotImplementedException();
-        }
+        //static void LimpiarConsola()
+        //{
+        //    Console.Clear();
+        //    // Escribir líneas en blanco para limpiar la consola
+        //    Console.WriteLine(new string('\n', Console.WindowHeight));
+        //    // Mover el cursor a la posición superior izquierda
+        //    Console.SetCursorPosition(0, 0);
+        //}
 
-        private static void MostrarMarcasPaginadas()
+        //Menu Principal
+        private static void MenuPrincipal()
         {
-            throw new NotImplementedException();
-        }
+            Console.WriteLine("MENÚ PRINCIPAL:");
+            Console.WriteLine();
+            Console.WriteLine("----------");
+            Console.WriteLine("1. Ver todos los Generos");
+            Console.WriteLine("2. Agregar un Genero");
+            Console.WriteLine("3. Editar un Genero");
+            Console.WriteLine("4. Eliminar un Genero");
+            Console.WriteLine("----------");
+            Console.WriteLine("5. Ver todas las Marcas");
+            Console.WriteLine("6. Agregar una Marca");
+            Console.WriteLine("7. Editar una Marca");
+            Console.WriteLine("8. Eliminar una Marca");
+            Console.WriteLine("----------");
+            Console.WriteLine("9. Ver todos los Deportes");
+            Console.WriteLine("10. Agregar un Deporte");
+            Console.WriteLine("11. Editar un Deports");
+            Console.WriteLine("12. Eliminar un Deporte");
+            Console.WriteLine("----------");
+            Console.WriteLine("13. Ver todos los Colores");
+            Console.WriteLine("14. Agregar un Color");
+            Console.WriteLine("15. Editar un Color");
+            Console.WriteLine("16. Eliminar un Color");
+            Console.WriteLine("----------");
+            Console.WriteLine("17. Ver todas las Zapatillas");
+            Console.WriteLine("18. Agregar una Zapatilla");
+            Console.WriteLine("19. Editar una Zapatilla");
+            Console.WriteLine("20. Eliminar una Zapatilla");
+            Console.WriteLine("----------");
+            Console.WriteLine("21. Ver Talles");
+            Console.WriteLine("22. Agregar Talle");
+            Console.WriteLine("23. Editar Talle");
+            Console.WriteLine("24. Eliminar Talle");
+            Console.WriteLine("----------");
+            Console.WriteLine("25. Paginado Generos");
+            Console.WriteLine("26. Paginado Deportes");
+            Console.WriteLine("27. Paginado Marcas");
+            Console.WriteLine("28. ");
+            Console.WriteLine("----------");
+            Console.WriteLine("PRESIONE X PARA SALIR");
+            Console.Write("Por favor, seleccione una opción: ");
 
+        }
+        //Talles
         private static void EliminarTalle()
         {
-            throw new NotImplementedException();
-        }
+            Console.WriteLine("ELIMINAR UN TALLE...");
+            MostrarTalles();
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del talle que desea eliminar: ",0, 9999);
+            try
+            {
+                var servicio = servicioProvider?.GetService<ISizesService>();
+                var size = servicio?.GetSizePorId(id);
 
+                if (size != null)
+                {
+                    if (servicio != null)
+                    {
+                        if (!servicio.EstaRelacionado(size))
+                        {
+                            servicio.Eliminar(size);
+                            Console.WriteLine("Registro eliminado satisfactoriamente.");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("El registro no puede ser eliminado porque se encuentra relacionado.");
+                        }
+
+                    }
+                    else
+                    {
+                        throw new Exception("Servicio no disponible.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El registro que desea eliminar no existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); ;
+            }
+
+            Thread.Sleep(5000);
+        }
         private static void EditarTalle()
         {
-            throw new NotImplementedException();
-        }
+            var servicio = servicioProvider?.GetService<ISizesService>();
 
+            Console.WriteLine("Editar talle");
+            MostrarTalles();
+
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del talle que desea editar: ",0,9999);
+            var size = servicio?.GetSizePorId(id);
+
+            if (size != null)
+            {
+                Console.WriteLine($"Talle Anterior: {size.SizeNumber}");
+                var nuevoNumber = ConsoleExtensions.ReadDecimal("Ingrese el nuevo talle: ");
+                size.SizeNumber = nuevoNumber;
+                servicio?.Guardar(size);
+                Console.WriteLine("Talle editado satisfactoriamente.");
+            }
+            else
+            {
+                Console.WriteLine("El talle que desea editar no existe.");
+            }
+            Thread.Sleep(2000);
+        }
         private static void AgregarTalle()
         {
-            throw new NotImplementedException();
-        }
+            var servicio = servicioProvider?.GetService<ISizesService>();
 
+            Console.WriteLine("Agregar Un talle");
+
+            var sizeNumber = ConsoleExtensions.ReadDecimal("Ingrese el número del talle: ");
+
+            var size = new Size
+            {
+                SizeNumber = sizeNumber
+            };
+
+            if (servicio != null)
+            {
+                if (!servicio.Existe(size))
+                {
+                    servicio.Guardar(size);
+                    Console.WriteLine("Talle agregado.");
+                }
+                else
+                {
+                    Console.WriteLine("El talle que desea ingresar ya existe.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Servicio no disponible");
+            }
+
+            Thread.Sleep(2000);
+        }
         private static void MostrarTalles()
         {
-            throw new NotImplementedException();
-        }
+            var servicio = servicioProvider?.GetService<ISizesService>();
+            var sizes = servicio?.GetSizes();
+            Console.WriteLine("Listado De Talles");
 
+            var tabla = new ConsoleTable("ID", "TALLE");
+
+            if (sizes != null)
+            {
+                foreach (var s in sizes)
+                {
+                    tabla.AddRow(s.SizeId, s.SizeNumber);
+                }
+            }
+            tabla.Options.EnableCount = false;
+            tabla.Write();
+            Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
+        }
         //Zapatillas
         private static void EliminarZapatillas()
         {
@@ -866,7 +982,7 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
-        //Paginado
+        //Calculo de Paginas
         private static int CalcularCantidadPaginas(int cantRegistros, int cantPorPagina)
         {
             if (cantRegistros < cantPorPagina)
@@ -882,6 +998,7 @@ namespace TP01EF2024.Consola
                 return cantRegistros / cantPorPagina + 1;
             }
         }
+        //Listas Paginadas
         private static void ListarMarcasPaginado()
         {
             Console.Clear();
@@ -897,14 +1014,14 @@ namespace TP01EF2024.Consola
                 Console.WriteLine($"Página: {page + 1}");
                 var lista = servicio?
                     .GetListaPaginadaOrdenada(page, pageSize, Orden.AZ);
-                PaginadoBrands(servicio, lista);
+                PaginadoMarcas(servicio, lista);
             }
             Console.WriteLine("Fin del Listado");
         }
         private static void PaginadoMarcas(IBrandsService? servicio, List<Brand>? lista)
         {
-            Console.WriteLine("Listado de Brands en la tienda");
-            ConsoleTable tabla = new ConsoleTable("ID", "BrandName");
+            Console.WriteLine("Listado de Marcas en la tienda");
+            ConsoleTable tabla = new ConsoleTable("ID", "Marca");
             if (lista != null)
             {
                 foreach (var brand in lista)
@@ -915,9 +1032,10 @@ namespace TP01EF2024.Consola
             tabla.Options.EnableCount = false;
             tabla.Write();
             Console.WriteLine($"Cantidad de registros: {servicio?.GetCantidad()}");
+            Console.WriteLine("Presione ENTER para continuar.");
             Console.ReadLine();
         }
-        private static void ListarSportPaginado()
+        private static void ListarDeportesPaginado()
         {
             Console.Clear();
             var servicio = servicioProvider?.GetService<ISportsService>();
@@ -932,15 +1050,14 @@ namespace TP01EF2024.Consola
                 Console.WriteLine($"Página: {page + 1}");
                 var lista = servicio?
                     .GetListaPaginadaOrdenada(page, pageSize, Orden.AZ);
-                PaginadoSports(servicio, lista);
+                PaginadoDeportes(servicio, lista);
             }
             Console.WriteLine("Fin del Listado");
         }
-
-        private static void PaginadoSports(ISportsService? servicio, List<Sport>? lista)
+        private static void PaginadoDeportes(ISportsService? servicio, List<Sport>? lista)
         {
-            Console.WriteLine("Listado de Sports en la tienda");
-            ConsoleTable tabla = new ConsoleTable("ID", "SportName");
+            Console.WriteLine("Listado de Deportes en la tienda");
+            ConsoleTable tabla = new ConsoleTable("ID", "Deporte");
             if (lista != null)
             {
                 foreach (var sport in lista)
@@ -951,6 +1068,45 @@ namespace TP01EF2024.Consola
             tabla.Options.EnableCount = false;
             tabla.Write();
             Console.WriteLine($"Cantidad de registros: {servicio?.GetCantidad()}");
+            Console.WriteLine("Presione ENTER para continuar.");
+
+            Console.ReadLine();
+        }
+        private static void ListarGenerosPaginado()
+        {
+            Console.Clear();
+            var servicio = servicioProvider?.GetService<IGenresService>();
+            var pageSize = ConsoleExtensions.ReadInt("Ingrese la cantidad por página:", 2, 10);
+            var recordCount = servicio?.GetCantidad() ?? 0;
+            var pageCount = CalcularCantidadPaginas(recordCount, pageSize);
+
+            for (int page = 0; page < pageCount; page++)
+            {
+                Console.Clear();
+                Console.WriteLine("Listado Paginado");
+                Console.WriteLine($"Página: {page + 1}");
+                var lista = servicio?
+                    .GetListaPaginadaOrdenada(page, pageSize, Orden.AZ);
+                PaginadoGeneros(servicio, lista);
+            }
+            Console.WriteLine("Fin del Listado");
+        }
+        private static void PaginadoGeneros(IGenresService? servicio, List<Genre>? lista)
+        {
+            Console.WriteLine("Listado de Generos en la tienda");
+            ConsoleTable tabla = new ConsoleTable("ID", "Genero");
+            if (lista != null)
+            {
+                foreach (var genre in lista)
+                {
+                    tabla.AddRow(genre.GenreId, genre.GenreName);
+                }
+            }
+            tabla.Options.EnableCount = false;
+            tabla.Write();
+            Console.WriteLine($"Cantidad de registros: {servicio?.GetCantidad()}");
+            Console.WriteLine("Presione ENTER para continuar.");
+
             Console.ReadLine();
         }
 

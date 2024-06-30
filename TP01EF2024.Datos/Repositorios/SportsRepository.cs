@@ -52,7 +52,7 @@ namespace TP01EF2024.Datos.Repositorios
             return _context.Sports.Count();
         }
 
-        public List<Sport>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden)
+        public List<Sport>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
         {
             IQueryable<Sport> query = _context.Sports.AsNoTracking();
 

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Repositorios
 {
@@ -62,6 +63,33 @@ namespace TP01EF2024.Datos.Repositorios
         public List<Genre> GetGenres()
         {
             return _context.Genres.OrderBy(g=>g.GenreId).AsNoTracking().ToList();
+        }
+
+        public List<Genre>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
+        {
+            IQueryable<Genre> query = _context.Genres.AsNoTracking();
+
+            if (orden != null)
+            {
+                switch (orden)
+                {
+                    case Orden.AZ:
+                        query = query.OrderBy(b => b.GenreName);
+                        break;
+                    case Orden.ZA:
+                        query = query.OrderByDescending(b => b.GenreName);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            List<Genre> listaPaginada = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return listaPaginada;
+
         }
     }
 }

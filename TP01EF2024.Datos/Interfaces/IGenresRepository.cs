@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Interfaces
 {
@@ -17,5 +18,6 @@ namespace TP01EF2024.Datos.Interfaces
         Genre? GetGenrePorId(int id);
         List<Genre> GetGenres();
         int GetCantidad();
+        List<Genre>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null);
     }
 }

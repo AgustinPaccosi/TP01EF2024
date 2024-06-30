@@ -1,17 +1,18 @@
 ﻿using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Enum;
 using TP01EF2024.Servicios.Interfaces;
 
 namespace TP01EF2024.Servicios.Servicios
 {
     public class GenresService : IGenresService
     {
-        private readonly IGenresRepository _reposiroty;
+        private readonly IGenresRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
         public GenresService(IGenresRepository repository, IUnitOfWork unitOfWork)
         {
-            _reposiroty = repository;
+            _repository = repository;
             _unitOfWork = unitOfWork;
         }
         public void Eliminar(Genre genre)
@@ -19,7 +20,7 @@ namespace TP01EF2024.Servicios.Servicios
             try
             {
                 _unitOfWork.BeginTransaction();
-                _reposiroty.Eliminar(genre);
+                _repository.Eliminar(genre);
                 _unitOfWork.Commit();
             }
             catch (Exception)
@@ -33,7 +34,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.EstaRelacionado(genre);
+                return _repository.EstaRelacionado(genre);
             }
             catch (Exception)
             {
@@ -46,7 +47,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.Existe(genre);
+                return _repository.Existe(genre);
             }
             catch (Exception)
             {
@@ -57,14 +58,14 @@ namespace TP01EF2024.Servicios.Servicios
 
         public int GetCantidad()
         {
-            return _reposiroty.GetCantidad();
+            return _repository.GetCantidad();
         }
 
         public Genre? GetGenrePorId(int id)
         {
             try
             {
-                return _reposiroty.GetGenrePorId(id);
+                return _repository.GetGenrePorId(id);
             }
             catch (Exception)
             {
@@ -77,13 +78,18 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.GetGenres();
+                return _repository.GetGenres();
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+
+        public List<Genre>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
+        {
+            return _repository.GetListaPaginadaOrdenada(page, pageSize, orden);
         }
 
         public void Guardar(Genre genre)
@@ -93,11 +99,11 @@ namespace TP01EF2024.Servicios.Servicios
                 _unitOfWork.BeginTransaction();
                 if (genre.GenreId==0)
                 {
-                    _reposiroty.Agregar(genre);
+                    _repository.Agregar(genre);
                 }
                 else
                 {
-                    _reposiroty.Editar(genre);
+                    _repository.Editar(genre);
                 }
                 _unitOfWork.Commit();
             }
