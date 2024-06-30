@@ -53,6 +53,8 @@ namespace TP01EF2024.Consola
                         EliminarGenero();
                         ConsoleExtensions.Enter();
                         break;
+                    //---------------------------------------------------------------------------------------------
+
                     //MARCAS
                     case "5":
                         Console.Clear();
@@ -74,6 +76,8 @@ namespace TP01EF2024.Consola
                         EliminarMarca();
                         ConsoleExtensions.Enter();
                         break;
+                    //---------------------------------------------------------------------------------------------
+
                     //DEPORTES
                     case "9":
                         Console.Clear();
@@ -95,6 +99,8 @@ namespace TP01EF2024.Consola
                         EliminarDeporte();
                         ConsoleExtensions.Enter();
                         break;
+                    //---------------------------------------------------------------------------------------------
+
                     //COLORES
                     case "13":
                         Console.Clear();
@@ -116,7 +122,9 @@ namespace TP01EF2024.Consola
                         EliminarColores ();
                         ConsoleExtensions.Enter();
                         break;
-                        //ZAPATILLAS
+                    //---------------------------------------------------------------------------------------------
+
+                    //ZAPATILLAS
                     case "17":
                         Console.Clear();
                         MostrarZapatillas();
@@ -137,7 +145,9 @@ namespace TP01EF2024.Consola
                         EliminarZapatillas();
                         ConsoleExtensions.Enter();
                         break;
-                        //TALLES
+                    //---------------------------------------------------------------------------------------------
+
+                    //TALLES
                     case "21":
                         Console.Clear();
                         MostrarTalles();
@@ -158,6 +168,8 @@ namespace TP01EF2024.Consola
                         EliminarTalle();
                         ConsoleExtensions.Enter();
                         break;
+                    //---------------------------------------------------------------------------------------------
+
                     //LISTADOS PAGINADOS
                     case "25":
                         Console.Clear();
@@ -179,32 +191,56 @@ namespace TP01EF2024.Consola
                         ListarTallesPaginado();
                         ConsoleExtensions.Enter();
                         break;
+                    //---------------------------------------------------------------------------------------------
+                    
+                    //Listados Filtrados Paginados
                     case "29":
                         Console.Clear();
-                        ListarZapatosPorMarcaPaginado(null, null);
+                        ListarZapatillasPorMarcaPaginado(null, null);
                         ConsoleExtensions.Enter();
                         break;
                     case "30":
                         Console.Clear();
-                        ListarZapatosPorDeportePaginado();
+                        ListarZapatillasPorDeportePaginado(null, null);
                         ConsoleExtensions.Enter();
                         break;
                     case "31":
                         Console.Clear();
-                        ListarZapatosPorGeneroPaginado();
+                        ListarZapatillasPorGeneroPaginado(null, null);
                         ConsoleExtensions.Enter();
                         break;
                     case "32":
                         Console.Clear();
-                        ListarZapatosPorColorPaginado();
+                        ListarZapatillasPorColorPaginado(null, null);
                         ConsoleExtensions.Enter();
                         break;
+                    //---------------------------------------------------------------------------------------------
+
+                    //Listados Filtrados por precio Paginados
                     case "33":
                         Console.Clear();
-                        precioMin = ConsoleExtensions.ReadDecimal("Ingrese el precio Minimo:");
-                        precioMax = ConsoleExtensions.ReadDecimal("Ingrese el precio Maximo:");
-                        ListarZapatosPorMarcaPaginado(precioMin, precioMax);
+                        precioMin = ConsoleExtensions.ReadDecimal("Ingrese el precio Minimo: ");
+                        precioMax = ConsoleExtensions.ReadDecimal("Ingrese el precio Maximo: ");
+                        ListarZapatillasPorMarcaPaginado(precioMin, precioMax);
                         Console.WriteLine("Lista Finalizada");
+                        ConsoleExtensions.Enter();
+                        break;
+                    //---------------------------------------------------------------------------------------------
+
+                    //Filtrados por Talles y zapatillas
+                    case "34":
+                        Console.Clear();
+                        AsignarTalles(); ;
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "35":
+                        Console.Clear();
+                        ListarZapatillasPorTalle();
+                        ConsoleExtensions.Enter();
+                        break;
+                    case "36":
+                        Console.Clear();
+                        ListarTallesPorZapatillas();
                         ConsoleExtensions.Enter();
                         break;
 
@@ -217,111 +253,6 @@ namespace TP01EF2024.Consola
             }
         }
 
-        private static void ListarZapatosPorColorPaginado()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void ListarZapatosPorDeportePaginado()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void ListarZapatosPorMarcaPaginado(decimal? precioMinimo = null, decimal? precioMaximo = null)
-        {
-            MostrarMarcas();
-            var servicioMarcas = servicioProvider?.GetService<IBrandsService>();
-            var servicioShoes = servicioProvider?.GetService<IShoesService>();
-            var brandId = ConsoleExtensions.ReadInt("Ingrese el ID de la marca para ver los zapatos disponibles: ",0,9999);
-            var pageSize = ConsoleExtensions.ReadInt("Ingrese la cantidad por página:", 1, 10);
-
-
-            Brand? brand = servicioMarcas?.GetBrandPorId(brandId);
-
-            var CantidadRegistros = servicioShoes?.GetCantidadFiltrada(brand, null, null, null, precioMaximo, precioMinimo) ?? 0;
-            var CantidadDePaginas = CalcularCantidadPaginas(CantidadRegistros, pageSize);
-
-            if (brand != null)
-            {
-                List<Shoe>? shoes = null;
-
-                if (precioMinimo != null && precioMaximo != null)
-                {
-                    for (int page = 0; page < CantidadDePaginas; page++)
-                    {
-                        Console.Clear();
-                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, brand, null, null, null, precioMaximo, precioMinimo);
-                        if (shoes != null && shoes.Count() != 0)
-                        {
-                            Console.WriteLine("Listado de Zapatillas");
-                            Console.WriteLine($"Página: {page + 1}");
-                            TablaDeZapatos(shoes);
-                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
-                            ConsoleExtensions.Enter();
-
-                        }
-                        else
-                        {
-                            Console.WriteLine($"No existen zapatos de la marca {brand.BrandName} con precio entre ${precioMinimo} y ${precioMaximo}");
-                        }
-                    }
-                }
-                else
-                {
-                    for (int page = 0; page < CantidadDePaginas; page++)
-                    {
-                        Console.Clear();
-                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, brand, null, null, null, null, null);
-                        if (shoes != null && shoes.Count() != 0)
-                        {
-                            Console.WriteLine("Listado de Zapatillas");
-                            Console.WriteLine($"Página: {page + 1}");
-                            TablaDeZapatos(shoes);
-                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
-                            ConsoleExtensions.Enter();
-
-                        }
-                        else
-                        {
-                            Console.WriteLine($"No existen zapatos de la marca {brand.BrandName} con precio entre ${precioMinimo} y ${precioMaximo}");
-                        }
-                    }
-
-                    //shoes = servicioMarcas?.GetShoes(brand);
-                    //TablaDeZapatos(shoes);
-                    //Console.WriteLine($"Cantidad: {servicioShoes?.GetCantidad()}");
-
-                }
-
-            }
-            else
-            {
-                Console.WriteLine("La marca que ha seleccionado no existe.");
-            }
-
-        }
-
-        private static void ListarZapatosPorGeneroPaginado()
-        {
-            throw new NotImplementedException();
-        }
-        private static void TablaDeZapatos(List<Shoe>? shoes)
-        {
-            var tabla = new ConsoleTable("ID", "MARCA", "DEPORTE", "GENERO", "COLOR", "MODELO", "DESCRIPCION", "PRECIO");
-
-            foreach (var s in shoes)
-            {
-                tabla.AddRow(s.ShoeId,
-                    s.Brand.BrandName,
-                    s.Sport.SportName,
-                    s.Genre.GenreName,
-                    s.Colour.ColourName,
-                    s.Model, s.Description,
-                    s.Price);
-            }
-            tabla.Options.EnableCount = false;
-            tabla.Write();
-        }
 
 
         //Limpiar Consola
@@ -337,33 +268,35 @@ namespace TP01EF2024.Consola
             //// Mover el cursor a la posición superior izquierda
             //Console.SetCursorPosition(0, 0);
         }
+        //---------------------------------------------------------------------------------------------
+
         //Menu Principal
         private static void MenuPrincipal()
         {
             Console.WriteLine("MENÚ PRINCIPAL:");
             Console.WriteLine();
             Console.WriteLine("----------");
-            Console.WriteLine("1. Ver todos los Generos");
+            Console.WriteLine("1. Ver Generos");
             Console.WriteLine("2. Agregar un Genero");
             Console.WriteLine("3. Editar un Genero");
             Console.WriteLine("4. Eliminar un Genero");
             Console.WriteLine("----------");
-            Console.WriteLine("5. Ver todas las Marcas");
+            Console.WriteLine("5. Ver Marcas");
             Console.WriteLine("6. Agregar una Marca");
             Console.WriteLine("7. Editar una Marca");
             Console.WriteLine("8. Eliminar una Marca");
             Console.WriteLine("----------");
-            Console.WriteLine("9. Ver todos los Deportes");
+            Console.WriteLine("9. Ver Deportes");
             Console.WriteLine("10. Agregar un Deporte");
             Console.WriteLine("11. Editar un Deports");
             Console.WriteLine("12. Eliminar un Deporte");
             Console.WriteLine("----------");
-            Console.WriteLine("13. Ver todos los Colores");
+            Console.WriteLine("13. Ver Colores");
             Console.WriteLine("14. Agregar un Color");
             Console.WriteLine("15. Editar un Color");
             Console.WriteLine("16. Eliminar un Color");
             Console.WriteLine("----------");
-            Console.WriteLine("17. Ver todas las Zapatillas");
+            Console.WriteLine("17. Ver Zapatillas");
             Console.WriteLine("18. Agregar una Zapatilla");
             Console.WriteLine("19. Editar una Zapatilla");
             Console.WriteLine("20. Eliminar una Zapatilla");
@@ -379,297 +312,26 @@ namespace TP01EF2024.Consola
             Console.WriteLine("28. Paginado Talles");
             Console.WriteLine("----------");
             Console.WriteLine("29. Zapatillas Por Marca Paginado");
-            Console.WriteLine("30. Zapatillas Por Deporte Paginado");//FALTA
-            Console.WriteLine("31. Zapatillas Por Genero Paginado");//FALTA
-            Console.WriteLine("32. Zapatillas Por Color Paginado");//FALTA
+            Console.WriteLine("30. Zapatillas Por Deporte Paginado");
+            Console.WriteLine("31. Zapatillas Por Genero Paginado");
+            Console.WriteLine("32. Zapatillas Por Color Paginado");
             Console.WriteLine("----------");
             Console.WriteLine("33. Zapatillas Por Marca Entre Precios Paginado");
+            Console.WriteLine("----------");
+            Console.WriteLine("34. Asignar Talles a Zapatillas");
+            Console.WriteLine("35. Zapatillas Por Talle");
+            Console.WriteLine("36. Talle Por Zapatillas");
+            Console.WriteLine("----------");
+
 
 
             Console.WriteLine("PRESIONE X PARA SALIR");
             Console.Write("Por favor, seleccione una opción: ");
 
         }
-        //Talles
-        private static void EliminarTalle()
-        {
-            Console.WriteLine("ELIMINAR UN TALLE...");
-            MostrarTalles();
-            var id = ConsoleExtensions.ReadInt("Ingrese el ID del talle que desea eliminar: ",0, 9999);
-            try
-            {
-                var servicio = servicioProvider?.GetService<ISizesService>();
-                var size = servicio?.GetSizePorId(id);
-
-                if (size != null)
-                {
-                    if (servicio != null)
-                    {
-                        if (!servicio.EstaRelacionado(size))
-                        {
-                            servicio.Eliminar(size);
-                            Console.WriteLine("Registro eliminado satisfactoriamente.");
-
-                        }
-                        else
-                        {
-                            Console.WriteLine("El registro no puede ser eliminado porque se encuentra relacionado.");
-                        }
-
-                    }
-                    else
-                    {
-                        throw new Exception("Servicio no disponible.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("El registro que desea eliminar no existe.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message); ;
-            }
-
-            Thread.Sleep(5000);
-        }
-        private static void EditarTalle()
-        {
-            var servicio = servicioProvider?.GetService<ISizesService>();
-
-            Console.WriteLine("Editar talle");
-            MostrarTalles();
-
-            var id = ConsoleExtensions.ReadInt("Ingrese el ID del talle que desea editar: ",0,9999);
-            var size = servicio?.GetSizePorId(id);
-
-            if (size != null)
-            {
-                Console.WriteLine($"Talle Anterior: {size.SizeNumber}");
-                var nuevoNumber = ConsoleExtensions.ReadDecimal("Ingrese el nuevo talle: ");
-                size.SizeNumber = nuevoNumber;
-                servicio?.Guardar(size);
-                Console.WriteLine("Talle editado satisfactoriamente.");
-            }
-            else
-            {
-                Console.WriteLine("El talle que desea editar no existe.");
-            }
-            Thread.Sleep(2000);
-        }
-        private static void AgregarTalle()
-        {
-            var servicio = servicioProvider?.GetService<ISizesService>();
-
-            Console.WriteLine("Agregar Un talle");
-
-            var sizeNumber = ConsoleExtensions.ReadDecimal("Ingrese el número del talle: ");
-
-            var size = new Size
-            {
-                SizeNumber = sizeNumber
-            };
-
-            if (servicio != null)
-            {
-                if (!servicio.Existe(size))
-                {
-                    servicio.Guardar(size);
-                    Console.WriteLine("Talle agregado.");
-                }
-                else
-                {
-                    Console.WriteLine("El talle que desea ingresar ya existe.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Servicio no disponible");
-            }
-
-            Thread.Sleep(2000);
-        }
-        private static void MostrarTalles()
-        {
-            var servicio = servicioProvider?.GetService<ISizesService>();
-            var sizes = servicio?.GetSizes();
-            Console.WriteLine("Listado De Talles");
-
-            var tabla = new ConsoleTable("ID", "TALLE");
-
-            if (sizes != null)
-            {
-                foreach (var s in sizes)
-                {
-                    tabla.AddRow(s.SizeId, s.SizeNumber);
-                }
-            }
-            tabla.Options.EnableCount = false;
-            tabla.Write();
-            Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
-        }
-        //Zapatillas
-        private static void EliminarZapatillas()
-        {
-            Console.WriteLine("Eliminar Una zapatilla");
-            MostrarZapatillas();
-            var id = ConsoleExtensions.ReadInt("Ingrese el ID de la Zapatilla que desea eliminar: ",0,9999);
-            try
-            {
-                var servicio = servicioProvider?.GetService<IShoesService>();
-                var shoe = servicio?.GetShoePorId(id);
-
-                if (shoe != null)
-                {
-                    if (servicio != null)
-                    {
-                        if (!servicio.EstaRelacionado(shoe))
-                        {
-                            servicio.Eliminar(shoe);
-                            Console.WriteLine("Registro eliminado satisfactoriamente.");
-
-                        }
-                        else
-                        {
-                            Console.WriteLine("El registro no puede ser eliminado porque se encuentra relacionado.");
-                        }
-
-                    }
-                    else
-                    {
-                        throw new Exception("Servicio no disponible.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("El registro que desea eliminar no existe.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message); ;
-            }
-
-            Thread.Sleep(5000);
-        }
-        private static void EditarZapatillas()
-        {
-            var servicio = servicioProvider?.GetService<IShoesService>();
-
-            Console.WriteLine("Editar una Zapatilla: ");
-            MostrarZapatillas();
-            var id = ConsoleExtensions.ReadInt("ID del zapatilla a editar: ",0, 9999);
-            var shoe = servicio?.GetShoePorId(id);
-
-            if (shoe != null)
-            {
-                Console.WriteLine($"Zapatilla a editar: ID: {shoe.ShoeId}, Marca: , Modelo:{shoe.Model}, Descripcion: {shoe.Description} ");
-                var model = ConsoleExtensions.ReadString("Ingrese el modelo de la zapatilla: ");
-                var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la zapatilla: ");
-                var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio de la zapatilla: ");
-                MostrarMarcas();
-                var marca = ConsoleExtensions.ReadInt("Ingrese el ID de la marca de la zapatilla: ", 0, 9999);
-                MostrarDeportes();
-                var deporte = ConsoleExtensions.ReadInt("Ingrese el ID del deporte de la zapatilla: ", 0, 9999);
-                MostrarGeneros();
-                var genero = ConsoleExtensions.ReadInt("Ingrese el ID del genero de la zapatilla: ", 0, 9999);
-
-                shoe.Model = model;
-                shoe.Description = description;
-                shoe.Price = precio;
-                shoe.BrandId = marca;
-                shoe.SportId = deporte;
-                shoe.GenreId = genero;
-
-                servicio?.Guardar(shoe);
-                Console.WriteLine("Zapatilla editada satisfactoriamente.");
-            }
-            else
-            {
-                Console.WriteLine("La Zapatilla que desea editar no existe.");
-            }
-            Thread.Sleep(2000);
+        //---------------------------------------------------------------------------------------------
 
 
-        }
-        private static void AgregarZapatillas()
-        {
-            var servicio = servicioProvider?.GetService<IShoesService>();
-
-            Console.WriteLine("Agregar Zapatilla");
-
-            var model = ConsoleExtensions.ReadString("Ingrese el modelo de la zapatilla: ");
-            var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la zapatilla: ");
-            var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio del zapatilla: ");
-
-            Console.Clear();
-            MostrarMarcas();
-            var marca = ConsoleExtensions.ReadInt("Ingrese el ID de la marca de la zapatilla: ", 0, 9999);
-
-            Console.Clear();
-            MostrarDeportes();
-            var deporte = ConsoleExtensions.ReadInt("Ingrese el ID del deporte de la zapatilla: ", 0, 9999);
-
-            Console.Clear();
-            MostrarGeneros();
-            var genero = ConsoleExtensions.ReadInt("Ingrese el ID del genero de la zapatilla: ", 0, 9999);
-
-            Console.Clear();
-            MostrarColores();
-            var colourId= ConsoleExtensions.ReadInt("Ingrese el ID del Color de la zapatilla: ", 0, 9999);
-
-            var shoe = new Shoe
-            {
-                BrandId = marca,
-                SportId = deporte,
-                GenreId = genero,
-                Model = model,
-                Description = description,
-                Price = precio,
-                ColourId=colourId
-            };
-
-            if (servicio != null)
-            {
-                if (!servicio.Existe(shoe))
-                {
-                    servicio.Guardar(shoe);
-                    Console.WriteLine("Zapatilla agregado satisfactoriamente.");
-                }
-                else
-                {
-                    Console.WriteLine("El zapatilla que desea ingresar ya existe.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Servicio no disponible");
-            }
-
-            Thread.Sleep(2000);
-        }
-        private static void MostrarZapatillas()
-        {
-            var servicio=servicioProvider?.GetService<IShoesService>();
-            var shoes=servicio?.GetShoes();
-
-            Console.WriteLine("Listado De Zapatillas");
-
-            var tabla=new ConsoleTable("ID","MARCA","MODELO","DESCRIPCION","DEPORTE","COLOR","GENERO","PRECIO");
-
-            if (shoes!=null)
-            {
-                foreach (var s in shoes)
-                {
-                    tabla.AddRow(s.ShoeId, s.Brand.BrandName, s.Model, s.Description, s.Sport.SportName, s.Colour.ColourName,
-                        s.Genre.GenreName, s.Price);
-                }
-            }
-            tabla.Options.EnableCount = false;
-            tabla.Write();
-            Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
-        }
         //Colores
         private static void EliminarColores()
         {
@@ -787,6 +449,8 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
+        //---------------------------------------------------------------------------------------------
+
         //Deportes
         private static void EliminarDeporte()
         {
@@ -906,6 +570,8 @@ namespace TP01EF2024.Consola
                 Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
             }
         }
+        //---------------------------------------------------------------------------------------------
+
         //Marcas
         private static void EliminarMarca()
         {
@@ -1023,6 +689,8 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
+        //---------------------------------------------------------------------------------------------
+
         //Generos
         private static void EliminarGenero()
         {
@@ -1140,6 +808,453 @@ namespace TP01EF2024.Consola
             tabla.Write();
             Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
         }
+        //---------------------------------------------------------------------------------------------
+
+        //Zapatillas
+        private static void EliminarZapatillas()
+        {
+            Console.WriteLine("Eliminar Una zapatilla");
+            MostrarZapatillas();
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID de la Zapatilla que desea eliminar: ", 0, 9999);
+            try
+            {
+                var servicio = servicioProvider?.GetService<IShoesService>();
+                var shoe = servicio?.GetShoePorId(id);
+
+                if (shoe != null)
+                {
+                    if (servicio != null)
+                    {
+                        if (!servicio.EstaRelacionado(shoe))
+                        {
+                            servicio.Eliminar(shoe);
+                            Console.WriteLine("Registro eliminado satisfactoriamente.");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("El registro no puede ser eliminado porque se encuentra relacionado.");
+                        }
+
+                    }
+                    else
+                    {
+                        throw new Exception("Servicio no disponible.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El registro que desea eliminar no existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); ;
+            }
+
+            Thread.Sleep(5000);
+        }
+        private static void EditarZapatillas()
+        {
+            var servicio = servicioProvider?.GetService<IShoesService>();
+
+            Console.WriteLine("Editar una Zapatilla: ");
+            MostrarZapatillas();
+            var id = ConsoleExtensions.ReadInt("ID del zapatilla a editar: ", 0, 9999);
+            var shoe = servicio?.GetShoePorId(id);
+
+            if (shoe != null)
+            {
+                Console.WriteLine($"Zapatilla a editar: ID: {shoe.ShoeId}, Marca: , Modelo:{shoe.Model}, Descripcion: {shoe.Description} ");
+                var model = ConsoleExtensions.ReadString("Ingrese el modelo de la zapatilla: ");
+                var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la zapatilla: ");
+                var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio de la zapatilla: ");
+                MostrarMarcas();
+                var marca = ConsoleExtensions.ReadInt("Ingrese el ID de la marca de la zapatilla: ", 0, 9999);
+                MostrarDeportes();
+                var deporte = ConsoleExtensions.ReadInt("Ingrese el ID del deporte de la zapatilla: ", 0, 9999);
+                MostrarGeneros();
+                var genero = ConsoleExtensions.ReadInt("Ingrese el ID del genero de la zapatilla: ", 0, 9999);
+
+                shoe.Model = model;
+                shoe.Description = description;
+                shoe.Price = precio;
+                shoe.BrandId = marca;
+                shoe.SportId = deporte;
+                shoe.GenreId = genero;
+
+                servicio?.Guardar(shoe);
+                Console.WriteLine("Zapatilla editada satisfactoriamente.");
+            }
+            else
+            {
+                Console.WriteLine("La Zapatilla que desea editar no existe.");
+            }
+            Thread.Sleep(2000);
+
+
+        }
+        private static void AgregarZapatillas()
+        {
+            var servicio = servicioProvider?.GetService<IShoesService>();
+
+            Console.WriteLine("Agregar Zapatilla");
+
+            var model = ConsoleExtensions.ReadString("Ingrese el modelo de la zapatilla: ");
+            var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la zapatilla: ");
+            var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio del zapatilla: ");
+
+            Console.Clear();
+            MostrarMarcas();
+            var marca = ConsoleExtensions.ReadInt("Ingrese el ID de la marca de la zapatilla: ", 0, 9999);
+
+            Console.Clear();
+            MostrarDeportes();
+            var deporte = ConsoleExtensions.ReadInt("Ingrese el ID del deporte de la zapatilla: ", 0, 9999);
+
+            Console.Clear();
+            MostrarGeneros();
+            var genero = ConsoleExtensions.ReadInt("Ingrese el ID del genero de la zapatilla: ", 0, 9999);
+
+            Console.Clear();
+            MostrarColores();
+            var colourId = ConsoleExtensions.ReadInt("Ingrese el ID del Color de la zapatilla: ", 0, 9999);
+
+            var shoe = new Shoe
+            {
+                BrandId = marca,
+                SportId = deporte,
+                GenreId = genero,
+                Model = model,
+                Description = description,
+                Price = precio,
+                ColourId = colourId
+            };
+
+            if (servicio != null)
+            {
+                if (!servicio.Existe(shoe))
+                {
+                    servicio.Guardar(shoe);
+                    Console.WriteLine("Zapatilla agregado satisfactoriamente.");
+                }
+                else
+                {
+                    Console.WriteLine("El zapatilla que desea ingresar ya existe.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Servicio no disponible");
+            }
+
+            Thread.Sleep(2000);
+        }
+        private static void MostrarZapatillas()
+        {
+            var servicio = servicioProvider?.GetService<IShoesService>();
+            var shoes = servicio?.GetShoes();
+
+            Console.WriteLine("Listado De Zapatillas");
+
+            var tabla = new ConsoleTable("ID", "MARCA", "MODELO", "DESCRIPCION", "DEPORTE", "COLOR", "GENERO", "PRECIO");
+
+            if (shoes != null)
+            {
+                foreach (var s in shoes)
+                {
+                    tabla.AddRow(s.ShoeId, s.Brand.BrandName, s.Model, s.Description, s.Sport.SportName, s.Colour.ColourName,
+                        s.Genre.GenreName, s.Price);
+                }
+            }
+            tabla.Options.EnableCount = false;
+            tabla.Write();
+            Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
+        }
+        //---------------------------------------------------------------------------------------------
+
+        //Talles
+        private static void EliminarTalle()
+        {
+            Console.WriteLine("Eliminar Un Talle");
+            MostrarTalles();
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del talle que desea eliminar: ", 0, 9999);
+            try
+            {
+                var servicio = servicioProvider?.GetService<ISizesService>();
+                var size = servicio?.GetSizePorId(id);
+
+                if (size != null)
+                {
+                    if (servicio != null)
+                    {
+                        if (!servicio.EstaRelacionado(size))
+                        {
+                            servicio.Eliminar(size);
+                            Console.WriteLine("Registro eliminado satisfactoriamente.");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("El registro no puede ser eliminado porque se encuentra relacionado.");
+                        }
+
+                    }
+                    else
+                    {
+                        throw new Exception("Servicio no disponible.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El registro que desea eliminar no existe.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message); ;
+            }
+
+            Thread.Sleep(5000);
+        }
+        private static void EditarTalle()
+        {
+            var servicio = servicioProvider?.GetService<ISizesService>();
+
+            Console.WriteLine("Editar talle");
+            MostrarTalles();
+
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del talle que desea editar: ", 0, 9999);
+            var size = servicio?.GetSizePorId(id);
+
+            if (size != null)
+            {
+                Console.WriteLine($"Talle Anterior: {size.SizeNumber}");
+                var nuevoNumber = ConsoleExtensions.ReadDecimal("Ingrese el nuevo talle: ");
+                size.SizeNumber = nuevoNumber;
+                servicio?.Guardar(size);
+                Console.WriteLine("Talle editado satisfactoriamente.");
+            }
+            else
+            {
+                Console.WriteLine("El talle que desea editar no existe.");
+            }
+            Thread.Sleep(2000);
+        }
+        private static void AgregarTalle()
+        {
+            var servicio = servicioProvider?.GetService<ISizesService>();
+
+            Console.WriteLine("Agregar Un talle");
+
+            var sizeNumber = ConsoleExtensions.ReadDecimal("Ingrese el número del talle: ");
+
+            var size = new Size
+            {
+                SizeNumber = sizeNumber
+            };
+
+            if (servicio != null)
+            {
+                if (!servicio.Existe(size))
+                {
+                    servicio.Guardar(size);
+                    Console.WriteLine("Talle agregado.");
+                }
+                else
+                {
+                    Console.WriteLine("El talle que desea ingresar ya existe.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Servicio no disponible");
+            }
+
+            Thread.Sleep(2000);
+        }
+        private static void MostrarTalles()
+        {
+            var servicio = servicioProvider?.GetService<ISizesService>();
+            var sizes = servicio?.GetSizes();
+            Console.WriteLine("Listado De Talles");
+
+            var tabla = new ConsoleTable("ID", "TALLE");
+
+            if (sizes != null)
+            {
+                foreach (var s in sizes)
+                {
+                    tabla.AddRow(s.SizeId, s.SizeNumber);
+                }
+            }
+            tabla.Options.EnableCount = false;
+            tabla.Write();
+            Console.WriteLine($"Cantidad: {servicio?.GetCantidad()}");
+        }
+        //---------------------------------------------------------------------------------------------
+
+        //Talles Zapatillas
+        private static void AsignarTalles()
+        {
+            var servicioTalles = servicioProvider?.GetService<ISizesService>();
+            var servicioShoes = servicioProvider?.GetService<IShoesService>();
+
+            if (servicioTalles == null || servicioShoes == null)
+            {
+                Console.WriteLine("Servicios no disponibles.");
+                return;
+            }
+
+            MostrarZapatillas();
+            var shoeId = ConsoleExtensions.ReadInt("Ingrese el ID del Zapatilla al que se le asignará un talle: ",0,9999);
+            Shoe shoe = servicioShoes.GetShoePorId(shoeId);
+            if (shoe != null)
+            {
+                MostrarTalles();
+                var sizeId = ConsoleExtensions.ReadInt("Ingrese el ID del talle que desea asignar al Zapatilla:  ", 0, 9999);
+                Size size = servicioTalles.GetSizePorId(sizeId);
+
+                if (size != null)
+                {
+                    Console.WriteLine($"Está por agregar el talle {size.SizeNumber} a los zapatos de id {shoe.ShoeId} y modelo {shoe.Model}");
+                    var stock = ConsoleExtensions.ReadInt("Ingrese la cantidad de stock a dar de alta para este ingreso: ", 0, 9999);
+                    servicioShoes.AsignarTalle(shoe, size, stock);
+
+                    Console.WriteLine("Se ingresó lo siguiente:");
+                    Console.WriteLine($"ZAPATILLAS: ");
+                    Console.WriteLine($"Marca: {shoe.Brand.BrandName}");
+                    Console.WriteLine($"Deporte: {shoe.Sport.SportName}");
+                    Console.WriteLine($"Genero: {shoe.Genre.GenreName}");
+                    Console.WriteLine($"Color: {shoe.Colour.ColourName}");
+                    Console.WriteLine($"Modelo: {shoe.Model}");
+                    Console.WriteLine($"Descripción {shoe.Description}");
+                    Console.WriteLine($"Precio {shoe.Price}");
+                    Console.WriteLine($"TALLE: {size.SizeNumber}");
+                    Console.WriteLine($"Cantidad de stock: {stock}");
+
+                    Console.WriteLine("Registro agregado satisfactoriamente...");
+                }
+                else
+                {
+                    Console.WriteLine("El ID del talle que ha seleccionado, no existe");
+
+                }
+            }
+            else
+            {
+                Console.WriteLine("El ID del zapato que ha seleccionado, no existe");
+            }
+
+        }
+        private static void ListarTallesPorZapatillas()
+        {
+            var servicioShoes = servicioProvider?.GetService<IShoesService>();
+
+            MostrarZapatillas();
+
+            var shoeId = ConsoleExtensions.ReadInt("Ingrese el ID del zapato para poder ver los talles en los que se encuentra disponible: ",0,9999);
+
+            Shoe? shoe = servicioShoes?.GetShoePorId(shoeId);
+
+            if (shoe != null)
+            {
+                Console.WriteLine("Zapatilla Seleccionada: ");
+
+                var tablaShoe = new ConsoleTable("ID", "MARCA", "DEPORTE", "GENERO", "COLOR", "MODELO", "DESCRIPCION", "PRECIO");
+                tablaShoe.AddRow(
+                        shoe.ShoeId,
+                        shoe.Brand.BrandName,
+                        shoe.Sport.SportName,
+                        shoe.Genre.GenreName,
+                        shoe.Colour.ColourName,
+                        shoe.Model,
+                        shoe.Description,
+                        shoe.Price);
+                tablaShoe.Options.EnableCount = false;
+                tablaShoe.Write();
+
+                List<Size>? sizes = servicioShoes?.GetSizesForShoe(shoe.ShoeId);
+                if (sizes != null && sizes.Count() > 0)
+                {
+                    Console.WriteLine("Talles Disponibles");
+
+                    var tablaSizes = new ConsoleTable("ID", "TALLE", "STOCK");
+                    foreach (var s in sizes)
+                    {
+                        int stock = servicioShoes.GetStockShoeSize(shoe, s);
+
+                        tablaSizes.AddRow(s.SizeId, s.SizeNumber, stock);
+                    }
+                    tablaSizes.Options.EnableCount = false;
+                    tablaSizes.Write();
+
+                }
+                else
+                {
+                    Console.WriteLine("No hay talles disponibles para esta Zapatilla.");
+                    Console.WriteLine();
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("El ID que ha ingresado no corresponde a ninguna Zapatilla.");
+            }
+        }
+        private static void ListarZapatillasPorTalle()
+        {
+            var servicioSizes = servicioProvider?.GetService<ISizesService>();
+            var servicioShoes = servicioProvider?.GetService<IShoesService>();
+
+            MostrarTalles();
+
+            var sizeId = ConsoleExtensions.ReadInt("Ingrese el ID del talle para poder ver los Zapatillas disponibles: ",0, 9999);
+
+            Size? size = servicioSizes?.GetSizePorId(sizeId);
+
+            if (size != null)
+            {
+                Console.WriteLine($"Talle Seleccionado: {size.SizeNumber}");
+
+                List<Shoe>? shoes = servicioSizes?.GetShoesForSize(size.SizeId);
+
+                if (shoes != null && shoes.Count() > 0)
+                {
+                    Console.WriteLine("Zpatillas Disponibles:");
+                    var tabla = new ConsoleTable("ID", "MARCA", "DEPORTE", "GENERO", "COLOR", "MODELO", "DESCRIPCION", "PRECIO", "STOCK");
+                    foreach (var s in shoes)
+                    {
+                        int stock = servicioShoes.GetStockShoeSize(s, size);
+
+                        tabla.AddRow(s.ShoeId,
+                            s.Brand.BrandName,
+                            s.Sport.SportName,
+                            s.Genre.GenreName,
+                            s.Colour.ColourName,
+                            s.Model,
+                            s.Description,
+                            s.Price,
+                            stock);
+                    }
+                    tabla.Options.EnableCount = false;
+                    tabla.Write();
+                }
+                else
+                {
+                    Console.WriteLine("No hay zapatos disponibles en el talle seleccionado.");
+                    Console.WriteLine();
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("El ID que ha ingresado no corresponde a ningun talle.");
+            }
+        }
+        //---------------------------------------------------------------------------------------------
+
+
         //Calculo de Paginas
         private static int CalcularCantidadPaginas(int cantRegistros, int cantPorPagina)
         {
@@ -1156,6 +1271,9 @@ namespace TP01EF2024.Consola
                 return cantRegistros / cantPorPagina + 1;
             }
         }
+        //---------------------------------------------------------------------------------------------
+
+
         //Listas Paginadas
         private static void ListarMarcasPaginado()
         {
@@ -1303,6 +1421,322 @@ namespace TP01EF2024.Consola
 
             Console.ReadLine();
         }
+        //---------------------------------------------------------------------------------------------
+
+
+        //Listas Filtradas Paginadas
+        private static void ListarZapatillasPorColorPaginado(decimal? precioMinimo = null, decimal? precioMaximo = null)
+        {
+            MostrarColores();
+            var servicioColor = servicioProvider?.GetService<IColoursService>();
+            var servicioShoes = servicioProvider?.GetService<IShoesService>();
+            var colourId = ConsoleExtensions.ReadInt("Ingrese el ID del Color para ver los zapatos disponibles: ", 0, 9999);
+            var pageSize = ConsoleExtensions.ReadInt("Ingrese la cantidad por página:", 1, 10);
+
+
+            Colour? colour = servicioColor?.GetColourPorId(colourId);
+
+            var CantidadRegistros = servicioShoes?.GetCantidadFiltrada(null, null, null, colour, precioMaximo, precioMinimo) ?? 0;
+            var CantidadDePaginas = CalcularCantidadPaginas(CantidadRegistros, pageSize);
+
+            if (colour != null)
+            {
+                List<Shoe>? shoes = null;
+
+                if (precioMinimo != null && precioMaximo != null)
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, null, null, null, colour, precioMaximo, precioMinimo);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {colour.ColourName} con precio entre ${precioMinimo} y ${precioMaximo}");
+                        }
+                    }
+                }
+                else
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, null, null, null, colour, null, null);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {colour.ColourName}");
+                        }
+                    }
+
+                    //shoes = servicioColor?.GetShoes(colour);
+                    //TablaDeZapatos(shoes);
+                    //Console.WriteLine($"Cantidad: {servicioShoes?.GetCantidad()}");
+                    //Console.WriteLine($"ERRORRRRRRR");
+
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("La marca que ha seleccionado no existe.");
+            }
+        }
+        private static void ListarZapatillasPorDeportePaginado(decimal? precioMinimo = null, decimal? precioMaximo = null)
+        {
+            MostrarDeportes();
+            var servicioSport = servicioProvider?.GetService<ISportsService>();
+            var servicioShoes = servicioProvider?.GetService<IShoesService>();
+            var sporId = ConsoleExtensions.ReadInt("Ingrese el ID del Deporte para ver los zapatos disponibles: ", 0, 9999);
+            var pageSize = ConsoleExtensions.ReadInt("Ingrese la cantidad por página:", 1, 10);
+
+
+            Sport? sport = servicioSport?.GetSportPorId(sporId);
+
+            var CantidadRegistros = servicioShoes?.GetCantidadFiltrada(null, sport, null, null, precioMaximo, precioMinimo) ?? 0;
+            var CantidadDePaginas = CalcularCantidadPaginas(CantidadRegistros, pageSize);
+
+            if (sport != null)
+            {
+                List<Shoe>? shoes = null;
+
+                if (precioMinimo != null && precioMaximo != null)
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, null, sport, null, null, precioMaximo, precioMinimo);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {sport.SportName} con precio entre ${precioMinimo} y ${precioMaximo}");
+                        }
+                    }
+                }
+                else
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, null, sport, null, null, null, null);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {sport.SportName}");
+                        }
+                    }
+
+                    //shoes = servicioMarcas?.GetShoes(brand);
+                    //TablaDeZapatos(shoes);
+                    //Console.WriteLine($"Cantidad: {servicioShoes?.GetCantidad()}");
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("La marca que ha seleccionado no existe.");
+            }
+        }
+        private static void ListarZapatillasPorMarcaPaginado(decimal? precioMinimo = null, decimal? precioMaximo = null)
+        {
+            MostrarMarcas();
+            var servicioMarcas = servicioProvider?.GetService<IBrandsService>();
+            var servicioShoes = servicioProvider?.GetService<IShoesService>();
+            var brandId = ConsoleExtensions.ReadInt("Ingrese el ID de la marca para ver los zapatos disponibles: ", 0, 9999);
+            var pageSize = ConsoleExtensions.ReadInt("Ingrese la cantidad por página:", 1, 10);
+
+
+            Brand? brand = servicioMarcas?.GetBrandPorId(brandId);
+
+            var CantidadRegistros = servicioShoes?.GetCantidadFiltrada(brand, null, null, null, precioMaximo, precioMinimo) ?? 0;
+            var CantidadDePaginas = CalcularCantidadPaginas(CantidadRegistros, pageSize);
+
+            if (brand != null)
+            {
+                List<Shoe>? shoes = null;
+
+                if (precioMinimo != null && precioMaximo != null)
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, brand, null, null, null, precioMaximo, precioMinimo);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {brand.BrandName} con precio entre ${precioMinimo} y ${precioMaximo}");
+                        }
+                    }
+                }
+                else
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, brand, null, null, null, null, null);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {brand.BrandName} ");
+                        }
+                    }
+
+                    //shoes = servicioMarcas?.GetShoes(brand);
+                    //TablaDeZapatos(shoes);
+                    //Console.WriteLine($"Cantidad: {servicioShoes?.GetCantidad()}");
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("La marca que ha seleccionado no existe.");
+            }
+
+        }
+        private static void ListarZapatillasPorGeneroPaginado(decimal? precioMinimo = null, decimal? precioMaximo = null)
+        {
+            MostrarColores();
+            var servicioGeneror = servicioProvider?.GetService<IGenresService>();
+            var servicioShoes = servicioProvider?.GetService<IShoesService>();
+            var genreId = ConsoleExtensions.ReadInt("Ingrese el ID del Genero para ver los zapatos disponibles: ", 0, 9999);
+            var pageSize = ConsoleExtensions.ReadInt("Ingrese la cantidad por página:", 1, 10);
+
+
+            Genre? genre = servicioGeneror?.GetGenrePorId(genreId);
+
+            var CantidadRegistros = servicioShoes?.GetCantidadFiltrada(null, null, genre, null, precioMaximo, precioMinimo) ?? 0;
+            var CantidadDePaginas = CalcularCantidadPaginas(CantidadRegistros, pageSize);
+
+            if (genre != null)
+            {
+                List<Shoe>? shoes = null;
+
+                if (precioMinimo != null && precioMaximo != null)
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, null, null, genre, null, precioMaximo, precioMinimo);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {genre.GenreName} con precio entre ${precioMinimo} y ${precioMaximo}");
+                        }
+                    }
+                }
+                else
+                {
+                    for (int page = 0; page < CantidadDePaginas; page++)
+                    {
+                        Console.Clear();
+                        shoes = servicioShoes?.GetListaPaginadaOrdenadaFiltrada(true, page, pageSize, null, null, null, genre, null, null, null);
+                        if (shoes != null && shoes.Count() != 0)
+                        {
+                            Console.WriteLine("Listado de Zapatillas");
+                            Console.WriteLine($"Página: {page + 1}");
+                            TablaDeZapatillas(shoes);
+                            Console.WriteLine($"Cantidad: {CantidadRegistros}");
+                            ConsoleExtensions.Enter();
+
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No existen zapatos de la marca {genre.GenreName}");
+                        }
+                    }
+
+                    //shoes = servicioColor?.GetShoes(colour);
+                    //TablaDeZapatos(shoes);
+                    //Console.WriteLine($"Cantidad: {servicioShoes?.GetCantidad()}");
+                    //Console.WriteLine($"ERRORRRRRRR");
+
+
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("La marca que ha seleccionado no existe.");
+            }
+        }
+        private static void TablaDeZapatillas(List<Shoe>? shoes)
+        {
+            var tabla = new ConsoleTable("ID", "MARCA", "DEPORTE", "GENERO", "COLOR", "MODELO", "DESCRIPCION", "PRECIO");
+
+            foreach (var s in shoes)
+            {
+                tabla.AddRow(s.ShoeId,
+                    s.Brand.BrandName,
+                    s.Sport.SportName,
+                    s.Genre.GenreName,
+                    s.Colour.ColourName,
+                    s.Model, s.Description,
+                    s.Price);
+            }
+            tabla.Options.EnableCount = false;
+            tabla.Write();
+        }
+        //---------------------------------------------------------------------------------------------
+
 
     }
 }

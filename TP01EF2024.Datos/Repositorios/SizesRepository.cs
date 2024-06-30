@@ -57,7 +57,7 @@ namespace TP01EF2024.Datos.Repositorios
         {
             IQueryable<Size> query = _context.Sizes.AsNoTracking();
 
-            //ORDEN
+            
             if (orden != null)
             {
                 switch (orden)
@@ -73,7 +73,7 @@ namespace TP01EF2024.Datos.Repositorios
                 }
             }
 
-            //PAGINADO
+            
             List<Size> listaPaginada = query.AsNoTracking()
                 .Skip(page * pageSize) //Saltea estos registros
                 .Take(pageSize) //Muestra estos

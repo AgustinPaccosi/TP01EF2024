@@ -93,7 +93,7 @@ namespace TP01EF2024.Datos.Repositorios
                 .Include(s => s.Colour)
                 .AsNoTracking();
 
-            // FILTROS
+            
             if (brand != null)
             {
                 query = query
@@ -115,7 +115,7 @@ namespace TP01EF2024.Datos.Repositorios
                     .Where(s => s.ColourId == colour.ColourId);
             }
 
-            //ORDEN
+            
             if (orden != null)
             {
                 switch (orden)
@@ -137,7 +137,7 @@ namespace TP01EF2024.Datos.Repositorios
                 }
             }
 
-            //PRECIO
+            
             if (maximo != null && minimo != null)
             {
                 query = query
@@ -145,7 +145,7 @@ namespace TP01EF2024.Datos.Repositorios
                     .Where(s => s.Price >= minimo);
             }
 
-            //PAGINADO
+            
             if (paginar)
             {
                 List<Shoe> listaPaginada = query.AsNoTracking()
@@ -168,7 +168,7 @@ namespace TP01EF2024.Datos.Repositorios
             decimal? minimo = null)
         {
             IQueryable<Shoe> query = _context.Shoes.AsNoTracking();
-            // FILTROS
+            
             if (brand != null)
             {
                 query = query
@@ -189,7 +189,7 @@ namespace TP01EF2024.Datos.Repositorios
                 query = query
                     .Where(s => s.ColourId == colour.ColourId);
             }
-            //PRECIO
+
             if (maximo != null && minimo != null)
             {
                 query = query
@@ -202,7 +202,14 @@ namespace TP01EF2024.Datos.Repositorios
 
         public Shoe? GetShoePorId(int id)
         {
-            return _context.Shoes.SingleOrDefault(s => s.ShoeId == id);
+            //return _context.Shoes.SingleOrDefault(s => s.ShoeId == id);
+            return _context.Shoes.
+                Include(s => s.Brand).
+                Include(s => s.Genre).
+                Include(s => s.Sport).
+                Include(s => s.Colour).
+                SingleOrDefault(s => s.ShoeId == id);
+
         }
 
         public List<Shoe> GetShoes()
