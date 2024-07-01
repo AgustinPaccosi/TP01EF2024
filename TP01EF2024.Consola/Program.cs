@@ -1,5 +1,7 @@
 ﻿using ConsoleTables;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using System.Xml.Serialization;
 using TP01EF2024.Datos.Migrations;
 using TP01EF2024.Entidades;
 using TP01EF2024.Entidades.Enum;
@@ -810,6 +812,8 @@ namespace TP01EF2024.Consola
         }
         //---------------------------------------------------------------------------------------------
 
+
+
         //Zapatillas
         private static void EliminarZapatillas()
         {
@@ -896,29 +900,23 @@ namespace TP01EF2024.Consola
         }
         private static void AgregarZapatillas()
         {
+            Console.WriteLine("Agregar una Zapatilla");
+
             var servicio = servicioProvider?.GetService<IShoesService>();
+            var serviciomarca = servicioProvider?.GetService<IBrandsService>();
+            var serviciodeportes = servicioProvider?.GetService<ISportsService>();
+            var serviciogeneros = servicioProvider?.GetService<IGenresService>();
+            var serviciocolores =servicioProvider?.GetService<IColoursService>();
 
-            Console.WriteLine("Agregar Zapatilla");
 
-            var model = ConsoleExtensions.ReadString("Ingrese el modelo de la zapatilla: ");
-            var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la zapatilla: ");
-            var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio del zapatilla: ");
+            var model = ConsoleExtensions.ReadString("Ingrese el modelo de la Zapatilla: ");
+            var description = ConsoleExtensions.ReadString("Ingrese la descripcion de la Zapatilla: ");
+            var precio = ConsoleExtensions.ReadDecimal("Ingrese el precio de la Zapatilla: ");
 
-            Console.Clear();
-            MostrarMarcas();
-            var marca = ConsoleExtensions.ReadInt("Ingrese el ID de la marca de la zapatilla: ", 0, 9999);
-
-            Console.Clear();
-            MostrarDeportes();
-            var deporte = ConsoleExtensions.ReadInt("Ingrese el ID del deporte de la zapatilla: ", 0, 9999);
-
-            Console.Clear();
-            MostrarGeneros();
-            var genero = ConsoleExtensions.ReadInt("Ingrese el ID del genero de la zapatilla: ", 0, 9999);
-
-            Console.Clear();
-            MostrarColores();
-            var colourId = ConsoleExtensions.ReadInt("Ingrese el ID del Color de la zapatilla: ", 0, 9999);
+            var marca = ValidarMarca(serviciomarca);
+            var deporte = ValidarDeporte(serviciodeportes);
+            var genero = ValidarGenero(serviciogeneros);
+            var colourId=ValidarColour(serviciocolores);
 
             var shoe = new Shoe
             {
@@ -928,7 +926,7 @@ namespace TP01EF2024.Consola
                 Model = model,
                 Description = description,
                 Price = precio,
-                ColourId = colourId
+                ColourId=colourId
             };
 
             if (servicio != null)
@@ -936,11 +934,11 @@ namespace TP01EF2024.Consola
                 if (!servicio.Existe(shoe))
                 {
                     servicio.Guardar(shoe);
-                    Console.WriteLine("Zapatilla agregado satisfactoriamente.");
+                    Console.WriteLine("Zapato agregado satisfactoriamente.");
                 }
                 else
                 {
-                    Console.WriteLine("El zapatilla que desea ingresar ya existe.");
+                    Console.WriteLine("El zapato que desea ingresar ya existe.");
                 }
             }
             else
@@ -973,6 +971,118 @@ namespace TP01EF2024.Consola
         }
         //---------------------------------------------------------------------------------------------
 
+        //Validaciones
+        public static int ValidarMarca(IBrandsService serviciomarca)
+        {
+            Brand? marca;
+            
+            var valido = true;
+            do
+            {
+                Console.Clear();
+                MostrarMarcas();
+                List<Brand> listamarcas = serviciomarca.GetBrands();
+                var marcaId = ConsoleExtensions.ReadInt("Ingrese el ID de la marca del zapato: ", 0, 9999);
+                marca = serviciomarca?.GetBrandPorId(marcaId);
+                if (marca != null && serviciomarca != null)
+                {
+                    if (listamarcas.Any(b => b.BrandId == marca.BrandId))
+                    {
+                        valido = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("ID de la marca no válido. Inténtelo nuevamente.");
+                    valido = true;
+                }
+
+            } while (valido);
+
+            return marca.BrandId;
+        }
+        public static int ValidarDeporte(ISportsService serviciodeportes)
+        {
+            Sport? deporte;
+            var valido = false;
+            do
+            {
+                Console.Clear();
+                MostrarDeportes();
+                List<Sport> listadeportes = serviciodeportes.GetSports();
+                var deporteId = ConsoleExtensions.ReadInt("Ingrese el ID del deporte del zapato: ", 0, 9999);
+                deporte = serviciodeportes?.GetSportPorId(deporteId);
+                if (deporte != null && serviciodeportes != null)
+                {
+                    if (listadeportes.Any(d => d.SportId == deporte.SportId))
+                    {
+                        valido = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("ID del deporte no válido. Inténtelo nuevamente.");
+                        valido = false;
+                    }
+                }
+            } while (!valido);
+
+            return deporte.SportId;
+        }
+        public static int ValidarGenero(IGenresService serviciogeneros)
+        {
+            Genre? genero;
+            var valido = false;
+            do
+            {
+                Console.Clear();
+                MostrarGeneros();
+                List<Genre> listageneros = serviciogeneros.GetGenres();
+                var generoId = ConsoleExtensions.ReadInt("Ingrese el ID del genero del zapato: ", 0, 9999);
+                genero = serviciogeneros?.GetGenrePorId(generoId);
+                if (genero != null && serviciogeneros != null)
+                {
+                    if (listageneros.Any(g => g.GenreId == genero.GenreId))
+                    {
+                        valido = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("ID del género no válido. Inténtelo nuevamente.");
+                        valido = false;
+                    }
+                }
+            } while (!valido);
+
+            return genero.GenreId;
+        }
+        public static int ValidarColour(IColoursService serviciocolores)
+        {
+            Colour? color;
+            var valido = false;
+            do
+            {
+                Console.Clear();
+                MostrarColores();
+                List<Colour> listacolores = serviciocolores.GetColours();
+                var colorId = ConsoleExtensions.ReadInt("Ingrese el ID del color del zapato: ", 0, 9999);
+                color = serviciocolores?.GetColourPorId(colorId);
+                if (color != null && serviciocolores != null)
+                {
+                    if (listacolores.Any(c => c.ColourId == color.ColourId))
+                    {
+                        valido = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("ID del color no válido. Inténtelo nuevamente.");
+                        valido = false;
+                    }
+                }
+            } while (!valido);
+
+            return color.ColourId;
+        }
+        //---------------------------------------------------------------------------------------------
         //Talles
         private static void EliminarTalle()
         {
