@@ -20,6 +20,7 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void Agregar(Brand brand)
         {
+            brand.Active = true;
             _context.Brands.Add(brand);
         }
 

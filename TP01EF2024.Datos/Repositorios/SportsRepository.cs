@@ -20,6 +20,7 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void Agregar(Sport sport)
         {
+            sport.Active = true;
             _context.Sports.Add(sport);
         }
 

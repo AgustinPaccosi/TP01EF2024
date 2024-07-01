@@ -20,6 +20,7 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void Agregar(Colour colour)
         {
+            colour.Active = true;
             _context.Colours.Add(colour);
         }
 

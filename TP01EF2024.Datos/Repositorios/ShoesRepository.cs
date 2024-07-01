@@ -25,6 +25,7 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void Agregar(Shoe shoe)
         {
+            shoe.Active= true;
             _context.Shoes.Add(shoe);
         }
 

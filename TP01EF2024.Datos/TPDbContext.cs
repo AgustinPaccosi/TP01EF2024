@@ -27,7 +27,7 @@ namespace TP01EF2024.Datos
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Data Source=.; 
-                                      Initial Catalog=TP01EF2024; 
+                                      Initial Catalog=TP01EDIIntegrador; 
                                       Trusted_Connection=true; 
                                       TrustServerCertificate=true;");
         }
@@ -124,8 +124,8 @@ namespace TP01EF2024.Datos
                     SportId = 3,
                     GenreId = 2,
                     ColourId=1,
-                    Model = "Deportivas",
-                    Description = "Vans Deportivas",
+                    Model = "Calle",
+                    Description = "Vans",
                     Price = 15,
                     Active = true
                 },
@@ -136,8 +136,8 @@ namespace TP01EF2024.Datos
                     SportId = 1,
                     GenreId = 1,
                     ColourId=1,
-                    Model = "Botines",
-                    Description = "Botines Femeninos",
+                    Model = "Botas",
+                    Description = "Botas de Lluvia ",
                     Price = 20,
                     Active = true
                 },
@@ -148,8 +148,8 @@ namespace TP01EF2024.Datos
                     SportId = 2,
                     GenreId = 3,
                     ColourId=1,
-                    Model = "1982",
-                    Description = "Importados",
+                    Model = "Fire",
+                    Description = "Facheritas",
                     Price = 35,
                     Active = true
 
