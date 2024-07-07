@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Dtos;
 using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Interfaces
@@ -41,5 +42,8 @@ namespace TP01EF2024.Datos.Interfaces
             Colour? colour = null,
             decimal? maximo = null,
             decimal? minimo = null);
+        List<ShoeDto> GetListaDto();
+        List<ShoeDto> PasarListaDto(List<Shoe> listaShoes);
+
     }
 }

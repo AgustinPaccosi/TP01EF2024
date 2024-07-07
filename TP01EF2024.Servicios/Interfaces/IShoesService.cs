@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Dtos;
 using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Servicios.Interfaces
@@ -17,6 +18,8 @@ namespace TP01EF2024.Servicios.Interfaces
         Shoe? GetShoePorId(int id);
         List<Shoe> GetShoes();
         int GetCantidad();
+        List<ShoeDto> GetListaDto();
+        List<ShoeDto> PasarListaDto(List<Shoe> listaShoes);
 
         List<Size> GetSizesForShoe(int shoeId);
         void AsignarTalle(Shoe shoe, Size size, int stock);

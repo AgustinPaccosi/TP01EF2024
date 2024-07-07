@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Datos.Repositorios;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Dtos;
 using TP01EF2024.Entidades.Enum;
 using TP01EF2024.Servicios.Interfaces;
 
@@ -104,6 +105,20 @@ namespace TP01EF2024.Servicios.Servicios
             return _repository.GetCantidadFiltrada(brand, sport, genre, colour, maximo, minimo);
         }
 
+        public List<ShoeDto> GetListaDto()
+        {
+            try
+            {
+                return _repository.GetListaDto();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
         public List<Shoe> GetListaPaginadaOrdenadaFiltrada(bool paginar, int page, int pageSize, Orden? orden = null, Brand? brand = null, Sport? sport = null, Genre? genre = null, Colour? colour = null, decimal? maximo = null, decimal? minimo = null)
         {
             return _repository.GetListaPaginadaOrdenadaFiltrada(paginar, page, pageSize, orden, brand, sport, genre, colour, maximo, minimo);
@@ -182,6 +197,11 @@ namespace TP01EF2024.Servicios.Servicios
                 _unitOfWork.RollBack();
                 throw;
             }
+        }
+
+        public List<ShoeDto> PasarListaDto(List<Shoe> listaShoes)
+        {
+            return _repository.PasarListaDto(listaShoes);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Datos.Interfaces;
 using TP01EF2024.Entidades;
+using TP01EF2024.Entidades.Dtos;
 using TP01EF2024.Entidades.Enum;
 
 namespace TP01EF2024.Datos.Repositorios
@@ -230,6 +231,49 @@ namespace TP01EF2024.Datos.Repositorios
                 .Where(ss => ss.ShoeId == shoeId)
                 .Select(ss => ss.Size)
                 .ToList();
+        }
+
+        public List<ShoeDto> GetListaDto()
+        {
+            return _context.Shoes
+                .Include(p => p.Brand)
+                .Include(p => p.Genre)
+                .Include(p => p.Colour)
+                .Include(p => p.Sport)
+                .Select(n => new ShoeDto
+                {
+                    ShoeId=n.ShoeId,
+                    Brand=n.Brand !=null ? n.Brand.BrandName : string.Empty,
+                    Genre = n.Genre != null ? n.Genre.GenreName : string.Empty,
+                    Color = n.Colour != null ? n.Colour.ColourName : string.Empty,
+                    Sport = n.Sport != null ? n.Sport.SportName : string.Empty,
+                    Model=n.Model,
+                    Description=n.Description,
+                    Price=n.Price,
+                }).ToList(); ;
+        
+        }
+
+        public List<ShoeDto> PasarListaDto(List<Shoe> listaShoes)
+        {
+            List<ShoeDto> listaDto = new List<ShoeDto>();
+            foreach (var shoe in listaShoes)
+            {
+                ShoeDto dto = new ShoeDto
+                {
+                    ShoeId = shoe.ShoeId,
+                    Brand = shoe.Brand?.BrandName ?? "",
+                    Sport = shoe.Sport?.SportName ?? "",
+                    Genre = shoe.Genre?.GenreName ?? "",
+                    Color = shoe.Colour?.ColourName ?? "",
+                    Model = shoe.Model,
+                    Description = shoe.Description,
+                    Price = shoe.Price
+                };
+
+                listaDto.Add(dto);
+            }
+            return listaDto;
         }
     }
 }
