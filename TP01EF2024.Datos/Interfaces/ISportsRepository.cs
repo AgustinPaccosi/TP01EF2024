@@ -19,5 +19,6 @@ namespace TP01EF2024.Datos.Interfaces
         List<Sport> GetSports();
         int GetCantidad();
         List<Sport>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null);
+        List<Shoe>? GetShoes(Sport? sport);
     }
 }

@@ -30,82 +30,101 @@
         {
             ButtonGenres = new Button();
             ButtonBrands = new Button();
-            button1 = new Button();
-            button2 = new Button();
+            ButtonColours = new Button();
+            ButtonSports = new Button();
             ButtonShoes = new Button();
+            label1 = new Label();
             SuspendLayout();
             // 
             // ButtonGenres
             // 
-            ButtonGenres.Location = new Point(170, 158);
+            ButtonGenres.Location = new Point(171, 124);
             ButtonGenres.Margin = new Padding(3, 4, 3, 4);
             ButtonGenres.Name = "ButtonGenres";
-            ButtonGenres.Size = new Size(126, 90);
+            ButtonGenres.Size = new Size(169, 90);
             ButtonGenres.TabIndex = 7;
             ButtonGenres.Text = "Generos";
             ButtonGenres.UseVisualStyleBackColor = true;
+            ButtonGenres.Click += ButtonGenres_Click;
             // 
             // ButtonBrands
             // 
-            ButtonBrands.Location = new Point(38, 158);
+            ButtonBrands.Location = new Point(2, 222);
             ButtonBrands.Margin = new Padding(3, 4, 3, 4);
             ButtonBrands.Name = "ButtonBrands";
-            ButtonBrands.Size = new Size(126, 90);
+            ButtonBrands.Size = new Size(169, 90);
             ButtonBrands.TabIndex = 6;
             ButtonBrands.Text = "Marcas";
             ButtonBrands.UseVisualStyleBackColor = true;
+            ButtonBrands.Click += ButtonBrands_Click;
             // 
-            // button1
+            // ButtonColours
             // 
-            button1.Location = new Point(566, 158);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(126, 90);
-            button1.TabIndex = 8;
-            button1.Text = "Colores";
-            button1.UseVisualStyleBackColor = true;
+            ButtonColours.Location = new Point(619, 222);
+            ButtonColours.Margin = new Padding(3, 4, 3, 4);
+            ButtonColours.Name = "ButtonColours";
+            ButtonColours.Size = new Size(169, 90);
+            ButtonColours.TabIndex = 8;
+            ButtonColours.Text = "Colores";
+            ButtonColours.UseVisualStyleBackColor = true;
+            ButtonColours.Click += ButtonColours_Click;
             // 
-            // button2
+            // ButtonSports
             // 
-            button2.Location = new Point(434, 158);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(126, 90);
-            button2.TabIndex = 9;
-            button2.Text = "Deportes";
-            button2.UseVisualStyleBackColor = true;
+            ButtonSports.Location = new Point(453, 124);
+            ButtonSports.Margin = new Padding(3, 4, 3, 4);
+            ButtonSports.Name = "ButtonSports";
+            ButtonSports.Size = new Size(169, 90);
+            ButtonSports.TabIndex = 9;
+            ButtonSports.Text = "Deportes";
+            ButtonSports.UseVisualStyleBackColor = true;
+            ButtonSports.Click += ButtonSports_Click;
             // 
             // ButtonShoes
             // 
-            ButtonShoes.Location = new Point(302, 158);
+            ButtonShoes.Location = new Point(320, 222);
             ButtonShoes.Margin = new Padding(3, 4, 3, 4);
             ButtonShoes.Name = "ButtonShoes";
-            ButtonShoes.Size = new Size(126, 90);
+            ButtonShoes.Size = new Size(169, 90);
             ButtonShoes.TabIndex = 10;
             ButtonShoes.Text = "Zapatillas";
             ButtonShoes.UseVisualStyleBackColor = true;
+            ButtonShoes.Click += ButtonShoes_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label1.Location = new Point(353, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(92, 41);
+            label1.TabIndex = 11;
+            label1.Text = "Menu";
             // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label1);
             Controls.Add(ButtonShoes);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(ButtonSports);
+            Controls.Add(ButtonColours);
             Controls.Add(ButtonGenres);
             Controls.Add(ButtonBrands);
             Name = "MenuPrincipal";
             Text = "MenuPrincipal";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Button ButtonGenres;
         private Button ButtonBrands;
-        private Button button1;
-        private Button button2;
+        private Button ButtonColours;
+        private Button ButtonSports;
         private Button ButtonShoes;
+        private Label label1;
     }
 }

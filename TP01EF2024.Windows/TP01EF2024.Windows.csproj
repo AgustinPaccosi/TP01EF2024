@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TP01EF2024.Entidades\TP01EF2024.Entidades.csproj" />
+    <ProjectReference Include="..\TP01EF2024.InversionOfControl\TP01EF2024.InversionOfControl.csproj" />
     <ProjectReference Include="..\TP01EF2024.Servicios\TP01EF2024.Servicios.csproj" />
   </ItemGroup>
 

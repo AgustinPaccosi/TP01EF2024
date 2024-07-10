@@ -14,6 +14,8 @@ namespace TP01EF2024.Datos.Interfaces
         void Editar(Genre genre);
         void Eliminar(Genre genre);
         bool EstaRelacionado(Genre genre);
+        List<Shoe>? GetShoes(Genre? genre);
+
         bool Existe(Genre genre);
         Genre? GetGenrePorId(int id);
         List<Genre> GetGenres();

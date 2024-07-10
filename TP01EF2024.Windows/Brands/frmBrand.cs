@@ -68,7 +68,7 @@ namespace TP01EF2024.Windows.Brands
             }
         }
 
-        private void ToolButtonNuevo_Click(object sender, EventArgs e)
+        private void ToolButtonNuevo_Click_1(object sender, EventArgs e)
         {
             frmBrandAE frm = new frmBrandAE() { Text = "Agregar Marca" };
             DialogResult dr = frm.ShowDialog(this);
@@ -83,7 +83,7 @@ namespace TP01EF2024.Windows.Brands
                     var r = GridHelpers.ConstruirFila(dgvDatos);
                     GridHelpers.SetearFila(r, brand);
                     GridHelpers.AgregarFila(r, dgvDatos);
-                    MessageBox.Show("Registro Agregado!!!", "Mensaje",
+                    MessageBox.Show("Registro Agregado", "Mensaje",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);
                     MostrarCantidadRegistros();
@@ -101,9 +101,10 @@ namespace TP01EF2024.Windows.Brands
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+
         }
 
-        private void TsButtonBorrar_Click(object sender, EventArgs e)
+        private void TsButtonBorrar_Click_1(object sender, EventArgs e)
         {
             if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
@@ -119,13 +120,13 @@ namespace TP01EF2024.Windows.Brands
                 {
                     _servicioBrand.Eliminar(brand);
                     GridHelpers.QuitarFila(r, dgvDatos);
-                    MessageBox.Show("Registro Borrado!!!", "Mensaje",
+                    MessageBox.Show("Registro Borrado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                     MostrarCantidadRegistros();
                 }
                 else
                 {
-                    MessageBox.Show("Registro Relacionado...Baja denegada!!!",
+                    MessageBox.Show("Registro Relacionado, Imposible dar de baja!!!",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -134,9 +135,10 @@ namespace TP01EF2024.Windows.Brands
                 MessageBox.Show(ex.Message, "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
-        private void TsButtonEditar_Click(object sender, EventArgs e)
+        private void TsButtonEditar_Click_1(object sender, EventArgs e)
         {
             if (dgvDatos.SelectedRows.Count == 0) return;
             var r = dgvDatos.SelectedRows[0];
@@ -153,7 +155,7 @@ namespace TP01EF2024.Windows.Brands
                 {
                     _servicioBrand.Guardar(brand);
                     GridHelpers.SetearFila(r, brand);
-                    MessageBox.Show("Registro Editado!!!", "Mensaje",
+                    MessageBox.Show("Registro Editado", "Mensaje",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -168,9 +170,10 @@ namespace TP01EF2024.Windows.Brands
                 MessageBox.Show(ex.Message, "Error",
                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
 
-        private void TsButtonFiltrar_Click(object sender, EventArgs e)
+        private void TsButtonFiltrar_Click_1(object sender, EventArgs e)
         {
             if (dgvDatos.SelectedRows.Count == 0) return;
 
@@ -178,17 +181,19 @@ namespace TP01EF2024.Windows.Brands
             Brand? brand = r.Tag as Brand;
             if (brand == null) return;
             var brandEnDB = _servicioBrand.GetBrandPorId(brand.BrandId);
-            listaShoes = _servicioShoe.GetShoes(brandEnDB);
+            listaShoes = _servicioBrand.GetShoes(brandEnDB);
             if (listaShoes == null) return;
             listaShoesDto = _servicioShoe.PasarListaDto(listaShoes);
-            frmMostrarShoes frm = new frmMostrarShoes();
-            frm.SetLista(listaShoesDto);
-            frm.ShowDialog(this);
+            //frmMostrarShoes frm = new frmMostrarShoes();
+            //frm.SetLista(listaShoesDto);
+            //frm.ShowDialog(this);
+
         }
 
-        private void TsButtonSalir_Click(object sender, EventArgs e)
+        private void TsButtonSalir_Click_1(object sender, EventArgs e)
         {
             Close();
+
         }
     }
 }

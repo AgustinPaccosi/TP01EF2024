@@ -81,6 +81,25 @@ namespace TP01EF2024.Datos.Repositorios
 
         }
 
+        public List<Shoe>? GetShoes(Sport? sport)
+        {
+            if (sport != null)
+            {
+                _context.Entry(sport)
+                                .Collection(tp => tp.Shoes)
+                                .Query()
+                                .Include(p => p.Brand)
+                                .Include(p => p.Sport)
+                                .Include(p => p.Genre)
+                                .Include(p => p.Colour)
+                                .Load();
+                var shoes = sport.Shoes.ToList();
+
+                return shoes;
+            }
+            return null;
+        }
+
         public Sport? GetSportPorId(int id)
         {
             return _context.Sports.SingleOrDefault(s => s.SportId == id);

@@ -92,6 +92,12 @@ namespace TP01EF2024.Servicios.Servicios
             return _repository.GetListaPaginadaOrdenada(page, pageSize, orden);
         }
 
+        public List<Shoe>? GetShoes(Genre? genre)
+        {
+            return _repository.GetShoes(genre);
+
+        }
+
         public void Guardar(Genre genre)
         {
             try

@@ -133,6 +133,7 @@
             ToolButtonNuevo.Size = new Size(56, 64);
             ToolButtonNuevo.Text = "Nuevo";
             ToolButtonNuevo.TextImageRelation = TextImageRelation.ImageAboveText;
+            ToolButtonNuevo.Click += ToolButtonNuevo_Click_1;
             // 
             // TsButtonBorrar
             // 
@@ -143,6 +144,7 @@
             TsButtonBorrar.Size = new Size(54, 64);
             TsButtonBorrar.Text = "Borrar";
             TsButtonBorrar.TextImageRelation = TextImageRelation.ImageAboveText;
+            TsButtonBorrar.Click += TsButtonBorrar_Click_1;
             // 
             // TsButtonEditar
             // 
@@ -153,6 +155,7 @@
             TsButtonEditar.Size = new Size(52, 64);
             TsButtonEditar.Text = "Editar";
             TsButtonEditar.TextImageRelation = TextImageRelation.ImageAboveText;
+            TsButtonEditar.Click += TsButtonEditar_Click_1;
             // 
             // toolStripSeparator1
             // 
@@ -168,6 +171,7 @@
             TsButtonFiltrar.Size = new Size(61, 64);
             TsButtonFiltrar.Text = "Detalle";
             TsButtonFiltrar.TextImageRelation = TextImageRelation.ImageAboveText;
+            TsButtonFiltrar.Click += TsButtonFiltrar_Click_1;
             // 
             // TsButtonSalir
             // 
@@ -178,6 +182,7 @@
             TsButtonSalir.Size = new Size(44, 64);
             TsButtonSalir.Text = "Salir";
             TsButtonSalir.TextImageRelation = TextImageRelation.ImageAboveText;
+            TsButtonSalir.Click += TsButtonSalir_Click_1;
             // 
             // frmBrand
             // 
@@ -187,7 +192,7 @@
             Controls.Add(splitContainer1);
             Controls.Add(toolStrip1);
             Name = "frmBrand";
-            Text = "frmBrand";
+            Text = "Marcas";
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             splitContainer1.Panel2.PerformLayout();

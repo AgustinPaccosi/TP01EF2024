@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace TP01EF2024.Datos.Repositorios
         }
         public bool EstaRelacionado(Colour colour)
         {
-            return true; //_context.ShoesColours.Any(s => s.ColourId == colour.ColourId);
+            return _context.Shoes.Any(s => s.ColourId == colour.ColourId);
         }
 
         public bool Existe(Colour colour)
@@ -61,6 +62,26 @@ namespace TP01EF2024.Datos.Repositorios
         public List<Colour> GetColours()
         {
             return _context.Colours.OrderBy(c => c.ColourId).AsNoTracking().ToList();
+        }
+
+        public List<Shoe>? GetShoes(Colour? colour)
+        {
+            if (colour != null)
+            {
+                _context.Entry(colour)
+                                .Collection(tp => tp.Shoes)
+                                .Query()
+                                .Include(p => p.Brand)
+                                .Include(p => p.Sport)
+                                .Include(p => p.Genre)
+                                .Include(p => p.Colour)
+                                .Load();
+                var shoes = colour.Shoes.ToList();
+
+                return shoes;
+            }
+            return null;
+
         }
     }
 }

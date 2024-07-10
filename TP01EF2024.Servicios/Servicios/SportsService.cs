@@ -72,6 +72,12 @@ namespace TP01EF2024.Servicios.Servicios
             return _repository.GetListaPaginadaOrdenada(page, pageSize, orden);
         }
 
+        public List<Shoe>? GetShoes(Sport? sport)
+        {
+            return _repository.GetShoes(sport);
+
+        }
+
         public Sport? GetSportPorId(int id)
         {
             try

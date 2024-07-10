@@ -18,6 +18,8 @@ namespace TP01EF2024.Servicios.Interfaces
         List<Genre> GetGenres();
         int GetCantidad();
         List<Genre>? GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null);
+        List<Shoe>? GetShoes(Genre? genre);
+
     }
 }
 

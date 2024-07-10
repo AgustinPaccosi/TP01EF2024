@@ -91,5 +91,25 @@ namespace TP01EF2024.Datos.Repositorios
             return listaPaginada;
 
         }
+
+        public List<Shoe>? GetShoes(Genre? genre)
+        {
+            if (genre != null)
+            {
+                _context.Entry(genre)
+                                .Collection(tp => tp.Shoes)
+                                .Query()
+                                .Include(p => p.Brand)
+                                .Include(p => p.Sport)
+                                .Include(p => p.Genre)
+                                .Include(p => p.Colour)
+                                .Load();
+                var shoes = genre.Shoes.ToList();
+
+                return shoes;
+            }
+            return null;
+
+        }
     }
 }

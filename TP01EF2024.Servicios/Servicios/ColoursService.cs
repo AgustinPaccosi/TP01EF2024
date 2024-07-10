@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,12 +13,12 @@ namespace TP01EF2024.Servicios.Servicios
 {
     public class ColoursService : IColoursService
     {
-        private readonly IColoursRepository _reposiroty;
+        private readonly IColoursRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ColoursService(IColoursRepository repository, IUnitOfWork unitOfWork)
         {
-            _reposiroty = repository;
+            _repository = repository;
             _unitOfWork = unitOfWork;
         }
         public void Eliminar(Colour colour)
@@ -25,7 +26,7 @@ namespace TP01EF2024.Servicios.Servicios
             try
             {
                 _unitOfWork.BeginTransaction();
-                _reposiroty.Eliminar(colour);
+                _repository.Eliminar(colour);
                 _unitOfWork.Commit();
             }
             catch (Exception)
@@ -39,7 +40,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.EstaRelacionado(colour);
+                return _repository.EstaRelacionado(colour);
             }
             catch (Exception)
             {
@@ -52,7 +53,7 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.Existe(colour);
+                return _repository.Existe(colour);
             }
             catch (Exception)
             {
@@ -63,14 +64,14 @@ namespace TP01EF2024.Servicios.Servicios
 
         public int GetCantidad()
         {
-            return _reposiroty.GetCantidad();
+            return _repository.GetCantidad();
         }
 
         public Colour? GetColourPorId(int id)
         {
             try
             {
-                return _reposiroty.GetColourPorId(id);
+                return _repository.GetColourPorId(id);
             }
             catch (Exception)
             {
@@ -83,13 +84,18 @@ namespace TP01EF2024.Servicios.Servicios
         {
             try
             {
-                return _reposiroty.GetColours();
+                return _repository.GetColours();
             }
             catch (Exception)
             {
 
                 throw;
             }
+        }
+
+        public List<Shoe>? GetShoes(Colour? colour)
+        {
+            return _repository.GetShoes(colour);
         }
 
         public void Guardar(Colour colour)
@@ -99,11 +105,11 @@ namespace TP01EF2024.Servicios.Servicios
                 _unitOfWork.BeginTransaction();
                 if (colour.ColourId==0)
                 {
-                    _reposiroty.Agregar(colour);
+                    _repository.Agregar(colour);
                 }
                 else
                 {
-                    _reposiroty.Editar(colour);
+                    _repository.Editar(colour);
                 }
                 _unitOfWork.Commit();
             }
