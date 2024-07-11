@@ -245,7 +245,7 @@ namespace TP01EF2024.Datos.Repositorios
                     ShoeId=n.ShoeId,
                     Brand=n.Brand !=null ? n.Brand.BrandName : string.Empty,
                     Genre = n.Genre != null ? n.Genre.GenreName : string.Empty,
-                    Color = n.Colour != null ? n.Colour.ColourName : string.Empty,
+                    Colour = n.Colour != null ? n.Colour.ColourName : string.Empty,
                     Sport = n.Sport != null ? n.Sport.SportName : string.Empty,
                     Model=n.Model,
                     Description=n.Description,
@@ -265,7 +265,7 @@ namespace TP01EF2024.Datos.Repositorios
                     Brand = shoe.Brand?.BrandName ?? "",
                     Sport = shoe.Sport?.SportName ?? "",
                     Genre = shoe.Genre?.GenreName ?? "",
-                    Color = shoe.Colour?.ColourName ?? "",
+                    Colour = shoe.Colour?.ColourName ?? "",
                     Model = shoe.Model,
                     Description = shoe.Description,
                     Price = shoe.Price
@@ -275,5 +275,60 @@ namespace TP01EF2024.Datos.Repositorios
             }
             return listaDto;
         }
+
+        public List<ShoeDto> GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null)
+        {
+            IQueryable<Shoe> query = _context.Shoes
+            .Include(s => s.Colour)
+            .Include(s => s.Genre)
+            .Include(s => s.Sport)
+            .Include(s => s.Brand)
+            .AsNoTracking();
+
+            // Aplicar orden si se proporciona
+            if (orden != null)
+            {
+                switch (orden)
+                {
+                    case Orden.AZ:
+                        query = query.OrderBy(s => s.Brand != null ? s.Brand.BrandName : string.Empty);
+                        break;
+                    case Orden.ZA:
+                        query = query.OrderByDescending(s => s.Brand != null ? s.Brand.BrandName : string.Empty);
+                        break;
+                    case Orden.MenorPrecio:
+                        query = query.OrderBy(s => s.Price);
+                        break;
+                    case Orden.MayorPrecio:
+                        query = query.OrderByDescending(s => s.Price);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Paginar los resultados
+            List<Shoe> listaPaginada = query
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            // Mapear los resultados a ShoeListDto
+            List<ShoeDto> listaDto = listaPaginada
+                .Select(s => new ShoeDto
+                {
+                    ShoeId = s.ShoeId,
+                    Description = s.Description,
+                    Colour = s.Colour?.ColourName ?? "",
+                    Genre = s.Genre?.GenreName ?? "",
+                    Sport = s.Sport?.SportName ?? "",
+                    Brand = s.Brand?.BrandName ?? "",
+                    Price = s.Price
+                })
+                .ToList();
+
+            return listaDto;
+        }
     }
+    
 }

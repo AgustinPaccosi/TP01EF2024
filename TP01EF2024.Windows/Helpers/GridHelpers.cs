@@ -46,7 +46,7 @@ namespace TP01EF2024.Windows.Helpers
                 case ShoeDto shoeDto:
                     r.Cells[0].Value = shoeDto.Brand;
                     r.Cells[1].Value = shoeDto.Genre;
-                    r.Cells[2].Value = shoeDto.Color;
+                    r.Cells[2].Value = shoeDto.Colour;
                     r.Cells[3].Value = shoeDto.Sport;
                     r.Cells[4].Value = shoeDto.Price.ToString("C");
                     break;

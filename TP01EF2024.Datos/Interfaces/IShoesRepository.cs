@@ -44,6 +44,7 @@ namespace TP01EF2024.Datos.Interfaces
             decimal? minimo = null);
         List<ShoeDto> GetListaDto();
         List<ShoeDto> PasarListaDto(List<Shoe> listaShoes);
-
+        List<ShoeDto> GetListaPaginadaOrdenada(int page, int pageSize,
+            Orden? orden = null);
     }
 }

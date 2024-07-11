@@ -20,6 +20,7 @@ namespace TP01EF2024.Servicios.Interfaces
         int GetCantidad();
         List<ShoeDto> GetListaDto();
         List<ShoeDto> PasarListaDto(List<Shoe> listaShoes);
+        List<ShoeDto> GetListaPaginadaOrdenada(int page, int pageSize, Orden? orden = null);
 
         List<Size> GetSizesForShoe(int shoeId);
         void AsignarTalle(Shoe shoe, Size size, int stock);

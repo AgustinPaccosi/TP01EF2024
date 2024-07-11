@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSportsAE));
             TextBoxSportName = new TextBox();
             label1 = new Label();
             buttonCancel = new Button();
             buttonGuardar = new Button();
+            errorProvider1 = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // TextBoxSportName
@@ -81,6 +84,10 @@
             buttonGuardar.UseVisualStyleBackColor = true;
             buttonGuardar.Click += buttonGuardar_Click;
             // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
+            // 
             // frmSportsAE
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -94,6 +101,7 @@
             MinimumSize = new Size(527, 319);
             Name = "frmSportsAE";
             Text = "Deportes";
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -104,5 +112,6 @@
         private Label label1;
         private Button buttonCancel;
         private Button buttonGuardar;
+        private ErrorProvider errorProvider1;
     }
 }

@@ -28,22 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmColoursAE));
-            TextBoxGenreName = new TextBox();
+            TextBoxColorName = new TextBox();
             label1 = new Label();
             buttonCancel = new Button();
             buttonGuardar = new Button();
+            errorProvider1 = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
-            // TextBoxGenreName
+            // TextBoxColorName
             // 
-            TextBoxGenreName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TextBoxGenreName.Location = new Point(134, 57);
-            TextBoxGenreName.Margin = new Padding(3, 4, 3, 4);
-            TextBoxGenreName.Name = "TextBoxGenreName";
-            TextBoxGenreName.PlaceholderText = "Nombre del Color";
-            TextBoxGenreName.Size = new Size(294, 34);
-            TextBoxGenreName.TabIndex = 15;
+            TextBoxColorName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TextBoxColorName.Location = new Point(134, 57);
+            TextBoxColorName.Margin = new Padding(3, 4, 3, 4);
+            TextBoxColorName.Name = "TextBoxColorName";
+            TextBoxColorName.PlaceholderText = "Nombre del Color";
+            TextBoxColorName.Size = new Size(294, 34);
+            TextBoxColorName.TabIndex = 15;
             // 
             // label1
             // 
@@ -66,6 +69,7 @@
             buttonCancel.TextAlign = ContentAlignment.BottomCenter;
             buttonCancel.TextImageRelation = TextImageRelation.ImageAboveText;
             buttonCancel.UseVisualStyleBackColor = true;
+            buttonCancel.Click += buttonCancel_Click;
             // 
             // buttonGuardar
             // 
@@ -78,29 +82,36 @@
             buttonGuardar.TextAlign = ContentAlignment.BottomCenter;
             buttonGuardar.TextImageRelation = TextImageRelation.ImageAboveText;
             buttonGuardar.UseVisualStyleBackColor = true;
+            buttonGuardar.Click += buttonGuardar_Click;
+            // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
             // 
             // frmColoursAE
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(509, 272);
-            Controls.Add(TextBoxGenreName);
+            Controls.Add(TextBoxColorName);
             Controls.Add(label1);
             Controls.Add(buttonCancel);
             Controls.Add(buttonGuardar);
             MaximumSize = new Size(527, 319);
             MinimumSize = new Size(527, 319);
             Name = "frmColoursAE";
-            Text = "frmColoursAE";
+            Text = "Colores";
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private TextBox TextBoxGenreName;
+        private TextBox TextBoxColorName;
         private Label label1;
         private Button buttonCancel;
         private Button buttonGuardar;
+        private ErrorProvider errorProvider1;
     }
 }
