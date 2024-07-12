@@ -43,6 +43,7 @@
             TextBoxGenreName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TextBoxGenreName.Location = new Point(133, 65);
             TextBoxGenreName.Margin = new Padding(3, 4, 3, 4);
+            TextBoxGenreName.MaxLength = 50;
             TextBoxGenreName.Name = "TextBoxGenreName";
             TextBoxGenreName.PlaceholderText = "Nombre del Genero";
             TextBoxGenreName.Size = new Size(294, 34);

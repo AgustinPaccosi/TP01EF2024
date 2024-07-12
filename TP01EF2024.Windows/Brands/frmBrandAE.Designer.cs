@@ -69,6 +69,7 @@
             TextBoxBrandName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TextBoxBrandName.Location = new Point(143, 67);
             TextBoxBrandName.Margin = new Padding(3, 4, 3, 4);
+            TextBoxBrandName.MaxLength = 50;
             TextBoxBrandName.Name = "TextBoxBrandName";
             TextBoxBrandName.PlaceholderText = "Nombre de la Marca";
             TextBoxBrandName.Size = new Size(294, 34);

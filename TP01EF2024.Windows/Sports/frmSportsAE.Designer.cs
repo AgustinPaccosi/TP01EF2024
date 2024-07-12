@@ -43,6 +43,7 @@
             TextBoxSportName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TextBoxSportName.Location = new Point(147, 51);
             TextBoxSportName.Margin = new Padding(3, 4, 3, 4);
+            TextBoxSportName.MaxLength = 50;
             TextBoxSportName.Name = "TextBoxSportName";
             TextBoxSportName.PlaceholderText = "Nombre del Deporte";
             TextBoxSportName.Size = new Size(294, 34);

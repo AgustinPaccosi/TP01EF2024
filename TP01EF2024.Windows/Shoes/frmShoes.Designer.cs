@@ -31,11 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmShoes));
             splitContainer1 = new SplitContainer();
             dgvDatos = new DataGridView();
-            ColumnaBrand = new DataGridViewTextBoxColumn();
-            ColumnaGenre = new DataGridViewTextBoxColumn();
-            ColumnaColor = new DataGridViewTextBoxColumn();
-            ColumnaSport = new DataGridViewTextBoxColumn();
-            ColumnaPrice = new DataGridViewTextBoxColumn();
             lblRegistros = new Label();
             label3 = new Label();
             ComboBoxPaginas = new ComboBox();
@@ -56,6 +51,11 @@
             toolStripSeparator2 = new ToolStripSeparator();
             DropDownButtonOrdenar = new ToolStripDropDownButton();
             toolStripButton1 = new ToolStripButton();
+            ColumnaBrand = new DataGridViewTextBoxColumn();
+            ColumnaGenre = new DataGridViewTextBoxColumn();
+            ColumnaColor = new DataGridViewTextBoxColumn();
+            ColumnaSport = new DataGridViewTextBoxColumn();
+            ColumnaPrice = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -109,46 +109,6 @@
             dgvDatos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvDatos.Size = new Size(800, 271);
             dgvDatos.TabIndex = 0;
-            // 
-            // ColumnaBrand
-            // 
-            ColumnaBrand.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColumnaBrand.HeaderText = "Brands";
-            ColumnaBrand.MinimumWidth = 6;
-            ColumnaBrand.Name = "ColumnaBrand";
-            ColumnaBrand.ReadOnly = true;
-            // 
-            // ColumnaGenre
-            // 
-            ColumnaGenre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColumnaGenre.HeaderText = "Genres";
-            ColumnaGenre.MinimumWidth = 6;
-            ColumnaGenre.Name = "ColumnaGenre";
-            ColumnaGenre.ReadOnly = true;
-            // 
-            // ColumnaColor
-            // 
-            ColumnaColor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColumnaColor.HeaderText = "Colors";
-            ColumnaColor.MinimumWidth = 6;
-            ColumnaColor.Name = "ColumnaColor";
-            ColumnaColor.ReadOnly = true;
-            // 
-            // ColumnaSport
-            // 
-            ColumnaSport.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColumnaSport.HeaderText = "Sports";
-            ColumnaSport.MinimumWidth = 6;
-            ColumnaSport.Name = "ColumnaSport";
-            ColumnaSport.ReadOnly = true;
-            // 
-            // ColumnaPrice
-            // 
-            ColumnaPrice.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ColumnaPrice.HeaderText = "Prices";
-            ColumnaPrice.MinimumWidth = 6;
-            ColumnaPrice.Name = "ColumnaPrice";
-            ColumnaPrice.ReadOnly = true;
             // 
             // lblRegistros
             // 
@@ -348,6 +308,46 @@
             toolStripButton1.TextImageRelation = TextImageRelation.ImageAboveText;
             toolStripButton1.Click += toolStripButton1_Click;
             // 
+            // ColumnaBrand
+            // 
+            ColumnaBrand.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColumnaBrand.HeaderText = "Marca";
+            ColumnaBrand.MinimumWidth = 6;
+            ColumnaBrand.Name = "ColumnaBrand";
+            ColumnaBrand.ReadOnly = true;
+            // 
+            // ColumnaGenre
+            // 
+            ColumnaGenre.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColumnaGenre.HeaderText = "Genero";
+            ColumnaGenre.MinimumWidth = 6;
+            ColumnaGenre.Name = "ColumnaGenre";
+            ColumnaGenre.ReadOnly = true;
+            // 
+            // ColumnaColor
+            // 
+            ColumnaColor.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColumnaColor.HeaderText = "Colores";
+            ColumnaColor.MinimumWidth = 6;
+            ColumnaColor.Name = "ColumnaColor";
+            ColumnaColor.ReadOnly = true;
+            // 
+            // ColumnaSport
+            // 
+            ColumnaSport.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColumnaSport.HeaderText = "Deporte";
+            ColumnaSport.MinimumWidth = 6;
+            ColumnaSport.Name = "ColumnaSport";
+            ColumnaSport.ReadOnly = true;
+            // 
+            // ColumnaPrice
+            // 
+            ColumnaPrice.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ColumnaPrice.HeaderText = "Precio";
+            ColumnaPrice.MinimumWidth = 6;
+            ColumnaPrice.Name = "ColumnaPrice";
+            ColumnaPrice.ReadOnly = true;
+            // 
             // frmShoes
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -374,11 +374,6 @@
 
         private SplitContainer splitContainer1;
         private DataGridView dgvDatos;
-        private DataGridViewTextBoxColumn ColumnaBrand;
-        private DataGridViewTextBoxColumn ColumnaGenre;
-        private DataGridViewTextBoxColumn ColumnaColor;
-        private DataGridViewTextBoxColumn ColumnaSport;
-        private DataGridViewTextBoxColumn ColumnaPrice;
         private ComboBox ComboBoxPaginas;
         private Button ButtonUltimo;
         private Button ButtonSiguiente;
@@ -399,5 +394,10 @@
         private Label lblRegistros;
         private Label label3;
         private ToolStripButton toolStripButton1;
+        private DataGridViewTextBoxColumn ColumnaBrand;
+        private DataGridViewTextBoxColumn ColumnaGenre;
+        private DataGridViewTextBoxColumn ColumnaColor;
+        private DataGridViewTextBoxColumn ColumnaSport;
+        private DataGridViewTextBoxColumn ColumnaPrice;
     }
 }

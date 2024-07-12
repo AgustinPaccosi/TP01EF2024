@@ -26,8 +26,42 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void Agregar(Shoe shoe)
         {
-            shoe.Active= true;
+            //shoe.Active= true;
+            //_context.Shoes.Add(shoe);
+            var brandExistenteBd = _context.Brands.
+                FirstOrDefault(b => b.BrandId == shoe.BrandId);
+            if (brandExistenteBd != null)
+            {
+                _context.Attach(brandExistenteBd);
+                shoe.Brand = brandExistenteBd;
+            }
+
+            var genreExistenteBd = _context.Genres.
+                FirstOrDefault(b => b.GenreId == shoe.GenreId);
+            if (genreExistenteBd != null)
+            {
+                _context.Attach(genreExistenteBd);
+                shoe.Genre = genreExistenteBd;
+            }
+
+            var colorExistenteBd = _context.Colours.
+                FirstOrDefault(b => b.ColourId == shoe.ColourId);
+            if (colorExistenteBd != null)
+            {
+                _context.Attach(colorExistenteBd);
+                shoe.Colour = colorExistenteBd;
+            }
+
+            var sportExistenteBd = _context.Sports.
+                FirstOrDefault(b => b.SportId == shoe.SportId);
+            if (sportExistenteBd != null)
+            {
+                _context.Attach(sportExistenteBd);
+                shoe.Sport = sportExistenteBd;
+            }
+
             _context.Shoes.Add(shoe);
+
         }
 
         public void AgregarShoeSize(ShoeSize relacion)
@@ -37,7 +71,41 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void Editar(Shoe shoe)
         {
+            //_context.Shoes.Update(shoe);
+            var brandExistenteBd = _context.Brands.
+    FirstOrDefault(b => b.BrandId == shoe.BrandId);
+            if (brandExistenteBd != null)
+            {
+                _context.Attach(brandExistenteBd);
+                shoe.Brand = brandExistenteBd;
+            }
+
+            var genreExistenteBd = _context.Genres.
+                FirstOrDefault(b => b.GenreId == shoe.GenreId);
+            if (genreExistenteBd != null)
+            {
+                _context.Attach(genreExistenteBd);
+                shoe.Genre = genreExistenteBd;
+            }
+
+            var colorExistenteBd = _context.Colours.
+                FirstOrDefault(b => b.ColourId == shoe.ColourId);
+            if (colorExistenteBd != null)
+            {
+                _context.Attach(colorExistenteBd);
+                shoe.Colour = colorExistenteBd;
+            }
+
+            var sportExistenteBd = _context.Sports.
+                FirstOrDefault(b => b.SportId == shoe.SportId);
+            if (sportExistenteBd != null)
+            {
+                _context.Attach(sportExistenteBd);
+                shoe.Sport = sportExistenteBd;
+            }
+
             _context.Shoes.Update(shoe);
+
         }
 
         public void Eliminar(Shoe shoe)

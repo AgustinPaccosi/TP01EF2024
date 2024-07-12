@@ -49,8 +49,8 @@ namespace TP01EF2024.Windows.Helpers
             };
             lista?.Insert(0, defaultColor);
             cbo.DataSource = lista;
-            cbo.DisplayMember = "ColorName";
-            cbo.ValueMember = "ColorId";
+            cbo.DisplayMember = "ColourName";
+            cbo.ValueMember = "ColourId";
             cbo.SelectedIndex = 0;
         }
         public static void CargarComboSports(IServiceProvider serviceProvider, ref ComboBox cbo)

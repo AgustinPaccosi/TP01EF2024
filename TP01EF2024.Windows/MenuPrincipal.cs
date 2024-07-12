@@ -72,8 +72,8 @@ namespace TP01EF2024.Windows
                     , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            //frmShoes frm = new frmShoes(servicioShoes, _serviceProvider);
-            //frm.ShowDialog();
+            frmShoes frm = new frmShoes(servicioShoes, _serviceProvider);
+            frm.ShowDialog();
 
         }
 

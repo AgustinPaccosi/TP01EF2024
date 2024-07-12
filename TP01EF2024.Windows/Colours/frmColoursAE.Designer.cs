@@ -43,6 +43,7 @@
             TextBoxColorName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TextBoxColorName.Location = new Point(134, 57);
             TextBoxColorName.Margin = new Padding(3, 4, 3, 4);
+            TextBoxColorName.MaxLength = 50;
             TextBoxColorName.Name = "TextBoxColorName";
             TextBoxColorName.PlaceholderText = "Nombre del Color";
             TextBoxColorName.Size = new Size(294, 34);
