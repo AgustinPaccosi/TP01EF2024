@@ -11,6 +11,7 @@ using TP01EF2024.Entidades;
 using TP01EF2024.Entidades.Dtos;
 using TP01EF2024.Servicios.Interfaces;
 using TP01EF2024.Windows.Helpers;
+using TP01EF2024.Windows.Shoes;
 
 namespace TP01EF2024.Windows.Brands
 {
@@ -29,15 +30,10 @@ namespace TP01EF2024.Windows.Brands
             _servicioShoe = servicioShoe;
         }
 
-        private void FrmBrands_Load(object sender, EventArgs e)
-        {
-            MostrarCantidadRegistros();
-            RecargarGrilla();
-        }
 
         private void MostrarCantidadRegistros()
         {
-            TextBoxCantRegistros.Text = _servicioBrand.GetCantidad().ToString();
+            lblRegistros.Text = _servicioBrand.GetCantidad().ToString();
         }
 
         private void RecargarGrilla()
@@ -184,15 +180,22 @@ namespace TP01EF2024.Windows.Brands
             listaShoes = _servicioBrand.GetShoes(brandEnDB);
             if (listaShoes == null) return;
             listaShoesDto = _servicioShoe.PasarListaDto(listaShoes);
-            //frmMostrarShoes frm = new frmMostrarShoes();
-            //frm.SetLista(listaShoesDto);
-            //frm.ShowDialog(this);
+            frmFiltrosShoes frm = new frmFiltrosShoes();
+            frm.SetLista(listaShoesDto);
+            frm.ShowDialog(this);
 
         }
 
         private void TsButtonSalir_Click_1(object sender, EventArgs e)
         {
             Close();
+
+        }
+
+        private void frmBrand_Load(object sender, EventArgs e)
+        {
+            MostrarCantidadRegistros();
+            RecargarGrilla();
 
         }
     }

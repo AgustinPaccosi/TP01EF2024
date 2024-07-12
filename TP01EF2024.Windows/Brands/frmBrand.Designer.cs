@@ -32,8 +32,9 @@
             splitContainer1 = new SplitContainer();
             dgvDatos = new DataGridView();
             ColumnaMarca = new DataGridViewTextBoxColumn();
-            TextBoxCantRegistros = new TextBox();
+            lblRegistros = new Label();
             label1 = new Label();
+            LabelRegistros = new Label();
             toolStrip1 = new ToolStrip();
             ToolButtonNuevo = new ToolStripButton();
             TsButtonBorrar = new ToolStripButton();
@@ -63,8 +64,9 @@
             // 
             // splitContainer1.Panel2
             // 
-            splitContainer1.Panel2.Controls.Add(TextBoxCantRegistros);
+            splitContainer1.Panel2.Controls.Add(lblRegistros);
             splitContainer1.Panel2.Controls.Add(label1);
+            splitContainer1.Panel2.Controls.Add(LabelRegistros);
             splitContainer1.Size = new Size(800, 383);
             splitContainer1.SplitterDistance = 276;
             splitContainer1.SplitterWidth = 5;
@@ -94,25 +96,32 @@
             ColumnaMarca.Name = "ColumnaMarca";
             ColumnaMarca.ReadOnly = true;
             // 
-            // TextBoxCantRegistros
+            // lblRegistros
             // 
-            TextBoxCantRegistros.Enabled = false;
-            TextBoxCantRegistros.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TextBoxCantRegistros.Location = new Point(237, 27);
-            TextBoxCantRegistros.Margin = new Padding(3, 4, 3, 4);
-            TextBoxCantRegistros.Name = "TextBoxCantRegistros";
-            TextBoxCantRegistros.Size = new Size(42, 34);
-            TextBoxCantRegistros.TabIndex = 6;
+            lblRegistros.AutoSize = true;
+            lblRegistros.Location = new Point(140, 35);
+            lblRegistros.Name = "lblRegistros";
+            lblRegistros.Size = new Size(17, 20);
+            lblRegistros.TabIndex = 9;
+            lblRegistros.Text = "0";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(19, 31);
+            label1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(40, 33);
             label1.Name = "label1";
-            label1.Size = new Size(212, 28);
-            label1.TabIndex = 4;
-            label1.Text = "Cantidad de Registros: ";
+            label1.Size = new Size(94, 23);
+            label1.TabIndex = 7;
+            label1.Text = "Registros: ";
+            // 
+            // LabelRegistros
+            // 
+            LabelRegistros.AutoSize = true;
+            LabelRegistros.Location = new Point(151, 33);
+            LabelRegistros.Name = "LabelRegistros";
+            LabelRegistros.Size = new Size(0, 20);
+            LabelRegistros.TabIndex = 8;
             // 
             // toolStrip1
             // 
@@ -168,8 +177,8 @@
             TsButtonFiltrar.ImageScaling = ToolStripItemImageScaling.None;
             TsButtonFiltrar.ImageTransparentColor = Color.Magenta;
             TsButtonFiltrar.Name = "TsButtonFiltrar";
-            TsButtonFiltrar.Size = new Size(61, 64);
-            TsButtonFiltrar.Text = "Detalle";
+            TsButtonFiltrar.Size = new Size(117, 64);
+            TsButtonFiltrar.Text = "Filtro Por Marca";
             TsButtonFiltrar.TextImageRelation = TextImageRelation.ImageAboveText;
             TsButtonFiltrar.Click += TsButtonFiltrar_Click_1;
             // 
@@ -193,6 +202,7 @@
             Controls.Add(toolStrip1);
             Name = "frmBrand";
             Text = "Marcas";
+            Load += frmBrand_Load;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
             splitContainer1.Panel2.PerformLayout();
@@ -210,8 +220,6 @@
         private SplitContainer splitContainer1;
         private DataGridView dgvDatos;
         private DataGridViewTextBoxColumn ColumnaMarca;
-        private TextBox TextBoxCantRegistros;
-        private Label label1;
         private ToolStrip toolStrip1;
         private ToolStripButton ToolButtonNuevo;
         private ToolStripButton TsButtonBorrar;
@@ -225,5 +233,8 @@
         private ToolStripButton tsbActualizar;
         private ToolStripButton tsbFiltrar;
         private ToolStripSeparator toolStripSeparator3;
+        private Label lblRegistros;
+        private Label label1;
+        private Label LabelRegistros;
     }
 }

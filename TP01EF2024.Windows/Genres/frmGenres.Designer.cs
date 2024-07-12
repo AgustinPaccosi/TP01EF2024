@@ -177,8 +177,8 @@
             TsButtonFiltrar.ImageScaling = ToolStripItemImageScaling.None;
             TsButtonFiltrar.ImageTransparentColor = Color.Magenta;
             TsButtonFiltrar.Name = "TsButtonFiltrar";
-            TsButtonFiltrar.Size = new Size(61, 64);
-            TsButtonFiltrar.Text = "Detalle";
+            TsButtonFiltrar.Size = new Size(124, 64);
+            TsButtonFiltrar.Text = "Filtro Por Genero";
             TsButtonFiltrar.TextImageRelation = TextImageRelation.ImageAboveText;
             TsButtonFiltrar.Click += TsButtonFiltrar_Click;
             // 
@@ -201,7 +201,7 @@
             Controls.Add(splitContainer1);
             Controls.Add(toolStrip1);
             Name = "frmGenres";
-            Text = "frmGenres";
+            Text = "Generos";
             Load += frmGenres_Load;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);

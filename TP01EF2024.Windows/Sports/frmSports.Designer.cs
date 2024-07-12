@@ -177,8 +177,8 @@
             TsButtonFiltrar.ImageScaling = ToolStripItemImageScaling.None;
             TsButtonFiltrar.ImageTransparentColor = Color.Magenta;
             TsButtonFiltrar.Name = "TsButtonFiltrar";
-            TsButtonFiltrar.Size = new Size(61, 64);
-            TsButtonFiltrar.Text = "Detalle";
+            TsButtonFiltrar.Size = new Size(131, 64);
+            TsButtonFiltrar.Text = "Filtro Por Deporte";
             TsButtonFiltrar.TextImageRelation = TextImageRelation.ImageAboveText;
             TsButtonFiltrar.Click += TsButtonFiltrar_Click;
             // 

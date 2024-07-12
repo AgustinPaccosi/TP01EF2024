@@ -11,6 +11,7 @@ using TP01EF2024.Entidades;
 using TP01EF2024.Entidades.Dtos;
 using TP01EF2024.Servicios.Interfaces;
 using TP01EF2024.Windows.Helpers;
+using TP01EF2024.Windows.Shoes;
 
 namespace TP01EF2024.Windows.Genres
 {
@@ -145,9 +146,9 @@ namespace TP01EF2024.Windows.Genres
             listaShoes = _servicioGenre.GetShoes(genreEnDB);
             if (listaShoes == null) return;
             listaShoesDto = _servicioShoe.PasarListaDto(listaShoes);
-            //frmMostrarShoes frm = new frmMostrarShoes();
-            //frm.SetLista(listaShoesDto);
-            //frm.ShowDialog(this);
+            frmFiltrosShoes frm = new frmFiltrosShoes();
+            frm.SetLista(listaShoesDto);
+            frm.ShowDialog(this);
 
         }
 

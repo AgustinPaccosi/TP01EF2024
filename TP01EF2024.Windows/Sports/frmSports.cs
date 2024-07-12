@@ -11,6 +11,7 @@ using TP01EF2024.Entidades;
 using TP01EF2024.Entidades.Dtos;
 using TP01EF2024.Servicios.Interfaces;
 using TP01EF2024.Windows.Helpers;
+using TP01EF2024.Windows.Shoes;
 
 namespace TP01EF2024.Windows.Sports
 {
@@ -145,9 +146,9 @@ namespace TP01EF2024.Windows.Sports
             listaShoes = _servicioSport.GetShoes(sportEnDB);
             if (listaShoes == null) return;
             listaShoesDto = _servicioShoe.PasarListaDto(listaShoes);
-            //FrmMostrarShoes frm = new FrmMostrarShoes();
-            //frm.SetLista(listaShoesDto);
-            //frm.ShowDialog(this);
+            frmFiltrosShoes frm = new frmFiltrosShoes();
+            frm.SetLista(listaShoesDto);
+            frm.ShowDialog(this);
 
         }
 
