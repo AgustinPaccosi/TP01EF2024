@@ -381,7 +381,7 @@ namespace TP01EF2024.Consola
             Console.WriteLine("Editar un Color: ");
             MostrarColores();
 
-            var id = ConsoleExtensions.ReadInt("Ingrese el ID del Color a editar", 0, 9999);
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del Color a editar: ", 0, 9999);
             var colour = servicio?.GetColourPorId(id);
             if (colour != null)
             {
@@ -500,7 +500,7 @@ namespace TP01EF2024.Consola
             Console.WriteLine("Editar Deporte: ");
             MostrarDeportes();
 
-            var id = ConsoleExtensions.ReadInt("Ingrese el ID del DEPORTE a editar", 0, 9999);
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID del DEPORTE a editar: ", 0, 9999);
             var sport = servicio?.GetSportPorId(id);
             if (sport != null)
             {
@@ -523,7 +523,7 @@ namespace TP01EF2024.Consola
             var servicio = servicioProvider?.GetService<ISportsService>();
 
             Console.WriteLine("Agregar Un Deporte: ");
-            MostrarGeneros();
+            MostrarDeportes();
 
             var sportName = ConsoleExtensions.ReadString("Nombre Del Deporte: ");
 
@@ -621,7 +621,7 @@ namespace TP01EF2024.Consola
             Console.WriteLine("Editar Marca: ");
             MostrarMarcas();
 
-            var id = ConsoleExtensions.ReadInt("Ingrese el ID de la MARCA a editar", 0, 9999);
+            var id = ConsoleExtensions.ReadInt("Ingrese el ID de la MARCA a editar: ", 0, 9999);
             var brand = servicio?.GetBrandPorId(id);
             if (brand != null)
             {
