@@ -174,7 +174,7 @@ namespace TP01EF2024.Windows.Shoes
             ShoeDto? shoeDto = r.Tag as ShoeDto;
             if (shoeDto == null) return;
             Shoe? shoe = _servicio.GetShoePorId(shoeDto.ShoeId);
-            frmShoesAE frm = new frmShoesAE(_serviceProvider) 
+            frmShoesAE frm = new frmShoesAE(_serviceProvider)
             { Text = "Editar Shoe" };
             frm.SetShoe(shoe);
             DialogResult dr = frm.ShowDialog(this);
@@ -258,6 +258,11 @@ namespace TP01EF2024.Windows.Shoes
             if (pageNum > pageCount - 1) { pageNum = pageCount - 1; }
             ComboBoxPaginas.SelectedIndex = pageNum;
             RercargarListaPaginada();
+        }
+
+        private void tlbuttonDetalles_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
