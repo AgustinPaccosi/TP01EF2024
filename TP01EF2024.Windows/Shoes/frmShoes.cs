@@ -262,6 +262,17 @@ namespace TP01EF2024.Windows.Shoes
 
         private void tlbuttonDetalles_Click(object sender, EventArgs e)
         {
+            if (dgvDatos.SelectedRows.Count == 0) { return; }
+
+            var r = dgvDatos.SelectedRows[0];
+
+            ShoeDto shoeDto = (ShoeDto)r.Tag;
+
+            Shoe shoe = _servicio.GetShoePorId(shoeDto.ShoeId);
+
+            frmShoesDetalles frm = new frmShoesDetalles(shoe, _servicio);
+
+            frm.Show();
 
         }
     }

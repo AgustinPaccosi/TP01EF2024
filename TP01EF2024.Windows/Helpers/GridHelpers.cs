@@ -50,6 +50,11 @@ namespace TP01EF2024.Windows.Helpers
                     r.Cells[3].Value = shoeDto.Sport;
                     r.Cells[4].Value = shoeDto.Price.ToString("C");
                     break;
+                case ShoeSize shoeSize:
+                    r.Cells[0].Value = shoeSize.Size.SizeNumber;
+                    r.Cells[1].Value = shoeSize.QuantityInStock;
+                    break;
+
                 default:
                     break;
 
@@ -60,6 +65,17 @@ namespace TP01EF2024.Windows.Helpers
         public static void AgregarFila(DataGridViewRow r, DataGridView dgv)
         {
             dgv.Rows.Add(r);
+        }
+        public static void MostrarDatosEnGrilla<T>(List<T> lista, DataGridView dgvDatos) where T : class
+        {
+            LimpiarGrilla(dgvDatos);
+
+            foreach (T t in lista)
+            {
+                var r = ConstruirFila(dgvDatos);
+                SetearFila(r, t);
+                AgregarFila(r, dgvDatos);
+            }
         }
 
     }

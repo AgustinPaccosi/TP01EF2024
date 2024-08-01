@@ -397,6 +397,58 @@ namespace TP01EF2024.Datos.Repositorios
 
             return listaDto;
         }
+
+        public ShoeSize? GetShoeSize(Shoe shoe, Size size)
+        {
+            return _context.ShoesSizes
+                .Include(ss => ss.Shoe)
+                .Include(ss => ss.Size)
+                .FirstOrDefault(ss => ss.ShoeId == shoe.ShoeId && ss.SizeId == size.SizeId);
+
+        }
+
+        public List<ShoeSize> GetShoesSizesPaginados(int page, int pageSize, Shoe shoe)
+        {
+            return _context.ShoesSizes
+                    .Include(ss => ss.Shoe)
+                    .Include(ss => ss.Size)
+                    .Where(ss => ss.ShoeId == shoe.ShoeId)
+                    .OrderBy(ss => ss.Size.SizeNumber)
+                    .AsNoTracking()
+                    .Skip(page * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+        }
+
+        public bool GetBoolShoeSize(ShoeSize shoesize)
+        {
+            if (shoesize.ShoeSizeId == 0)
+            {
+                return _context.ShoesSizes.Any(ss => ss.ShoeId == shoesize.ShoeId
+                            && ss.SizeId == shoesize.SizeId);
+            }
+            else
+            {
+                return _context.ShoesSizes.Any(ss => ss.ShoeId == shoesize.ShoeId
+                            && ss.QuantityInStock == shoesize.QuantityInStock
+                            && ss.SizeId == shoesize.SizeId);
+            }
+
+        }
+
+        public void EliminarShoeSize(ShoeSize shoeSize)
+        {
+            var shoeExist = _context.Shoes.Local.FirstOrDefault(s => s.ShoeId == shoeSize.ShoeId);
+
+            if (shoeExist != null)
+            {
+                _context.Entry(shoeExist).State = EntityState.Detached;
+            }
+
+            _context.ShoesSizes.Remove(shoeSize);
+
+        }
     }
     
 }

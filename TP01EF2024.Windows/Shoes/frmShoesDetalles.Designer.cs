@@ -34,12 +34,11 @@
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
-            TexboxDescripcion = new TextBox();
+            DescripcionTxt = new TextBox();
             label2 = new Label();
             label1 = new Label();
-            buttonCancel = new Button();
-            buttonOK = new Button();
-            dataGridView1 = new DataGridView();
+            BackBtn = new Button();
+            DgvShoesSizes = new DataGridView();
             ColTalle = new DataGridViewTextBoxColumn();
             colStock = new DataGridViewTextBoxColumn();
             AgregarTalleBtn = new Button();
@@ -59,7 +58,11 @@
             ColorLbl = new Label();
             panel6 = new Panel();
             PrecioLbl = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            CantidadPaginasLbl = new Label();
+            label9 = new Label();
+            PaginaActualLbl = new Label();
+            label10 = new Label();
+            ((System.ComponentModel.ISupportInitialize)DgvShoesSizes).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -102,7 +105,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(411, 479);
+            label4.Location = new Point(2, 442);
             label4.Name = "label4";
             label4.Size = new Size(70, 28);
             label4.TabIndex = 32;
@@ -118,17 +121,17 @@
             label3.TabIndex = 31;
             label3.Text = "Deporte:";
             // 
-            // TexboxDescripcion
+            // DescripcionTxt
             // 
-            TexboxDescripcion.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TexboxDescripcion.Location = new Point(115, 283);
-            TexboxDescripcion.Margin = new Padding(3, 4, 3, 4);
-            TexboxDescripcion.MaxLength = 50;
-            TexboxDescripcion.Multiline = true;
-            TexboxDescripcion.Name = "TexboxDescripcion";
-            TexboxDescripcion.PlaceholderText = "Ingrese una Descripcion";
-            TexboxDescripcion.Size = new Size(267, 109);
-            TexboxDescripcion.TabIndex = 30;
+            DescripcionTxt.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            DescripcionTxt.Location = new Point(115, 283);
+            DescripcionTxt.Margin = new Padding(3, 4, 3, 4);
+            DescripcionTxt.MaxLength = 50;
+            DescripcionTxt.Multiline = true;
+            DescripcionTxt.Name = "DescripcionTxt";
+            DescripcionTxt.PlaceholderText = "Descripcion";
+            DescripcionTxt.Size = new Size(267, 109);
+            DescripcionTxt.TabIndex = 30;
             // 
             // label2
             // 
@@ -150,42 +153,30 @@
             label1.TabIndex = 27;
             label1.Text = "Modelo:";
             // 
-            // buttonCancel
+            // BackBtn
             // 
-            buttonCancel.Image = (Image)resources.GetObject("buttonCancel.Image");
-            buttonCancel.Location = new Point(257, 436);
-            buttonCancel.Name = "buttonCancel";
-            buttonCancel.Size = new Size(94, 74);
-            buttonCancel.TabIndex = 26;
-            buttonCancel.Text = "Cancel";
-            buttonCancel.TextAlign = ContentAlignment.BottomCenter;
-            buttonCancel.TextImageRelation = TextImageRelation.ImageAboveText;
-            buttonCancel.UseVisualStyleBackColor = true;
+            BackBtn.Image = (Image)resources.GetObject("BackBtn.Image");
+            BackBtn.Location = new Point(411, 458);
+            BackBtn.Name = "BackBtn";
+            BackBtn.Size = new Size(94, 74);
+            BackBtn.TabIndex = 26;
+            BackBtn.Text = "Volver";
+            BackBtn.TextAlign = ContentAlignment.BottomCenter;
+            BackBtn.TextImageRelation = TextImageRelation.ImageAboveText;
+            BackBtn.UseVisualStyleBackColor = true;
             // 
-            // buttonOK
+            // DgvShoesSizes
             // 
-            buttonOK.Image = (Image)resources.GetObject("buttonOK.Image");
-            buttonOK.Location = new Point(96, 436);
-            buttonOK.Name = "buttonOK";
-            buttonOK.Size = new Size(94, 74);
-            buttonOK.TabIndex = 25;
-            buttonOK.Text = "OK";
-            buttonOK.TextAlign = ContentAlignment.BottomCenter;
-            buttonOK.TextImageRelation = TextImageRelation.ImageAboveText;
-            buttonOK.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ColTalle, colStock });
-            dataGridView1.Location = new Point(411, 177);
-            dataGridView1.MultiSelect = false;
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidth = 15;
-            dataGridView1.Size = new Size(380, 267);
-            dataGridView1.TabIndex = 41;
+            DgvShoesSizes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            DgvShoesSizes.Columns.AddRange(new DataGridViewColumn[] { ColTalle, colStock });
+            DgvShoesSizes.Location = new Point(411, 177);
+            DgvShoesSizes.MultiSelect = false;
+            DgvShoesSizes.Name = "DgvShoesSizes";
+            DgvShoesSizes.ReadOnly = true;
+            DgvShoesSizes.RowHeadersVisible = false;
+            DgvShoesSizes.RowHeadersWidth = 15;
+            DgvShoesSizes.Size = new Size(380, 267);
+            DgvShoesSizes.TabIndex = 41;
             // 
             // ColTalle
             // 
@@ -211,6 +202,7 @@
             AgregarTalleBtn.TabIndex = 42;
             AgregarTalleBtn.Text = "Agregar Talle";
             AgregarTalleBtn.UseVisualStyleBackColor = true;
+            AgregarTalleBtn.Click += AgregarTalleBtn_Click;
             // 
             // EditarTalleBtn
             // 
@@ -220,6 +212,7 @@
             EditarTalleBtn.TabIndex = 43;
             EditarTalleBtn.Text = "Actualizar Stock";
             EditarTalleBtn.UseVisualStyleBackColor = true;
+            EditarTalleBtn.Click += EditarTalleBtn_Click;
             // 
             // EliminarTalleBtn
             // 
@@ -229,6 +222,7 @@
             EliminarTalleBtn.TabIndex = 44;
             EliminarTalleBtn.Text = "Eliminar Talle";
             EliminarTalleBtn.UseVisualStyleBackColor = true;
+            EliminarTalleBtn.Click += EliminarTalleBtn_Click;
             // 
             // PagAnteriorBtn
             // 
@@ -238,6 +232,7 @@
             PagAnteriorBtn.Size = new Size(55, 46);
             PagAnteriorBtn.TabIndex = 45;
             PagAnteriorBtn.UseVisualStyleBackColor = true;
+            PagAnteriorBtn.Click += PagAnteriorBtn_Click;
             // 
             // PagSiguienteBtn
             // 
@@ -247,6 +242,7 @@
             PagSiguienteBtn.Size = new Size(55, 46);
             PagSiguienteBtn.TabIndex = 46;
             PagSiguienteBtn.UseVisualStyleBackColor = true;
+            PagSiguienteBtn.Click += PagSiguienteBtn_Click;
             // 
             // panel1
             // 
@@ -264,7 +260,7 @@
             MarcaLbl.Name = "MarcaLbl";
             MarcaLbl.Size = new Size(50, 20);
             MarcaLbl.TabIndex = 0;
-            MarcaLbl.Text = "label8";
+            MarcaLbl.Text = "Marca";
             // 
             // panel2
             // 
@@ -280,9 +276,9 @@
             GeneroLbl.AutoSize = true;
             GeneroLbl.Location = new Point(0, 7);
             GeneroLbl.Name = "GeneroLbl";
-            GeneroLbl.Size = new Size(50, 20);
+            GeneroLbl.Size = new Size(57, 20);
             GeneroLbl.TabIndex = 0;
-            GeneroLbl.Text = "label8";
+            GeneroLbl.Text = "Genero";
             // 
             // panel3
             // 
@@ -298,9 +294,9 @@
             DeporteLbl.AutoSize = true;
             DeporteLbl.Location = new Point(0, 7);
             DeporteLbl.Name = "DeporteLbl";
-            DeporteLbl.Size = new Size(50, 20);
+            DeporteLbl.Size = new Size(64, 20);
             DeporteLbl.TabIndex = 0;
-            DeporteLbl.Text = "label8";
+            DeporteLbl.Text = "Deporte";
             // 
             // panel4
             // 
@@ -316,9 +312,9 @@
             ModeloLbl.AutoSize = true;
             ModeloLbl.Location = new Point(0, 7);
             ModeloLbl.Name = "ModeloLbl";
-            ModeloLbl.Size = new Size(50, 20);
+            ModeloLbl.Size = new Size(61, 20);
             ModeloLbl.TabIndex = 0;
-            ModeloLbl.Text = "label8";
+            ModeloLbl.Text = "Modelo";
             // 
             // panel5
             // 
@@ -334,15 +330,15 @@
             ColorLbl.AutoSize = true;
             ColorLbl.Location = new Point(0, 7);
             ColorLbl.Name = "ColorLbl";
-            ColorLbl.Size = new Size(50, 20);
+            ColorLbl.Size = new Size(45, 20);
             ColorLbl.TabIndex = 0;
-            ColorLbl.Text = "label8";
+            ColorLbl.Text = "Color";
             // 
             // panel6
             // 
             panel6.BackColor = SystemColors.AppWorkspace;
             panel6.Controls.Add(PrecioLbl);
-            panel6.Location = new Point(505, 473);
+            panel6.Location = new Point(96, 436);
             panel6.Name = "panel6";
             panel6.Size = new Size(286, 34);
             panel6.TabIndex = 49;
@@ -354,13 +350,57 @@
             PrecioLbl.Name = "PrecioLbl";
             PrecioLbl.Size = new Size(50, 20);
             PrecioLbl.TabIndex = 0;
-            PrecioLbl.Text = "label8";
+            PrecioLbl.Text = "Precio";
+            // 
+            // CantidadPaginasLbl
+            // 
+            CantidadPaginasLbl.AutoSize = true;
+            CantidadPaginasLbl.ForeColor = Color.Gray;
+            CantidadPaginasLbl.Location = new Point(767, 458);
+            CantidadPaginasLbl.Name = "CantidadPaginasLbl";
+            CantidadPaginasLbl.Size = new Size(25, 20);
+            CantidadPaginasLbl.TabIndex = 64;
+            CantidadPaginasLbl.Text = "10";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.ForeColor = Color.Gray;
+            label9.Location = new Point(743, 458);
+            label9.Name = "label9";
+            label9.Size = new Size(26, 20);
+            label9.TabIndex = 63;
+            label9.Text = "de";
+            // 
+            // PaginaActualLbl
+            // 
+            PaginaActualLbl.AutoSize = true;
+            PaginaActualLbl.ForeColor = Color.Gray;
+            PaginaActualLbl.Location = new Point(728, 458);
+            PaginaActualLbl.Name = "PaginaActualLbl";
+            PaginaActualLbl.Size = new Size(17, 20);
+            PaginaActualLbl.TabIndex = 62;
+            PaginaActualLbl.Text = "0";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.ForeColor = Color.Gray;
+            label10.Location = new Point(666, 458);
+            label10.Name = "label10";
+            label10.Size = new Size(56, 20);
+            label10.TabIndex = 65;
+            label10.Text = "Pagina:";
             // 
             // frmShoesDetalles
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(947, 544);
+            Controls.Add(label10);
+            Controls.Add(CantidadPaginasLbl);
+            Controls.Add(label9);
+            Controls.Add(PaginaActualLbl);
             Controls.Add(panel6);
             Controls.Add(panel5);
             Controls.Add(panel4);
@@ -372,20 +412,19 @@
             Controls.Add(EliminarTalleBtn);
             Controls.Add(EditarTalleBtn);
             Controls.Add(AgregarTalleBtn);
-            Controls.Add(dataGridView1);
+            Controls.Add(DgvShoesSizes);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(TexboxDescripcion);
+            Controls.Add(DescripcionTxt);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(buttonCancel);
-            Controls.Add(buttonOK);
+            Controls.Add(BackBtn);
             Name = "frmShoesDetalles";
-            Text = "frmShoesDetalles";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Text = "Detalles";
+            ((System.ComponentModel.ISupportInitialize)DgvShoesSizes).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
@@ -413,13 +452,12 @@
         private TextBox TexboxPrice;
         private Label label4;
         private Label label3;
-        private TextBox TexboxDescripcion;
+        private TextBox DescripcionTxt;
         private Label label2;
         private TextBox TexboxModel;
         private Label label1;
-        private Button buttonCancel;
-        private Button buttonOK;
-        private DataGridView dataGridView1;
+        private Button BackBtn;
+        private DataGridView DgvShoesSizes;
         private DataGridViewTextBoxColumn ColTalle;
         private DataGridViewTextBoxColumn colStock;
         private Button AgregarTalleBtn;
@@ -439,5 +477,9 @@
         private Label ColorLbl;
         private Panel panel6;
         private Label PrecioLbl;
+        private Label CantidadPaginasLbl;
+        private Label label9;
+        private Label PaginaActualLbl;
+        private Label label10;
     }
 }

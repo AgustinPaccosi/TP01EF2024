@@ -21,7 +21,7 @@ namespace TP01EF2024.Datos.Interfaces
         int GetCantidad();
         void AgregarShoeSize(ShoeSize nuevaRelacion);
 
-        ShoeSize? ExisteShoeSize(Shoe shoe, Size size);
+        ShoeSize? ExisteShoeSize(Shoe shoe, Size size);//
         void ActualizarShoeSize(ShoeSize shoeSize);
 
         List<Size> GetSizesForShoe(int shoeId);
@@ -46,5 +46,11 @@ namespace TP01EF2024.Datos.Interfaces
         List<ShoeDto> PasarListaDto(List<Shoe> listaShoes);
         List<ShoeDto> GetListaPaginadaOrdenada(int page, int pageSize,
             Orden? orden = null);
+        ShoeSize? GetShoeSize(Shoe shoe, Size size);
+        List<ShoeSize> GetShoesSizesPaginados(int page, int pageSize, Shoe shoe);
+        bool GetBoolShoeSize(ShoeSize shoesize);
+        void EliminarShoeSize(ShoeSize shoeSize);
+
+
     }
 }

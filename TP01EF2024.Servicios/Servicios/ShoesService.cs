@@ -23,6 +23,38 @@ namespace TP01EF2024.Servicios.Servicios
             _unitOfWork = unitOfWork;
         }
 
+        public void ActualizarShoeSize(ShoeSize shoeSize)
+        {
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _repository.ActualizarShoeSize(shoeSize);
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.RollBack();
+                throw;
+            }
+
+        }
+
+        public void AgregarShoeSize(ShoeSize nuevaRelacion)
+        {
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _repository.AgregarShoeSize(nuevaRelacion);
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.RollBack();
+                throw;
+            }
+
+        }
+
         public void AsignarTalle(Shoe shoe, Size size, int stock)
         {
             try
@@ -69,6 +101,22 @@ namespace TP01EF2024.Servicios.Servicios
             }
         }
 
+        public void EliminarShoeSize(ShoeSize shoeSize)
+        {
+            try
+            {
+                _unitOfWork.BeginTransaction();
+                _repository.EliminarShoeSize(shoeSize);
+                _unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+                _unitOfWork.RollBack();
+                throw;
+            }
+
+        }
+
         public bool EstaRelacionado(Shoe shoe)
         {
             try
@@ -93,6 +141,12 @@ namespace TP01EF2024.Servicios.Servicios
 
                 throw;
             }
+        }
+
+        public bool ExisteShoeSize(ShoeSize shoesize)
+        {
+            return _repository.GetBoolShoeSize(shoesize);
+
         }
 
         public int GetCantidad()
@@ -153,6 +207,25 @@ namespace TP01EF2024.Servicios.Servicios
 
                 throw;
             }
+        }
+
+        public ShoeSize? GetShoeSize(Shoe shoe, Size size)
+        {
+            try
+            {
+                return _repository.GetShoeSize(shoe, size);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public List<ShoeSize> GetShoesSizesPaginados(int page, int pageSize, Shoe shoe)
+        {
+            return _repository.GetShoesSizesPaginados(page, pageSize, shoe);
         }
 
         public List<Size> GetSizesForShoe(int shoeId)

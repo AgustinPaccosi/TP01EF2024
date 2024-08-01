@@ -42,6 +42,14 @@ namespace TP01EF2024.Servicios.Interfaces
             Colour? colour = null,
             decimal? maximo = null,
             decimal? minimo = null);
+        ShoeSize? GetShoeSize(Shoe shoe, Size size);
+        List<ShoeSize> GetShoesSizesPaginados(int page, int pageSize, Shoe shoe);
+        void AgregarShoeSize(ShoeSize nuevaRelacion);
+
+        void ActualizarShoeSize(ShoeSize shoeSize);
+        void EliminarShoeSize(ShoeSize shoeSize);
+        bool ExisteShoeSize(ShoeSize shoesize);
+
     }
 }
 

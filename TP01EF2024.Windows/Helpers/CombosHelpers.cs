@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TP01EF2024.Entidades;
 using TP01EF2024.Servicios.Interfaces;
+using Size = TP01EF2024.Entidades.Size;
 
 namespace TP01EF2024.Windows.Helpers
 {
@@ -76,5 +77,39 @@ namespace TP01EF2024.Windows.Helpers
             }
             cbo.SelectedIndex = 0;
         }
+        public static void CargarComboTalles(IServiceProvider serviceProvider, ref ComboBox cbo)
+        {
+            var servicio = serviceProvider.GetService<ISizesService>();
+
+            var lista = servicio?.GetSizes();
+
+            var defaultSize = new Size
+            {
+                SizeNumber = 0
+            };
+
+            lista?.Insert(0, defaultSize);
+            cbo.DataSource = lista;
+            cbo.DisplayMember = "SizeNumber";
+            cbo.ValueMember = "SizeId";
+            cbo.SelectedIndex = 0;
+
+            cbo.Format += (s, e) =>
+            {
+                if (e.ListItem != null)
+                {
+                    var size = (Size)e.ListItem;
+                    if (size.SizeNumber == 0)
+                    {
+                        e.Value = "Seleccione...";
+                    }
+                    else
+                    {
+                        e.Value = size.SizeNumber.ToString();
+                    }
+                }
+            };
+        }
+
     }
 }
