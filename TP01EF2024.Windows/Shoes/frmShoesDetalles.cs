@@ -27,7 +27,7 @@ namespace TP01EF2024.Windows.Shoes
         List<ShoeSize> shoesSizesPaginados = new List<ShoeSize>();
 
         private int cantidadPaginas;
-        private int pageSize = 7;
+        private int pageSize = 5;
         private int pageNum = 0;
         private int cantidadRegistros;
 
@@ -232,6 +232,11 @@ namespace TP01EF2024.Windows.Shoes
             PaginaActualLbl.Text = (pageNum + 1).ToString();
             RecargarGrilla();
 
+        }
+
+        private void BackBtn_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

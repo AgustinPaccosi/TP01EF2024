@@ -21,6 +21,15 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void ActualizarShoeSize(ShoeSize shoeSize)
         {
+            //_context.Set<ShoeSize>().Update(shoeSize);
+            var trackedEntity = _context.Set<ShoeSize>().Local
+                .FirstOrDefault(entry => entry.ShoeSizeId == shoeSize.ShoeSizeId);
+
+            if (trackedEntity != null)
+            {
+                _context.Entry(trackedEntity).State = EntityState.Detached;
+            }
+
             _context.Set<ShoeSize>().Update(shoeSize);
         }
 
@@ -278,6 +287,7 @@ namespace TP01EF2024.Datos.Repositorios
                 Include(s => s.Genre).
                 Include(s => s.Sport).
                 Include(s => s.Colour).
+                AsNoTracking().
                 SingleOrDefault(s => s.ShoeId == id);
 
         }
@@ -298,6 +308,7 @@ namespace TP01EF2024.Datos.Repositorios
                 .Include(ss => ss.Size)
                 .Where(ss => ss.ShoeId == shoeId)
                 .Select(ss => ss.Size)
+                .AsNoTracking()
                 .ToList();
         }
 
@@ -403,6 +414,7 @@ namespace TP01EF2024.Datos.Repositorios
             return _context.ShoesSizes
                 .Include(ss => ss.Shoe)
                 .Include(ss => ss.Size)
+                .AsNoTracking()
                 .FirstOrDefault(ss => ss.ShoeId == shoe.ShoeId && ss.SizeId == size.SizeId);
 
         }
@@ -439,14 +451,23 @@ namespace TP01EF2024.Datos.Repositorios
 
         public void EliminarShoeSize(ShoeSize shoeSize)
         {
-            var shoeExist = _context.Shoes.Local.FirstOrDefault(s => s.ShoeId == shoeSize.ShoeId);
+            var existingEntity = _context.ShoesSizes.Local
+                .FirstOrDefault(s => s.ShoeSizeId == shoeSize.ShoeSizeId);
 
-            if (shoeExist != null)
+            if (existingEntity != null)
             {
-                _context.Entry(shoeExist).State = EntityState.Detached;
+                _context.Entry(existingEntity).State = EntityState.Detached;
             }
 
             _context.ShoesSizes.Remove(shoeSize);
+            //var shoeExist = _context.Shoes.Local.FirstOrDefault(s => s.ShoeId == shoeSize.ShoeId);
+
+            //if (shoeExist != null)
+            //{
+            //    _context.Entry(shoeExist).State = EntityState.Detached;
+            //}
+
+            //_context.ShoesSizes.Remove(shoeSize);
 
         }
     }

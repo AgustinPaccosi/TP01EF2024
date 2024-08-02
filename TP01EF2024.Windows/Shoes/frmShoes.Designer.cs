@@ -54,9 +54,8 @@
             TsButtonFiltrar = new ToolStripButton();
             TsButtonActualizar = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
-            DropDownButtonOrdenar = new ToolStripDropDownButton();
-            toolStripButton1 = new ToolStripButton();
             tlbuttonDetalles = new ToolStripButton();
+            toolStripButton1 = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -256,7 +255,7 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(20, 20);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { ToolButtonNuevo, TsButtonBorrar, TsButtonEditar, toolStripSeparator1, TsButtonFiltrar, TsButtonActualizar, toolStripSeparator2, DropDownButtonOrdenar, tlbuttonDetalles, toolStripButton1 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { ToolButtonNuevo, TsButtonBorrar, TsButtonEditar, toolStripSeparator1, TsButtonFiltrar, TsButtonActualizar, toolStripSeparator2, tlbuttonDetalles, toolStripButton1 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(800, 67);
@@ -328,15 +327,16 @@
             toolStripSeparator2.Name = "toolStripSeparator2";
             toolStripSeparator2.Size = new Size(6, 67);
             // 
-            // DropDownButtonOrdenar
+            // tlbuttonDetalles
             // 
-            DropDownButtonOrdenar.Image = (Image)resources.GetObject("DropDownButtonOrdenar.Image");
-            DropDownButtonOrdenar.ImageScaling = ToolStripItemImageScaling.None;
-            DropDownButtonOrdenar.ImageTransparentColor = Color.Magenta;
-            DropDownButtonOrdenar.Name = "DropDownButtonOrdenar";
-            DropDownButtonOrdenar.Size = new Size(77, 64);
-            DropDownButtonOrdenar.Text = "Ordenar";
-            DropDownButtonOrdenar.TextImageRelation = TextImageRelation.ImageAboveText;
+            tlbuttonDetalles.Image = (Image)resources.GetObject("tlbuttonDetalles.Image");
+            tlbuttonDetalles.ImageScaling = ToolStripItemImageScaling.None;
+            tlbuttonDetalles.ImageTransparentColor = Color.Magenta;
+            tlbuttonDetalles.Name = "tlbuttonDetalles";
+            tlbuttonDetalles.Size = new Size(67, 64);
+            tlbuttonDetalles.Text = "Detalles";
+            tlbuttonDetalles.TextImageRelation = TextImageRelation.ImageAboveText;
+            tlbuttonDetalles.Click += tlbuttonDetalles_Click;
             // 
             // toolStripButton1
             // 
@@ -348,17 +348,6 @@
             toolStripButton1.Text = "Salir";
             toolStripButton1.TextImageRelation = TextImageRelation.ImageAboveText;
             toolStripButton1.Click += toolStripButton1_Click;
-            // 
-            // tlbuttonDetalles
-            // 
-            tlbuttonDetalles.Image = (Image)resources.GetObject("tlbuttonDetalles.Image");
-            tlbuttonDetalles.ImageScaling = ToolStripItemImageScaling.None;
-            tlbuttonDetalles.ImageTransparentColor = Color.Magenta;
-            tlbuttonDetalles.Name = "tlbuttonDetalles";
-            tlbuttonDetalles.Size = new Size(67, 64);
-            tlbuttonDetalles.Text = "Detalles";
-            tlbuttonDetalles.TextImageRelation = TextImageRelation.ImageAboveText;
-            tlbuttonDetalles.Click += tlbuttonDetalles_Click;
             // 
             // frmShoes
             // 
@@ -402,7 +391,6 @@
         private ToolStripButton TsButtonFiltrar;
         private ToolStripButton TsButtonActualizar;
         private ToolStripSeparator toolStripSeparator2;
-        private ToolStripDropDownButton DropDownButtonOrdenar;
         private Label lblRegistros;
         private Label label3;
         private ToolStripButton toolStripButton1;

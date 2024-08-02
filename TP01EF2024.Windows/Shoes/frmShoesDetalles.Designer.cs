@@ -123,6 +123,7 @@
             // 
             // DescripcionTxt
             // 
+            DescripcionTxt.Enabled = false;
             DescripcionTxt.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             DescripcionTxt.Location = new Point(115, 283);
             DescripcionTxt.Margin = new Padding(3, 4, 3, 4);
@@ -164,9 +165,14 @@
             BackBtn.TextAlign = ContentAlignment.BottomCenter;
             BackBtn.TextImageRelation = TextImageRelation.ImageAboveText;
             BackBtn.UseVisualStyleBackColor = true;
+            BackBtn.Click += BackBtn_Click;
             // 
             // DgvShoesSizes
             // 
+            DgvShoesSizes.AllowUserToAddRows = false;
+            DgvShoesSizes.AllowUserToDeleteRows = false;
+            DgvShoesSizes.AllowUserToResizeColumns = false;
+            DgvShoesSizes.AllowUserToResizeRows = false;
             DgvShoesSizes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvShoesSizes.Columns.AddRange(new DataGridViewColumn[] { ColTalle, colStock });
             DgvShoesSizes.Location = new Point(411, 177);
@@ -175,6 +181,8 @@
             DgvShoesSizes.ReadOnly = true;
             DgvShoesSizes.RowHeadersVisible = false;
             DgvShoesSizes.RowHeadersWidth = 15;
+            DgvShoesSizes.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            DgvShoesSizes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             DgvShoesSizes.Size = new Size(380, 267);
             DgvShoesSizes.TabIndex = 41;
             // 
